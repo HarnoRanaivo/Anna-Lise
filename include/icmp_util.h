@@ -24,47 +24,63 @@
 #include "base.h"
 
 /**
+ * \brief ICMP Header.
+ */
+typedef struct icmphdr icmphdr;
+
+/**
  * \brief Modifier le type.
- * \param header Header ICMPv4 à modifier.
- * \param type Type du header.
+ * \param[in,out] header Header ICMPv4 à modifier.
+ * \param[in] type Type du header.
  * \retval 0 Pas d'erreur.
  * \retval -1 \p header pointe vers \c NULL.
  * \retval -2 \p type n'est pas un type valide.
  * \retval -3 \p header pointe vers \c NULL et \p type n'est pas un type valide.
+ * \relatesalso icmphdr;
  *
  * En cas d'erreur, \c errno sera modifié et contiendra \c EINVAL.
  */
-int icmp_set_type(struct icmphdr * header, u_int8_t type);
+int icmp_set_type(icmphdr * header, u_int8_t type);
 
 /**
  * \brief Modifier le code.
- * \param header Header ICMPv4 à modifier.
- * \param type Type du header.
+ * \param[in,out] header Header ICMPv4 à modifier.
+ * \param[in] code Code.
  * \pre Le type doit avoir été modifié.
  * \retval 0 Pas d'erreur.
  * \retval -1 En cas d'erreur.
  * \retval -2 \p header n'est pas du type \c ICMP_ECHO
  * \warning Les vérifications du code ne sont faites que pour certains types...
+ * \relatesalso icmphdr
  *
- * Erreurs :
- * - \p header pointe vers \c NULL.
- * - \p code n'est pas un code valide.
- * Dans les deux cas, \c errno sera modifié et contiendra \c EINVAL.
+ * En cas d'erreur, \c errno sera modifié et contiendra \c EINVAL.
  */
-int icmp_set_code(struct icmphdr * header, u_int8_t code);
+int icmp_set_code(icmphdr * header, u_int8_t code);
 
 /**
- * \brief Modifier le code.
- * \param header Header ICMPv4 à modifier.
- * \param type Type du header.
+ * \brief Modifier les infos pour un ICMP_ECHO.
+ * \param[in,out] header Header ICMPv4 à modifier.
+ * \param[in] identifier ID.
+ * \param[in] sequence Sequence.
  * \pre Le type doit avoir été modifié.
  * \retval 0 Pas d'erreur.
  * \retval -1 \p header pointe vers \c NULL.
  * \retval -2 \p header n'est pas du type \c ICMP_ECHO
  * \warning Les vérifications du code ne sont faites que pour certains types...
+ * \relatesalso icmphdr
  *
  * En cas d'erreur, \c errno sera modifié et contiendra \c EINVAL.
  */
-int icmp_set_echo(struct icmphdr * header, u_int16_t identifier, u_int16_t sequence);
+int icmp_set_echo(icmphdr * header, u_int16_t identifier, u_int16_t sequence);
+
+/**
+ * \brief Checksum.
+ * \param[in,out] header Header ICMPv4.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \relatesalso icmphdr
+ * \todo implémenter icmp checksum
+ */
+int icmp_checksum(icmphdr * header);
 
 #endif /* __ICMP_UTIL_H */
