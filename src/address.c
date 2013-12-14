@@ -15,23 +15,25 @@
 
 #include "address.h"
 
+static inline void addrinfo_hints(struct addrinfo * hints, int family, int socktype, int protocol, int flags)
+{
+    memset(hints, 0, sizeof *hints);
+    hints->ai_family = family;
+    hints->ai_socktype = socktype;
+    hints->ai_protocol = protocol;
+    hints->ai_flags = flags;
+}
+
 u_int32_t get_ipv4(const char * hostname, int protocol)
 {
     struct addrinfo hints;
     struct addrinfo * results;
 
-    memset(&hints, 0, sizeof hints);
-    hints.ai_family = AF_INET;
-    hints.ai_socktype = 0;
-    hints.ai_protocol = protocol;
-    hints.ai_flags = 0;
-
+    addrinfo_hints(&hints, AF_INET, 0, protocol, 0);
     getaddrinfo(hostname, NULL, &hints, &results);
-
     /* Première addresse IP. */
     struct sockaddr_in * s = (struct sockaddr_in *) results->ai_addr;
     u_int32_t address = s->sin_addr.s_addr;
-
     freeaddrinfo(results);
 
     return address;
@@ -48,4 +50,46 @@ u_int32_t get_source_ipv4(int protocol)
     u_int32_t address = get_ipv4(buffer, protocol);
 
     return address;
+}
+
+int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, u_int32_t * address)
+{
+    int success = -1;
+    struct addrinfo hints;
+    struct addrinfo * results;
+
+    /* AF_INET : forcer IPv4. */
+    addrinfo_hints(&hints, AF_INET, socktype, protocol, 0);
+    getaddrinfo(hostname, NULL, &hints, &results);
+    int go_on = 1;
+    for (const struct addrinfo * r = results; go_on == 1 && r != NULL; r = r->ai_next)
+    {
+        *sockfd = socket(r->ai_family, r->ai_socktype, r->ai_protocol);
+        if (*sockfd != -1)
+        {
+            /* Si la socket nécessite une connection. */
+            int connected = -1;
+            if (socktype == SOCK_STREAM)
+            {
+                connected = connect(*sockfd, r->ai_addr, r->ai_addrlen);
+                if (connected == -1)
+                    close(*sockfd);
+            }
+
+            /* Si la socket ne nécessite pas de connection, c'est bon.
+             * Si la socket en nécessite une, elle doit être connectée.
+             */
+            if (socktype != SOCK_STREAM || connected == 0)
+            {
+                struct sockaddr_in * s = (struct sockaddr_in *) results->ai_addr;
+                *address = s->sin_addr.s_addr;
+                go_on = 0;
+                success = 0;
+            }
+        }
+    }
+
+    freeaddrinfo(results);
+
+    return success;
 }
