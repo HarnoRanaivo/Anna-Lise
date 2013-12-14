@@ -23,7 +23,6 @@
 #include <unistd.h>
 
 #include "base.h"
-#include "address.h"
 
 /**
  * \brief Header IP.

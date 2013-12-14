@@ -29,8 +29,11 @@ static inline int check_ipv4_version(unsigned int version)
 static inline int check_iphdr(iphdr * header)
 {
     int success = check_pointer(header);
-    if (success == 0)
-        success = check_ipv4_version(header->version);
+    if (success == 0 && header->version != 4)
+    {
+        success = -2;
+        errno = EINVAL;
+    }
     return success;
 }
 
@@ -144,7 +147,9 @@ int iphdr_set_protocol(iphdr * header, u_int8_t protocol)
 
 int iphdr_checksum(iphdr * header)
 {
-    return 0;
+    int success = check_iphdr(header);
+
+    return success;
 }
 
 int iphdr_set_source_address(iphdr * header, u_int32_t address)
