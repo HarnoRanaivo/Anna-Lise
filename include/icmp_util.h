@@ -22,6 +22,7 @@
 #include <errno.h>
 
 #include "base.h"
+#include "checksum.h"
 
 /**
  * \brief ICMP Header.
@@ -78,8 +79,10 @@ int icmp_set_echo(icmphdr * header, u_int16_t identifier, u_int16_t sequence);
  * \param[in,out] header Header ICMPv4.
  * \retval 0 Pas d'erreur.
  * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 La checksum ne s'est pas bien déroulée.
  * \relatesalso icmphdr
- * \todo implémenter icmp checksum
+ *
+ * Si \p header pointe vers \c NULL, \c errno sera modifé à \c EINVAL. Si la checksum ne s'est pas déroulée correctement, \c errno contiendra \c ECANCELED.
  */
 int icmp_checksum(icmphdr * header);
 

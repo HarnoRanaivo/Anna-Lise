@@ -57,3 +57,11 @@ void test_icmp_set_echo(void)
 
     CU_ASSERT_EQUAL(icmp_set_echo(NULL, 0, 0), -1);
 }
+
+void test_icmp_checksum(void)
+{
+    struct icmphdr header;
+
+    CU_ASSERT_EQUAL(icmp_checksum(NULL), -1);
+    CU_ASSERT_EQUAL(icmp_checksum(&header), 0);
+}
