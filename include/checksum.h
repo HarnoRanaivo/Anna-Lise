@@ -19,7 +19,7 @@
 #include <stdio.h>
 
 /**
- * \brief Calculer l'Internet Checksum.
+ * \brief Calculer l'Internet Checksum (RFC 1071).
  * \param address Addresse.
  * \param length Longueur.
  * \return Checksum.

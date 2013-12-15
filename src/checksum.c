@@ -15,35 +15,22 @@
 
 #include "checksum.h"
 
-/*
- * http://cboard.cprogramming.com/networking-device-communication/41635-ping-program.html
+/* Algorithme custom à partir des explications de Wikipedia.
+ * https://en.wikipedia.org/wiki/IPv4_header_checksum
  */
 unsigned short checksum(void * address, int length)
 {
-    register int sum = 0;
-    u_short answer = 0;
-    register u_short *w = address;
-    register int nleft = length;
-    /*
-     * Our algorithm is simple, using a 32 bit accumulator (sum), we add
-     * sequential 16 bit words to it, and at the end, fold back all the
-     * carry bits from the top 16 bits into the lower 16 bits.
-     */
-    while (nleft > 1)
-    {
-      sum += *w++;
-      nleft -= 2;
-    }
-    /* mop up an odd byte, if necessary */
-    if (nleft == 1)
-    {
-      *(u_char *) (&answer) = *(u_char *) w;
-      sum += answer;
-    }
-    /* add back carry outs from top 16 bits to low 16 bits */
-    sum = (sum >> 16) + (sum & 0xffff);       /* add hi 16 to low 16 */
-    sum += (sum >> 16);               /* add carry */
-    answer = ~sum;              /* truncate to 16 bits */
-    return (answer);
+    int sum = 0;
+    unsigned short * last_word = (unsigned short *)address + length;
+
+    for (const unsigned short * word = address; word != last_word; word++)
+        sum += *word;
+
+    int carry = (sum >> 16);
+    sum = sum & 0xffff;
+    sum += carry;
+    sum = ~sum;
+
+    return sum;
 }
 
