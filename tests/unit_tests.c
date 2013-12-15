@@ -8,6 +8,7 @@
 #include "test_base.h"
 #include "test_icmp_util.h"
 #include "test_ip_util.h"
+#include "test_checksum.h"
 
 /* Infos des suites de tests. */
 CU_TestInfo test_base_info[] =
@@ -42,12 +43,20 @@ CU_TestInfo test_ip_util_info[] =
     CU_TEST_INFO_NULL,
 };
 
+CU_TestInfo test_checksum_info[] =
+{
+    { "Test checksum", test_checksum },
+    CU_TEST_INFO_NULL,
+};
+
+
 /* Liste des suites de tests */
 CU_SuiteInfo suites[] =
 {
     { "Test base.h", do_nothing, do_nothing, test_base_info },
     { "Test icmp_util.h", do_nothing, do_nothing, test_icmp_util_info },
     { "Test ip_util.h", do_nothing, do_nothing, test_ip_util_info },
+    { "Test checksum.h", do_nothing, do_nothing, test_checksum_info },
     CU_SUITE_INFO_NULL,
 };
 
