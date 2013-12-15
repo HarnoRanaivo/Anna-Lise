@@ -27,6 +27,7 @@
 #include "base.h"
 #include "icmp_util.h"
 #include "ip_util.h"
+#include "address.h"
 
 /**
  * \brief Paquet Ipv4 ICMP.
@@ -42,9 +43,28 @@ typedef struct icmp4_packet
  * \param[in,out] packet Paquet.
  * \param[in] dest_address Addresse de destination du paquet.
  * \retval 0 Pas d'erreur.
- * \retval <0 Erreur.
+ * \retval n < 0 Erreur...
  * \relatesalso icmp4_packet
  */
-int icmp4_packet_set(icmp4_packet * packet, u_int32_t dest_address);
+int icmp4_packet_init(icmp4_packet * packet, u_int32_t dest_address);
+
+/**
+ * \brief Changer le TTL d'un paquet IPv4 + ICMP.
+ * \param[in,out] packet Paquet.
+ * \param[in] ttl Nouveau TTL (1 <= TTL <= MAXTTL).
+ * \retval 0 Pas d'erreur.
+ * \retval < 0 Erreur.
+ * \relatesalso icmp4_packet
+ */
+int icmp4_packet_set_ttl(icmp4_packet * packet, u_int8_t ttl);
+
+/**
+ * \brief Changer la sequence d'un paquet IPv4+ICMP ECHO_REQUEST.
+ * \param[in,out] packet Paquet.
+ * \param[in] ttl Nouvelle séquence.
+ * \retval 0 Pas d'erreur.
+ * \relatesalso icmp4_packet
+ */
+int icmp4_packet_set_echo_seq(icmp4_packet * packet, u_int16_t sequence);
 
 #endif /* __PACKET_H */
