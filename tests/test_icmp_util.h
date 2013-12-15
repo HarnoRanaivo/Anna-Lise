@@ -13,4 +13,6 @@ void test_icmp_set_code(void);
 
 void test_icmp_set_echo(void);
 
+void test_icmp_checksum(void);
+
 #endif /* __TEST_ICMP_UTIL_H */

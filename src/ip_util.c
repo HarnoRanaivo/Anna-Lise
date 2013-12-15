@@ -149,6 +149,20 @@ int iphdr_checksum(iphdr * header)
 {
     int success = check_iphdr(header);
 
+    if (success == 0)
+    {
+        u_int16_t old_sum = header->check;
+        header->check = 0;
+        header->check = checksum(header, sizeof *header);
+        u_int16_t check = checksum(header, sizeof *header);
+        if (check != 0)
+        {
+            header->check = old_sum;
+            errno = ECANCELED;
+            success = -3;
+        }
+    }
+
     return success;
 }
 

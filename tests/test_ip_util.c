@@ -154,6 +154,15 @@ void test_iphdr_set_protocol(void)
 
 void test_iphdr_checksum(void)
 {
+    struct iphdr header_1;
+    struct iphdr header_2;
+
+    header_1.version = 0;
+    iphdr_set_version(&header_2);
+
+    CU_ASSERT_EQUAL(iphdr_checksum(NULL), -1);
+    CU_ASSERT_EQUAL(iphdr_checksum(&header_1), -2);
+    CU_ASSERT_EQUAL(iphdr_checksum(&header_2), 0);
 }
 
 void test_iphdr_set_source_address(void)

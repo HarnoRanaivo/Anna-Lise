@@ -23,6 +23,7 @@ CU_TestInfo test_icmp_util_info[] =
     { "Test icmp_set_type", test_icmp_set_type },
     { "Test icmp_set_code", test_icmp_set_code },
     { "Test icmp_set_echo", test_icmp_set_echo },
+    { "Test icmp_checksum", test_icmp_checksum },
     CU_TEST_INFO_NULL,
 };
 
@@ -48,7 +49,6 @@ CU_TestInfo test_checksum_info[] =
     { "Test checksum", test_checksum },
     CU_TEST_INFO_NULL,
 };
-
 
 /* Liste des suites de tests */
 CU_SuiteInfo suites[] =

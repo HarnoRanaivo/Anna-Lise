@@ -23,6 +23,7 @@
 #include <unistd.h>
 
 #include "base.h"
+#include "checksum.h"
 
 /**
  * \brief Header IP.
@@ -156,10 +157,11 @@ int iphdr_set_protocol(iphdr * header, u_int8_t protocol);
  * \retval 0 Pas d'erreur.
  * \retval -1 \p header pointe vers \c NULL.
  * \retval -2 \p header n'est pas un header pour IPv4
+ * \retval -3 La checksum ne s'est pas bien déroulée.
  * \relatesalso iphdr
- * \todo Implémenter iphdr checksum
  *
  * En cas d'erreur -1 ou 2, \c errno sera rempli à \c EINVAL.
+ * Si la checksum ne s'est pas bien déroulée, \c errno contiendra \c ECANCELED.
  */
 int iphdr_checksum(iphdr * header);
 

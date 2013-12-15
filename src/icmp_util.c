@@ -91,3 +91,24 @@ int icmp_set_echo(struct icmphdr * header, u_int16_t identifier, u_int16_t seque
 
     return success;
 }
+
+int icmp_checksum(icmphdr * header)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+    {
+        u_int16_t old_sum = header->checksum;
+        header->checksum = 0;
+        header->checksum = checksum(header, sizeof *header);
+        u_int16_t check = checksum(header, sizeof *header);
+        if (check != 0)
+        {
+            header->checksum = old_sum;
+            errno = ECANCELED;
+            success = -2;
+        }
+    }
+
+    return success;
+}
