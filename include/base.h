@@ -132,12 +132,12 @@ static inline int check_pointer(const void * pointer)
  */
 static inline int uint_in_array(const int * array, unsigned int value)
 {
-    int index = -1;
+    int place = -1;
     if (check_pointer(array) == 0 && value <= INT_MAX)
-        for (int i = 0; index == -1 && array[i] >= 0; i++)
+        for (int i = 0; place == -1 && array[i] >= 0; i++)
             if ((unsigned int) array[i] == value)
-                index = i;
-    return index;
+                place = i;
+    return place;
 }
 
 #endif /* __BASE_H */
