@@ -27,6 +27,7 @@ int icmp4_packet_init(icmp4_packet * packet, u_int32_t dest_address)
     if (success != 0)
         return success;
 
+    memset(packet, 0, sizeof (*packet));
     iphdr * ip_header = &packet->ip_header;
     icmphdr * icmp_header = &packet->icmp_header;
 
@@ -37,7 +38,7 @@ int icmp4_packet_init(icmp4_packet * packet, u_int32_t dest_address)
     succeed_or_die(success, iphdr_set_id(ip_header, 0));
     succeed_or_die(success, iphdr_set_fragment_offset(ip_header, 0));
     succeed_or_die(success, iphdr_set_ttl(ip_header, IPDEFTTL));
-    succeed_or_die(success, iphdr_set_protocol(ip_header, 1));
+    succeed_or_die(success, iphdr_set_protocol(ip_header, IPPROTO_ICMP));
     succeed_or_die(success, iphdr_set_source_address(ip_header, get_source_ipv4(IPPROTO_ICMP)));
     succeed_or_die(success, iphdr_set_dest_address(ip_header, dest_address));
     /* À faire en dernier. */
@@ -75,6 +76,7 @@ int icmp4_packet_set_echo_seq(icmp4_packet * packet, u_int16_t sequence)
 
     icmphdr * icmp_header = &packet->icmp_header;
     succeed_or_die(success, icmp_set_echo(icmp_header, icmp_header->un.echo.id, sequence));
+    succeed_or_die(success, icmp_checksum(icmp_header));
 
     return success;
 }

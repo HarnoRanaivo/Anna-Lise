@@ -57,6 +57,6 @@ u_int32_t get_source_ipv4(int protocol);
  * protocol = 0 pour faire une recherche sans se préocupper du protocole.
  * Dans le cas de socket nécessitant une connection, la connection sera établie.
  */
-int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, u_int32_t * address);
+int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, struct sockaddr * address);
 
 #endif /* __ADDRESS_H */

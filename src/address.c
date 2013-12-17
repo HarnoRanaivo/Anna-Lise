@@ -52,7 +52,7 @@ u_int32_t get_source_ipv4(int protocol)
     return address;
 }
 
-int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, u_int32_t * address)
+int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, struct sockaddr * address)
 {
     int success = -1;
     struct addrinfo hints;
@@ -62,12 +62,16 @@ int socket_host_v4(const char * hostname, int protocol, int socktype, int * sock
     addrinfo_hints(&hints, AF_INET, socktype, protocol, 0);
     getaddrinfo(hostname, NULL, &hints, &results);
     int go_on = 1;
+    printf("%s\n", hostname);
     for (const struct addrinfo * r = results; go_on == 1 && r != NULL; r = r->ai_next)
     {
-        *sockfd = socket(r->ai_family, r->ai_socktype, r->ai_protocol);
+        *sockfd = socket(AF_INET, socktype, protocol);
         if (*sockfd != -1)
         {
-            /* Si la socket nécessite une connection. */
+            printf("socket\n");
+            /* Si la socket nécessite une connection...
+             * Mais on n'utilisera que des SOCK_RAW...on laisse pour l'instant.
+             */
             int connected = -1;
             if (socktype == SOCK_STREAM)
             {
@@ -81,8 +85,7 @@ int socket_host_v4(const char * hostname, int protocol, int socktype, int * sock
              */
             if (socktype != SOCK_STREAM || connected == 0)
             {
-                struct sockaddr_in * s = (struct sockaddr_in *) results->ai_addr;
-                *address = s->sin_addr.s_addr;
+                *address = *results->ai_addr;
                 go_on = 0;
                 success = 0;
             }
