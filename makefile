@@ -38,6 +38,7 @@ test_traceroute: test_traceroute.o address.o packet.o | bin
 
 # Anna-lise
 main.o: main.c base.h
+ping_icmp.o: ping_icmp.c ping_icmp.h base.h packet.h icmp_util.h ip_util.h address.h
 address.o: address.c address.h base.h
 icmp_util.o: icmp_util.c icmp_util.h base.h checksum.h
 ip_util.o: ip_util.c ip_util.h base.h address.h checksum.h
