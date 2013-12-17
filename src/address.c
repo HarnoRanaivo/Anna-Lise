@@ -44,8 +44,8 @@ u_int32_t get_source_ipv4(int protocol)
     /* Voir la section NOTES du man(2) de gethostname pour la taille
      * du buffer.
      */
-    char buffer[HOST_NAME_MAX];
-    gethostname(buffer, HOST_NAME_MAX);
+    char buffer[HOST_NAME_MAX+1];
+    gethostname(buffer, HOST_NAME_MAX+1);
 
     u_int32_t address = get_ipv4(buffer, protocol);
 
