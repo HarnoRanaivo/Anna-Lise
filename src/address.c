@@ -57,7 +57,7 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address)
     return get_ipv4(buffer, protocol, address);
 }
 
-u_int32_t extract_ipv4(struct sockaddr_in * address)
+u_int32_t extract_ipv4(const struct sockaddr_in * address)
 {
     u_int32_t result = 0;
     if (check_pointer(address) == 0)

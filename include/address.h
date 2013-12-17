@@ -61,7 +61,7 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address);
  * \param address sockaddr_in.
  * \return Addresse IPv4.
  */
-u_int32_t extract_ipv4(struct sockaddr_in * address);
+u_int32_t extract_ipv4(const struct sockaddr_in * address);
 
 /**
  * \brief Créer une socket.

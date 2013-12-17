@@ -30,8 +30,8 @@ other_tests: test_address test_traceroute | bin
 test_address: test_address.o address.o | bin
 	$(CC) $(CFLAGS) -o $(BPATH)/test_address $(OPATH)/test_address.o $(OPATH)/address.o
 
-test_traceroute: test_traceroute.o address.o packet.o | bin
-	$(CC) $(CFLAGS) -o $(BPATH)/test_traceroute $(OPATH)/test_traceroute.o $(OPATH)/address.o $(OPATH)/packet.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/checksum.o
+test_traceroute: test_traceroute.o traceroute.o address.o packet.o | bin
+	$(CC) $(CFLAGS) -o $(BPATH)/test_traceroute $(OPATH)/test_traceroute.o $(OPATH)/traceroute.o $(OPATH)/address.o $(OPATH)/packet.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/checksum.o
 
 %.o: %.c | obj
 		$(CC) $(CFLAGS) -o $(OPATH)/$@ -c $< $(IFLAGS)
@@ -43,6 +43,7 @@ icmp_util.o: icmp_util.c icmp_util.h base.h checksum.h
 ip_util.o: ip_util.c ip_util.h base.h address.h checksum.h
 packet.o: packet.c packet.h base.h icmp_util.h ip_util.h address.h
 checksum.o: checksum.c checksum.h
+traceroute.o: traceroute.c traceroute.h base.h address.h packet.h
 
 # Tests
 unit_tests.o: unit_tests.c CUnit_util.h
@@ -52,7 +53,7 @@ test_ip_util.o: test_ip_util.c test_ip_util.h ip_util.h checksum.h
 test_address.o: test_address.c address.h manual_tests.h
 test_checksum.o: test_checksum.c test_checksum.h checksum.h
 test_packet.o: test_packet.c test_packet.h packet.h
-test_traceroute.o: test_traceroute.c
+test_traceroute.o: test_traceroute.c traceroute.h address.h packet.h
 
 doc: cleandoc
 		@doxygen
