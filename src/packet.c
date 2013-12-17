@@ -46,7 +46,7 @@ int icmp4_packet_init(icmp4_packet * packet, u_int32_t dest_address)
 
     succeed_or_die(success, icmp_set_type(icmp_header, ICMP_ECHO));
     succeed_or_die(success, icmp_set_code(icmp_header, 0));
-    succeed_or_die(success, icmp_set_echo(icmp_header, 0, 0));
+    succeed_or_die(success, icmp_set_echo(icmp_header, getpid(), 0));
     /* À faire en dernier. */
     succeed_or_die(success, icmp_checksum(icmp_header));
 
@@ -79,6 +79,12 @@ int icmp4_packet_set_echo_seq(icmp4_packet * packet, u_int16_t sequence)
     succeed_or_die(success, icmp_checksum(icmp_header));
 
     return success;
+}
+
+void icmp4_packet_print(const icmp4_packet * packet)
+{
+    iphdr_print(&packet->ip_header);
+    icmp_print(&packet->icmp_header);
 }
 
 #undef succeed_or_die

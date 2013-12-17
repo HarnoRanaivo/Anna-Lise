@@ -67,4 +67,6 @@ int icmp4_packet_set_ttl(icmp4_packet * packet, u_int8_t ttl);
  */
 int icmp4_packet_set_echo_seq(icmp4_packet * packet, u_int16_t sequence);
 
+void icmp4_packet_print(const icmp4_packet * packet);
+
 #endif /* __PACKET_H */

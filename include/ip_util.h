@@ -24,6 +24,7 @@
 
 #include "base.h"
 #include "checksum.h"
+#include "address.h"
 
 /**
  * \brief Header IP.
@@ -190,5 +191,11 @@ int iphdr_set_source_address(iphdr * header, u_int32_t address);
  * En cas d'erreur -1 ou 2, \c errno sera rempli à \c EINVAL.
  */
 int iphdr_set_dest_address(iphdr * header, u_int32_t address);
+
+/**
+ * \brief Afficher le contenu d'un header.
+ * \param header Header à afficher.
+ */
+void iphdr_print(const iphdr * header);
 
 #endif /* __IP_UTIL_H */

@@ -100,8 +100,8 @@ int icmp_checksum(icmphdr * header)
     {
         u_int16_t old_sum = header->checksum;
         header->checksum = 0;
-        header->checksum = checksum(header, sizeof *header);
-        u_int16_t check = checksum(header, sizeof *header);
+        header->checksum = checksum(header, (sizeof *header) / 2);
+        u_int16_t check = checksum(header, (sizeof *header) / 2);
         if (check != 0)
         {
             header->checksum = old_sum;
@@ -111,4 +111,21 @@ int icmp_checksum(icmphdr * header)
     }
 
     return success;
+}
+
+void icmp_print(const icmphdr * header)
+{
+    int ok = check_pointer(header);
+    if (ok == 0)
+    {
+        printf("ICMP type: %d\n", header->type);
+        printf("ICMP code: %d\n", header->code);
+        printf("ICMP checksum: %d\n", header->checksum);
+        if (header->type == ICMP_ECHO)
+        {
+            printf("ICMP id: %d\n", header->un.echo.id);
+            printf("ICMP sequence: %d\n", header->un.echo.sequence);
+        }
+
+    }
 }

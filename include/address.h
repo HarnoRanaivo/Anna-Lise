@@ -59,4 +59,10 @@ u_int32_t get_source_ipv4(int protocol);
  */
 int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, struct sockaddr * address);
 
+/**
+ * \brief Afficher une adresse IPv4.
+ * \param address Adresse IPv4.
+ */
+void print_ipv4_address(u_int32_t address);
+
 #endif /* __ADDRESS_H */

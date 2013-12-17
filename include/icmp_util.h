@@ -23,6 +23,7 @@
 
 #include "base.h"
 #include "checksum.h"
+#include "address.h"
 
 /**
  * \brief ICMP Header.
@@ -85,5 +86,11 @@ int icmp_set_echo(icmphdr * header, u_int16_t identifier, u_int16_t sequence);
  * Si \p header pointe vers \c NULL, \c errno sera modifé à \c EINVAL. Si la checksum ne s'est pas déroulée correctement, \c errno contiendra \c ECANCELED.
  */
 int icmp_checksum(icmphdr * header);
+
+/**
+ * \brief Afficher un header.
+ * \param header Header.
+ */
+void icmp_print(const icmphdr * header);
 
 #endif /* __ICMP_UTIL_H */

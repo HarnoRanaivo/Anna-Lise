@@ -153,8 +153,8 @@ int iphdr_checksum(iphdr * header)
     {
         u_int16_t old_sum = header->check;
         header->check = 0;
-        header->check = checksum(header, sizeof *header);
-        u_int16_t check = checksum(header, sizeof *header);
+        header->check = checksum(header, (sizeof *header) / 2);
+        u_int16_t check = checksum(header, (sizeof *header) / 2);
         if (check != 0)
         {
             header->check = old_sum;
@@ -184,4 +184,26 @@ int iphdr_set_dest_address(iphdr * header, u_int32_t address)
         header->daddr = address;
 
     return success;
+}
+
+void iphdr_print(const iphdr * header)
+{
+    int ok = check_pointer(header);
+
+    if (ok == 0)
+    {
+        printf("IP ihl: %d\n", header->ihl);
+        printf("IP version: %d\n", header->version);
+        printf("IP tos: %d\n", header->tos);
+        printf("IP total length: %d\n", header->tot_len);
+        printf("IP id: %d\n", header->id);
+        printf("IP fragment_offset: %d\n", header->frag_off);
+        printf("IP ttl: %d\n", header->ttl);
+        printf("IP protocol: %d\n", header->protocol);
+        printf("IP checksum: %d\n", header->check);
+        printf("IP source: ");
+        print_ipv4_address(header->saddr);
+        printf("IP dest: ");
+        print_ipv4_address(header->daddr);
+    }
 }

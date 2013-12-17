@@ -33,6 +33,7 @@ int main(int argc, char ** argv)
     if (success == 0)
     {
         printf("init ok\n");
+        icmp4_packet_print(&packet);
         print_packet_addresses(&packet);
         if (sendto(sockfd, &packet, sizeof packet, 0, &address, address_size) < 0)
             success = -1;
