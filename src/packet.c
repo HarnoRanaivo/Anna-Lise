@@ -39,7 +39,11 @@ int icmp4_packet_init(icmp4_packet * packet, u_int32_t dest_address)
     succeed_or_die(success, iphdr_set_fragment_offset(ip_header, 0));
     succeed_or_die(success, iphdr_set_ttl(ip_header, IPDEFTTL));
     succeed_or_die(success, iphdr_set_protocol(ip_header, IPPROTO_ICMP));
-    succeed_or_die(success, iphdr_set_source_address(ip_header, get_source_ipv4(IPPROTO_ICMP)));
+
+    struct sockaddr_in address;
+    succeed_or_die(success, get_source_ipv4(IPPROTO_ICMP, &address));
+    succeed_or_die(success, iphdr_set_source_address(ip_header, extract_ipv4(&address)));
+
     succeed_or_die(success, iphdr_set_dest_address(ip_header, dest_address));
     /* À faire en dernier. */
     succeed_or_die(success, iphdr_checksum(ip_header));

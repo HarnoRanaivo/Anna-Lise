@@ -24,22 +24,29 @@ static inline void addrinfo_hints(struct addrinfo * hints, int family, int sockt
     hints->ai_flags = flags;
 }
 
-u_int32_t get_ipv4(const char * hostname, int protocol)
+int get_ip(const char * hostname, int family, int socktype, int protocol, struct sockaddr * address)
 {
+    int success = -1;
     struct addrinfo hints;
     struct addrinfo * results;
 
-    addrinfo_hints(&hints, AF_INET, 0, protocol, 0);
-    getaddrinfo(hostname, NULL, &hints, &results);
-    /* Première addresse IP. */
-    struct sockaddr_in * s = (struct sockaddr_in *) results->ai_addr;
-    u_int32_t address = s->sin_addr.s_addr;
-    freeaddrinfo(results);
+    addrinfo_hints(&hints, family, socktype, protocol, 0);
+    success = getaddrinfo(hostname, NULL, &hints, &results);
+    if (success == 0)
+    {
+        *address = *results->ai_addr;
+        freeaddrinfo(results);
+    }
 
-    return address;
+    return success;
 }
 
-u_int32_t get_source_ipv4(int protocol)
+int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address)
+{
+    return get_ip(hostname, AF_INET, SOCK_RAW, protocol, (struct sockaddr *) address);
+}
+
+int get_source_ipv4(int protocol, struct sockaddr_in * address)
 {
     /* Voir la section NOTES du man(2) de gethostname pour la taille
      * du buffer.
@@ -47,9 +54,28 @@ u_int32_t get_source_ipv4(int protocol)
     char buffer[HOST_NAME_MAX+1];
     gethostname(buffer, HOST_NAME_MAX+1);
 
-    u_int32_t address = get_ipv4(buffer, protocol);
+    return get_ipv4(buffer, protocol, address);
+}
 
-    return address;
+u_int32_t extract_ipv4(struct sockaddr_in * address)
+{
+    u_int32_t result = 0;
+    if (check_pointer(address) == 0)
+        result = address->sin_addr.s_addr;
+
+    return result;
+}
+
+int create_raw_socket(int family, int socktype, int protocol, int * sockfd)
+{
+    int success = -1;
+    int optval;
+
+    *sockfd = socket(family, socktype, protocol);
+    if (*sockfd != -1)
+        success = setsockopt(*sockfd, IPPROTO_IP, IP_HDRINCL, &optval, sizeof optval);
+
+    return success;
 }
 
 int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, struct sockaddr * address)

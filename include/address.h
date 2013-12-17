@@ -26,6 +26,18 @@
 #include "base.h"
 
 /**
+ * \brief Obtenir une adresse IP.
+ * \param[in] hostname Nom d'hôte.
+ * \param[in] family Type d'adresse.
+ * \param[in] socktype Type de socket.
+ * \param[in] protocol Protocole.
+ * \param[in,out] address sockaddr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
+int get_ip(const char * hostname, int family, int socktype, int protocol, struct sockaddr * address);
+
+/**
  * \brief Obtenir une adresse IPv4.
  * \param hostname Nom d'hôte.
  * \param protocol Protocole.
@@ -33,7 +45,7 @@
  *
  * protocol = 0 pour faire une recherche sans se préocupper du protocole.
  */
-u_int32_t get_ipv4(const char * hostname, int protocol);
+int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address);
 
 /**
  * \brief Obtenir l'adresse IPv4 de la machine.
@@ -42,7 +54,25 @@ u_int32_t get_ipv4(const char * hostname, int protocol);
  *
  * protocol = 0 pour faire une recherche sans se préocupper du protocole.
  */
-u_int32_t get_source_ipv4(int protocol);
+int get_source_ipv4(int protocol, struct sockaddr_in * address);
+
+/**
+ * \brief Extraire une IPv4.
+ * \param address sockaddr_in.
+ * \return Addresse IPv4.
+ */
+u_int32_t extract_ipv4(struct sockaddr_in * address);
+
+/**
+ * \brief Créer une socket.
+ * \param[in] family Type d'adresse.
+ * \param[in] socktype Type de socket.
+ * \param[in] protocol Protocole.
+ * \param[in,out] sockfd Descripteur de socket.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
+int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
 
 /**
  * \brief Obtenir socket et adresse pour un hôte.
@@ -53,6 +83,7 @@ u_int32_t get_source_ipv4(int protocol);
  * \param[in,out] address Addresse IPv4 de l'hôte.
  * \retval 0 Pas d'erreur.
  * \retval -1 Erreur.
+ * \deprecated Déprécié.
  *
  * protocol = 0 pour faire une recherche sans se préocupper du protocole.
  * Dans le cas de socket nécessitant une connection, la connection sera établie.
