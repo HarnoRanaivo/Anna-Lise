@@ -67,13 +67,23 @@ int icmp4_packet_set_ttl(icmp4_packet * packet, u_int8_t ttl);
  */
 int icmp4_packet_set_echo_seq(icmp4_packet * packet, u_int16_t sequence);
 
+/**
+ * \brief Afficher un paquet.
+ * \param packet Paquet à afficher.
+ *
+ * Surtout pour du debug...
+ */
 void icmp4_packet_print(const icmp4_packet * packet);
 
 /**
  * \brief Recevoir un paquet IPv4+ICMP.
  * \param sockfd Socket.
- * \param ttl TTL courant.
+ * \param address Adresse ciblée.
+ * \param wait_time Temps d'attente maximum.
+ * \param pacaket Packet reçu.
+ * \retval 0 Pas d'erreur.
+ * \retval autre Erreur.
  */
-int receive_icmp_v4(int sockfd, struct sockaddr_in * address, icmp4_packet * packet);
+int receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct timeval * wait_time, icmp4_packet * packet);
 
 #endif /* __PACKET_H */

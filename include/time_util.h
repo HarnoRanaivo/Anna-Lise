@@ -20,10 +20,25 @@
 #include <stdio.h>
 #include <sys/time.h>
 
+/**
+ * \brief Faire la différence entre deux struct timeval.
+ * \param start timeval de départ.
+ * \param end timeval de fin.
+ * \result end - start.
+ */
 struct timeval diff_timeval(struct timeval start, struct timeval end);
 
+/**
+ * \brief Extraire le temps en ms d'une struct timeval.
+ * \param time timeval.
+ * \result Temps en ms.
+ */
 long double extract_time(struct timeval time);
 
+/**
+ * \brief Afficher une struct timeval.
+ * \param time timeval.
+ */
 void print_timeval(struct timeval time);
 
 #endif /* __TIME_UTIL_H */
