@@ -20,19 +20,20 @@
  */
 struct timeval diff_timeval(struct timeval start, struct timeval end)
 {
-    struct timeval result;
+    static const long int factor = 1000000;
     if (end.tv_usec < start.tv_usec)
     {
-        int nsec = (start.tv_usec - end.tv_usec) / 1000000 + 1;
-        start.tv_usec -= 1000000* nsec;
-        start.tv_sec += nsec;
+        int seconds = (start.tv_usec - end.tv_usec) / factor + 1;
+        start.tv_usec -= factor * seconds;
+        start.tv_sec += seconds;
     }
-    if (end.tv_usec - start.tv_usec > 1000000)
+    if (end.tv_usec - start.tv_usec > factor)
     {
-        int nsec = (end.tv_usec - start.tv_usec) / 1000000;
-        start.tv_usec += 1000000 * nsec;
-        start.tv_sec -= nsec;
+        int seconds = (end.tv_usec - start.tv_usec) / factor;
+        start.tv_usec += factor * seconds;
+        start.tv_sec -= seconds;
     }
+    struct timeval result;
     result.tv_sec = end.tv_sec - start.tv_sec;
     result.tv_usec = end.tv_usec - start.tv_usec;
 
@@ -41,7 +42,7 @@ struct timeval diff_timeval(struct timeval start, struct timeval end)
 
 long double extract_time(struct timeval time)
 {
-	return (time.tv_sec * 1000.0 + time.tv_usec / 1000.0);
+    return (time.tv_sec * 1000.0 + time.tv_usec / 1000.0);
 }
 
 void print_timeval(struct timeval time)

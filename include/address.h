@@ -43,8 +43,6 @@ int get_ip(const char * hostname, int family, int socktype, int protocol, struct
  * \param hostname Nom d'hôte.
  * \param protocol Protocole.
  * \return Adresse IPv4.
- *
- * protocol = 0 pour faire une recherche sans se préocupper du protocole.
  */
 int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address);
 
@@ -52,10 +50,17 @@ int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address);
  * \brief Obtenir l'adresse IPv4 de la machine.
  * \param protocol Protocole.
  * \return Adresse IPv4.
- *
- * protocol = 0 pour faire une recherche sans se préocupper du protocole.
  */
 int get_source_ipv4(int protocol, struct sockaddr_in * address);
+
+/**
+ * \brief Rechercher une adresse IPv4 parmi celles des interfaces de la machine.
+ * \param[in,out] address Adresse.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
+int get_interface_ipv4(struct sockaddr_in * address);
+
 
 /**
  * \brief Extraire une IPv4.
@@ -63,35 +68,6 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address);
  * \return Addresse IPv4.
  */
 u_int32_t extract_ipv4(const struct sockaddr_in * address);
-
-/**
- * \brief Créer une socket.
- * \param[in] family Type d'adresse.
- * \param[in] socktype Type de socket.
- * \param[in] protocol Protocole.
- * \param[in,out] sockfd Descripteur de socket.
- * \retval 0 Pas d'erreur.
- * \retval -1 Erreur.
- */
-int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
-
-int get_interface_ipv4(struct sockaddr_in * address);
-
-/**
- * \brief Obtenir socket et adresse pour un hôte.
- * \param[in] hostname Nom de l'hôte.
- * \param[in] protocol Protocole.
- * \param[in] socktype Type de socket.
- * \param[in,out] sockfd Descripteur de socket.
- * \param[in,out] address Addresse IPv4 de l'hôte.
- * \retval 0 Pas d'erreur.
- * \retval -1 Erreur.
- * \deprecated Déprécié.
- *
- * protocol = 0 pour faire une recherche sans se préocupper du protocole.
- * Dans le cas de socket nécessitant une connection, la connection sera établie.
- */
-int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, struct sockaddr * address);
 
 /**
  * \brief Afficher une adresse IPv4.
@@ -112,7 +88,21 @@ int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address);
 /**
  * \brief Afficher un hôte.
  * \param host Addresse.
+ *
+ * Affichage sous la forme "nom d'hôte (addresse)".
  */
 void print_host_v4(struct in_addr host);
+
+
+/**
+ * \brief Créer une socket.
+ * \param[in] family Type d'adresse.
+ * \param[in] socktype Type de socket.
+ * \param[in] protocol Protocole.
+ * \param[in,out] sockfd Descripteur de socket.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
+int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
 
 #endif /* __ADDRESS_H */

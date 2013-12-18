@@ -53,12 +53,26 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address)
      */
     char buffer[HOST_NAME_MAX+1];
     gethostname(buffer, HOST_NAME_MAX+1);
-    const in_addr_t NO = inet_addr("127.0.0.1");
+
     int success = get_ipv4(buffer, protocol, address);
-    if (address->sin_addr.s_addr == NO)
-    {
+
+    /* Workaround pour obtenir une adresse de la machine.
+     *
+     * Sur certaines machines getaddrinfo retourne pour unique adresse 127.0.0.1
+     * lorsqu'on donne le hostname de la machine...
+     * Sur d'autres elle retourne bien les adresses des interfaces
+     * de la machine.
+     *
+     * De même avec les « vrais » ping et traceroute:
+     * `ping localhost` et `ping <hostname de la machine>` vont tous deux se faire sur
+     * 127.0.0.1, mais sur d'autres machines se feront sur deux adresses différentes.
+     * Configuration des machines ? Versions des logiciels ? ...?
+     *
+     * Avec ça, ça fonctionne partout :
+     */
+    const in_addr_t REFUSED_IPV4 = inet_addr("127.0.0.1");
+    if (address->sin_addr.s_addr == REFUSED_IPV4)
         success = get_interface_ipv4(address);
-    }
 
     return success;
 }
@@ -66,7 +80,7 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address)
 int get_interface_ipv4(struct sockaddr_in * address)
 {
     struct ifaddrs * results;
-    const in_addr_t NO = inet_addr("127.0.0.1");
+    const in_addr_t REFUSED_IPV4 = inet_addr("127.0.0.1");
 
     int success = getifaddrs(&results);
     if (success == 0)
@@ -76,15 +90,15 @@ int get_interface_ipv4(struct sockaddr_in * address)
             if (r->ifa_addr != NULL && r->ifa_addr->sa_family == AF_INET)
             {
                 struct sockaddr_in * s = (struct sockaddr_in *) r->ifa_addr;
-                if (s->sin_addr.s_addr != NO)
+                if (s->sin_addr.s_addr != REFUSED_IPV4)
                 {
                     *address = *s;
                     success = 0;
                 }
             }
+        freeifaddrs(results);
     }
 
-    freeifaddrs(results);
     return success;
 }
 
@@ -95,63 +109,6 @@ u_int32_t extract_ipv4(const struct sockaddr_in * address)
         result = address->sin_addr.s_addr;
 
     return result;
-}
-
-int create_raw_socket(int family, int socktype, int protocol, int * sockfd)
-{
-    int success = -1;
-    int optval;
-
-    *sockfd = socket(family, socktype, protocol);
-    if (*sockfd != -1)
-        success = setsockopt(*sockfd, IPPROTO_IP, IP_HDRINCL, &optval, sizeof optval);
-
-    return success;
-}
-
-int socket_host_v4(const char * hostname, int protocol, int socktype, int * sockfd, struct sockaddr * address)
-{
-    int success = -1;
-    struct addrinfo hints;
-    struct addrinfo * results;
-
-    /* AF_INET : forcer IPv4. */
-    addrinfo_hints(&hints, AF_INET, socktype, protocol, 0);
-    getaddrinfo(hostname, NULL, &hints, &results);
-    int go_on = 1;
-    printf("%s\n", hostname);
-    for (const struct addrinfo * r = results; go_on == 1 && r != NULL; r = r->ai_next)
-    {
-        *sockfd = socket(AF_INET, socktype, protocol);
-        if (*sockfd != -1)
-        {
-            printf("socket\n");
-            /* Si la socket nécessite une connection...
-             * Mais on n'utilisera que des SOCK_RAW...on laisse pour l'instant.
-             */
-            int connected = -1;
-            if (socktype == SOCK_STREAM)
-            {
-                connected = connect(*sockfd, r->ai_addr, r->ai_addrlen);
-                if (connected == -1)
-                    close(*sockfd);
-            }
-
-            /* Si la socket ne nécessite pas de connection, c'est bon.
-             * Si la socket en nécessite une, elle doit être connectée.
-             */
-            if (socktype != SOCK_STREAM || connected == 0)
-            {
-                *address = *results->ai_addr;
-                go_on = 0;
-                success = 0;
-            }
-        }
-    }
-
-    freeaddrinfo(results);
-
-    return success;
 }
 
 void print_ipv4_address(u_int32_t address)
@@ -171,4 +128,16 @@ void print_host_v4(struct in_addr host)
     char buffer[buffer_size];
     reverse_dns_v4(buffer, buffer_size, host);
     printf("%s (%s)", buffer, inet_ntoa(host));
+}
+
+int create_raw_socket(int family, int socktype, int protocol, int * sockfd)
+{
+    int success = -1;
+    int optval;
+
+    *sockfd = socket(family, socktype, protocol);
+    if (*sockfd != -1)
+        success = setsockopt(*sockfd, IPPROTO_IP, IP_HDRINCL, &optval, sizeof optval);
+
+    return success;
 }
