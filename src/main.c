@@ -87,7 +87,10 @@ int main(int argc, char ** argv)
 		info_addr ia;
 		compteur cpt;
 		struct sigaction sa;
+		struct timeval debut_total, fin_total, diff_total;
 		struct timeval debut, fin, diff;
+		
+		gettimeofday(&debut_total,NULL);
 		
 		char * dest = argv[1];
     
@@ -101,17 +104,27 @@ int main(int argc, char ** argv)
 		
 		while(fin_des_temps)
 		{
+			int avant = cpt.paquets_recus;
 			gettimeofday(&debut,NULL);
 			send_paquet(&c,&p,&cpt);
 			answer_send(&c,&cpt);
 			gettimeofday(&fin,NULL);
 			diff = diff_timeval(debut,fin);
+			if((avant == 0) &&(cpt.paquets_recus == 1))
+			{
+				cpt.min = extract_time(diff);
+				cpt.max = extract_time(diff);
+			}
 			rtt(diff,&cpt);
-			printf("time=%.0Lf\n",extract_time(diff));
+			printf("time=%.2Lf\n",extract_time(diff));
 			icmp4_packet_set_echo_seq(&p,p.icmp_header.un.echo.sequence+1);
 		}
 
-		affichage_fin(dest,&cpt);
+		gettimeofday(&fin_total,NULL);
+		
+		diff_total = diff_timeval(debut_total,fin_total);
+		
+		affichage_fin(dest,&cpt,diff_total);
 	
 		freedom(&c);
 	
