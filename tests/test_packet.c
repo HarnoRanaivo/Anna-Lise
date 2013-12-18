@@ -3,6 +3,8 @@
 void test_icmp4_packet_init(void)
 {
     icmp4_packet packet;
+    struct sockaddr_in address;
+    get_source_ipv4(IPPROTO_ICMP, &address);
 
     CU_ASSERT_EQUAL(icmp4_packet_init(&packet, 0), 0);
     CU_ASSERT_NOT_EQUAL(icmp4_packet_init(NULL, 0), 0);
@@ -14,14 +16,13 @@ void test_icmp4_packet_init(void)
     CU_ASSERT_EQUAL(packet.ip_header.id, 0);
     CU_ASSERT_EQUAL(packet.ip_header.frag_off, 0);
     CU_ASSERT_EQUAL(packet.ip_header.ttl, IPDEFTTL);
-    CU_ASSERT_EQUAL(packet.ip_header.ttl, IPDEFTTL);
     CU_ASSERT_EQUAL(packet.ip_header.protocol, 1);
-    CU_ASSERT_EQUAL(packet.ip_header.saddr, get_source_ipv4(IPPROTO_ICMP));
+    CU_ASSERT_EQUAL(packet.ip_header.saddr, extract_ipv4(&address));
     CU_ASSERT_EQUAL(packet.ip_header.daddr, 0);
 
     CU_ASSERT_EQUAL(packet.icmp_header.type, ICMP_ECHO);
     CU_ASSERT_EQUAL(packet.icmp_header.code, 0);
-    CU_ASSERT_EQUAL(packet.icmp_header.un.echo.id, 0);
+    CU_ASSERT_EQUAL(packet.icmp_header.un.echo.id, getpid());
     CU_ASSERT_EQUAL(packet.icmp_header.un.echo.sequence, 0);
 }
 
