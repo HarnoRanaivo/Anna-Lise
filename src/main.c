@@ -72,13 +72,10 @@ int main(int argc, char ** argv)
         print_version();
     else
     {
-		echo_reply er;
 		icmp4_packet p;
 		connexion c;
 		info_addr ia;
 		compteur cpt;
-		int optval = 0;
-		iphdr * ip_reply = NULL;
 		struct sigaction sa;
 		
 		char * dest = argv[1];
@@ -88,18 +85,18 @@ int main(int argc, char ** argv)
 		sa.sa_flags = 0;
 		sigaction(SIGINT,&sa,NULL);
     
-		init(&p,&er,&c,&ia,dest,&cpt);
-		init_socket(&c,optval);
+		init(&p,&c,&ia,dest,&cpt);
+		create_raw_socket(AF_INET,SOCK_RAW,IPPROTO_ICMP,&c.sockfd);
 		
 		while(fin_des_temps)
 		{
-			send_paquet(&c,&er,&p,&cpt);
-			answer_send(&c,&er,ip_reply,&ia,&cpt);
+			send_paquet(&c,&p,&cpt);
+			answer_send(&c,&ia,&cpt);
 		}
 
 		affichage_fin(dest,&cpt);
 	
-		freedom(&er,&c);
+		freedom(&c);
 	
 		return 0;
 	}

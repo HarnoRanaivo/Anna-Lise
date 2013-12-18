@@ -1,31 +1,15 @@
 #include "ping_icmp.h"
 
-void init (icmp4_packet * p, echo_reply * er, connexion * c, info_addr * ia, char * dest, compteur * cpt)
+void init (icmp4_packet * p, connexion * c, info_addr * ia, char * dest, compteur * cpt)
 {	
-	er->paquet = q_malloc(sizeof(iphdr) + sizeof(icmphdr));
-    er->buffer = q_malloc(sizeof(iphdr) + sizeof(icmphdr));
-    
-    ia->src = get_source_ipv4(IPPROTO_ICMP);
-    ia->dest = get_ipv4(dest,IPPROTO_ICMP);
+    get_ipv4(dest,IPPROTO_ICMP,&c->addr);
     ia->addr_dest = char_to_ip(dest);
+    ia->dest = extract_ipv4(&c->addr);
     
     cpt->paquets_transmis = 0;
     cpt->paquets_recus = 0;
     
-    c->addr.sin_family = AF_INET;
-    c->addr.sin_addr.s_addr = inet_addr(ia->addr_dest);
-    
     icmp4_packet_init(p,ia->dest);
-}
-
-void init_socket (connexion * c, int optval)
-{
-	if ((c->sockfd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) == -1)
-    {
-		perror("socket");
-		exit(EXIT_FAILURE);
-    }
-    setsockopt(c->sockfd, IPPROTO_IP, IP_HDRINCL, &optval, sizeof(int));
 }
 
 char * char_to_ip (char * dest)
@@ -35,36 +19,31 @@ char * char_to_ip (char * dest)
     return inet_ntoa(*(struct in_addr *)h->h_addr);
 }
 
-void send_paquet (connexion * c, echo_reply * er, icmp4_packet * p, compteur * cpt)
+void send_paquet (connexion * c, icmp4_packet * p, compteur * cpt)
 {
-	sendto(c->sockfd, er->paquet, p->ip_header.tot_len, 0, (struct sockaddr *)&c->addr, sizeof(struct sockaddr));
+	sendto(c->sockfd, p, sizeof(icmp4_packet), 0, (struct sockaddr *)&c->addr, sizeof(struct sockaddr));
 	cpt->paquets_transmis++;
 }
 
-void answer_send (connexion * c, echo_reply * er, iphdr* ip_reply, info_addr * ia, compteur * cpt)
+void answer_send (connexion * c, info_addr * ia, compteur * cpt)
 {
-	int size_paquet;
-	unsigned int size_addr;
+	int succes;
+	icmp4_packet paquet;
 	
-	size_addr = sizeof(c->addr);
-	
-    if (( size_paquet = recvfrom(c->sockfd, er->buffer, sizeof(iphdr) + sizeof(icmphdr), 0, (struct sockaddr *)&c->addr, &size_addr)) == -1)
+    if (( succes = receive_icmp_v4(c->sockfd,&c->addr,&paquet)) == -1)
     {
-		perror("recv");
+		perror("receive_icmp_v4");
     }
     else
     {
 		cpt->paquets_recus++;
-		ip_reply = (iphdr*) er->buffer;
-		printf("%d bytes from %s: icmp_req=%d ttl=%d\n", size_paquet, ia->addr_dest, cpt->paquets_transmis, ip_reply->ttl);
+		printf("%lu bytes from %s: icmp_seq=%d ttl=%d\n", sizeof(paquet), ia->addr_dest, paquet.icmp_header.un.echo.sequence, paquet.ip_header.ttl);
 		sleep(1);
     }
 }
 
-void freedom (echo_reply * er, connexion * c)
+void freedom (connexion * c)
 {
-	free(er->paquet);
-	free(er->buffer);
 	close(c->sockfd);
 }
 
