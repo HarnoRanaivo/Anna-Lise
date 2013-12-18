@@ -47,9 +47,9 @@ void freedom (connexion * c)
 	close(c->sockfd);
 }
 
-void affichage_fin (char* dest, compteur * cpt)
+void affichage_fin (char* dest, compteur * cpt, struct timeval total)
 {
 	printf("--- %s ping statistics ---\n",dest);
-	printf("%d packets transmitted, %d received, %d%% paquet loss, time %.0Lf\n",cpt->paquets_transmis, cpt->paquets_recus, (cpt->paquets_transmis - cpt->paquets_recus)/cpt->paquets_transmis*100,cpt->sum);
+	printf("%d packets transmitted, %d received, %d%% paquet loss, time %.0Lf\n",cpt->paquets_transmis, cpt->paquets_recus, (cpt->paquets_transmis - cpt->paquets_recus)/cpt->paquets_transmis*100,extract_time(total));
 	printf("rtt min/avg/max = %.3Lf/%.3Lf/%.3Lf\n",cpt->min,cpt->sum/cpt->paquets_recus,cpt->max);
 }

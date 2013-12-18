@@ -50,6 +50,6 @@ void answer_send (connexion * c, compteur * cpt);
 
 void freedom (connexion * c);
 
-void affichage_fin (char* dest, compteur * cpt);
+void affichage_fin (char* dest, compteur * cpt, struct timeval total);
 
 #endif /* __PING_ICMP_H */
