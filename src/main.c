@@ -112,6 +112,7 @@ int main(int argc, char ** argv)
 			diff = diff_timeval(debut,fin);
 			if((avant == 0) &&(cpt.paquets_recus == 1))
 			{
+			    cpt.sum = .0;
 				cpt.min = extract_time(diff);
 				cpt.max = extract_time(diff);
 			}

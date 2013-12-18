@@ -22,6 +22,7 @@
 #include <unistd.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#include <ifaddrs.h>
 
 #include "base.h"
 
@@ -73,6 +74,8 @@ u_int32_t extract_ipv4(const struct sockaddr_in * address);
  * \retval -1 Erreur.
  */
 int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
+
+int get_interface_ipv4(struct sockaddr_in * address);
 
 /**
  * \brief Obtenir socket et adresse pour un hôte.
