@@ -39,7 +39,6 @@ void answer_send (connexion * c, compteur * cpt)
 		printf("%lu bytes from ",sizeof(paquet));
 		print_host_v4(c->addr.sin_addr);
 		printf(" : icmp_seq=%d ttl=%d ", paquet.icmp_header.un.echo.sequence, paquet.ip_header.ttl);
-		sleep(1);
     }
 }
 
