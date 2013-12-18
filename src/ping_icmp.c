@@ -32,7 +32,6 @@ void answer_send (connexion * c, info_addr * ia, compteur * cpt)
 	
     if (( succes = receive_icmp_v4(c->sockfd,&c->addr,&paquet)) == -1)
     {
-		perror("receive_icmp_v4");
     }
     else
     {
@@ -50,6 +49,6 @@ void freedom (connexion * c)
 void affichage_fin (char* dest, compteur * cpt)
 {
 	printf("--- %s ping statistics ---\n",dest);
-	printf("%d packets transmitted, %d received, %d%% paquet loss\n",cpt->paquets_transmis, cpt->paquets_recus, cpt->paquets_recus/cpt->paquets_transmis);
+	printf("%d packets transmitted, %d received, %d%% paquet loss\n",cpt->paquets_transmis, cpt->paquets_recus, (cpt->paquets_transmis - cpt->paquets_recus)/cpt->paquets_transmis*100);
 	printf("rtt min/avg/max = //\n");
 }
