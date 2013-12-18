@@ -22,6 +22,7 @@
 #include <sysexits.h>
 #include <errno.h>
 #include <string.h>
+#include <limits.h>
 
 /**
  * \brief Afficher un message d'erreur, puis quitter.
@@ -99,6 +100,44 @@ static inline void * q_calloc(size_t n, size_t size)
     if (memory == NULL && n != 0 && size != 0)
         pq_error("calloc", EX_OSERR);
     return memory;
+}
+
+/**
+ * \brief Vérifier qu'un pointeur ne pointe pas vers \c NULL
+ * \param pointer Pointeur à verifier.
+ * \retval 0 Le pointeur ne pointe pas vers \c NULL.
+ * \retval -1 Le pointeur pointe vers \c NULL.
+ *
+ * En cas d'erreur, \c errno est modifié à \c EINVAL.
+ */
+static inline int check_pointer(const void * pointer)
+{
+    int success = 0;
+    if (pointer == NULL)
+    {
+        errno = EINVAL;
+        success = -1;
+    }
+    return success;
+}
+
+/**
+ * \brief Vérifier l'appartenance d'un entier positif à un tableau.
+ * \param array Tableau à parcourir.
+ * \param value Entier positif recherché.
+ * \pre \p array doit avoir pour dernière valeur un entier négatif, cette valeur doit être la seule valeur négative.
+ * \pre \p value doit être inférieure au plus grand entier signé.
+ * \retval index de l'entier dans le tableau.
+ * \retval -1 si l'entier n'appartient pas au tableau.
+ */
+static inline int uint_in_array(const int * array, unsigned int value)
+{
+    int place = -1;
+    if (check_pointer(array) == 0 && value <= INT_MAX)
+        for (int i = 0; place == -1 && array[i] >= 0; i++)
+            if ((unsigned int) array[i] == value)
+                place = i;
+    return place;
 }
 
 #endif /* __BASE_H */
