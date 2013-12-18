@@ -96,4 +96,20 @@ int socket_host_v4(const char * hostname, int protocol, int socktype, int * sock
  */
 void print_ipv4_address(u_int32_t address);
 
+/**
+ * \brief Obtenir le nom d'un hôte à partir de son adresse IPv4.
+ * \param[in,out] buffer Tampon pour le nom de l'hôte.
+ * \param[in] buffer_size Taille du tampon.
+ * \param[in] address Adresse de l'hôte.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
+int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address);
+
+/**
+ * \brief Afficher un hôte.
+ * \param host Addresse.
+ */
+void print_host_v4(struct in_addr host);
+
 #endif /* __ADDRESS_H */

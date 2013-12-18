@@ -24,16 +24,6 @@
 #include "time_util.h"
 
 /**
- * \brief Obtenir le nom d'un hôte à partir de son adresse IPv4.
- * \param[in,out] buffer Tampon pour le nom de l'hôte.
- * \param[in] buffer_size Taille du tampon.
- * \param[in] address Adresse de l'hôte.
- * \retval 0 Pas d'erreur.
- * \retval n < 0 Erreur.
- */
-int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address);
-
-/**
  * \brief Recevoir un paquet IPv4+ICMP.
  * \param sockfd Socket.
  * \param ttl TTL courant.
@@ -42,6 +32,6 @@ int receive_icmp_v4(int sockfd, struct sockaddr_in * address, icmp4_packet * pac
 
 int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct sockaddr_in * source, struct timeval * time);
 
-int traceroute_icmp_v4(const char * hostname);
+int traceroute_icmp_v4(const char * hostname, int hops_max, int attempts_number);
 
 #endif /* __TRACEROUTE_H */
