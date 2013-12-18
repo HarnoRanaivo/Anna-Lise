@@ -109,6 +109,7 @@ int main(int argc, char ** argv)
 			rtt(diff,&cpt);
 			printf("time=%.0Lf\n",extract_time(diff));
 			icmp4_packet_set_echo_seq(&p,p.icmp_header.un.echo.sequence+1);
+            sleep(1);
 		}
 
 		affichage_fin(dest,&cpt);
