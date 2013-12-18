@@ -17,8 +17,8 @@ vpath %.o $(OPATH)/
 
 all: anna-lise
 
-anna-lise: main.o | bin
-		$(CC) $(CFLAGS) -o $(BPATH)/$@ $(OPATH)/main.o $(LFLAGS)
+anna-lise: main.o ping_icmp.o packet.o ip_util.o icmp_util.o address.o checksum.o | bin
+		$(CC) $(CFLAGS) -o $(BPATH)/$@ $(OPATH)/main.o $(OPATH)/ping_icmp.o $(OPATH)/packet.o $(OPATH)/ip_util.o $(OPATH)/icmp_util.o $(OPATH)/address.o $(OPATH)/checksum.o $(LFLAGS)
 
 tests: unit_tests other_tests
 
@@ -37,8 +37,8 @@ test_traceroute: test_traceroute.o address.o packet.o | bin
 		$(CC) $(CFLAGS) -o $(OPATH)/$@ -c $< $(IFLAGS)
 
 # Anna-lise
-main.o: main.c base.h
-ping_icmp.o: ping_icmp.c ping_icmp.h base.h packet.h icmp_util.h ip_util.h address.h
+main.o: main.c base.h address.h icmp_util.h ip_util.h packet.h ping_icmp.h
+ping_icmp.o: ping_icmp.c ping_icmp.h base.h address.h icmp_util.h ip_util.h packet.h
 address.o: address.c address.h base.h
 icmp_util.o: icmp_util.c icmp_util.h base.h checksum.h
 ip_util.o: ip_util.c ip_util.h base.h address.h checksum.h

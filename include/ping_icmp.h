@@ -8,8 +8,6 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
-#include <linux/ip.h>
-#include <linux/icmp.h>
 #include <string.h>
 #include <unistd.h>
 #include <signal.h>
@@ -35,13 +33,14 @@ typedef struct echo_reply
 typedef struct connexion
 {
 	int sockfd;
-	u_int32_t addr;
+	struct sockaddr_in addr;
 } connexion;
 
 typedef struct info_addr
 {
-	char src [20];
-	char dest [20];
+	u_int32_t src;
+	u_int32_t dest;
+	char * addr_dest;
 } info_addr;
 
 
@@ -49,11 +48,13 @@ void init (icmp4_packet * p, echo_reply * er, connexion * c, info_addr * ia, cha
 
 void init_socket (connexion * c, int optval);
 
+char * char_to_ip (char * dest);
+
 void send_paquet (connexion * c, echo_reply * er, icmp4_packet * p, compteur * cpt);
 
 void answer_send (connexion * c, echo_reply * er, struct iphdr* ip_reply, info_addr * ia, compteur * cpt);
 
-void freedom (icmp4_packet * p, echo_reply * er, connexion * c, info_addr * ia, compteur * cpt);
+void freedom (echo_reply * er, connexion * c);
 
 void affichage_fin (char* dest, compteur * cpt);
 

@@ -17,9 +17,10 @@
 
 int fin_des_temps = 1;
 
-void handler_int (int signum)
+static void handler_int (int signum)
 {
-	fin_des_temps=0;
+	if (signum == SIGINT)
+		fin_des_temps=0;
 }
 
 /**
@@ -71,33 +72,34 @@ int main(int argc, char ** argv)
         print_version();
     else
     {
-		echo_reply * er;
-		icmp4_packet * p;
-		connexion * c;
-		info_addr * ia;
-		compteur * cpt;
-		int optval;
-		iphdr * ip_reply;
+		echo_reply er;
+		icmp4_packet p;
+		connexion c;
+		info_addr ia;
+		compteur cpt;
+		int optval = 0;
+		iphdr * ip_reply = NULL;
 		struct sigaction sa;
+		
+		char * dest = argv[1];
     
 		sa.sa_handler = handler_int;
 		sigfillset(&sa.sa_mask);
 		sa.sa_flags = 0;
 		sigaction(SIGINT,&sa,NULL);
     
-    
-		init(p,er,c,ia,argv[1],cpt);
-		init_socket(c,optval);
-    
+		init(&p,&er,&c,&ia,dest,&cpt);
+		init_socket(&c,optval);
+		
 		while(fin_des_temps)
 		{
-			send_paquet(c,er,p,cpt);
-			answer_send(c,er,ip_reply,ia,cpt);
+			send_paquet(&c,&er,&p,&cpt);
+			answer_send(&c,&er,ip_reply,&ia,&cpt);
 		}
 
-		affichage_fin(argv[1],cpt);
+		affichage_fin(dest,&cpt);
 	
-		freedom(p,er,c,ia,cpt);
+		freedom(&er,&c);
 	
 		return 0;
 	}
