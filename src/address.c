@@ -53,8 +53,39 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address)
      */
     char buffer[HOST_NAME_MAX+1];
     gethostname(buffer, HOST_NAME_MAX+1);
+    const in_addr_t NO = inet_addr("127.0.0.1");
+    int success = get_ipv4(buffer, protocol, address);
+    if (address->sin_addr.s_addr == NO)
+    {
+        success = get_interface_ipv4(address);
+    }
 
-    return get_ipv4(buffer, protocol, address);
+    return success;
+}
+
+int get_interface_ipv4(struct sockaddr_in * address)
+{
+    struct ifaddrs * results;
+    const in_addr_t NO = inet_addr("127.0.0.1");
+
+    int success = getifaddrs(&results);
+    if (success == 0)
+    {
+        success = -1;
+        for (const struct ifaddrs * r = results; success == -1 && r != NULL; r = r->ifa_next)
+            if (r->ifa_addr != NULL && r->ifa_addr->sa_family == AF_INET)
+            {
+                struct sockaddr_in * s = (struct sockaddr_in *) r->ifa_addr;
+                if (s->sin_addr.s_addr != NO)
+                {
+                    *address = *s;
+                    success = 0;
+                }
+            }
+    }
+
+    freeifaddrs(results);
+    return success;
 }
 
 u_int32_t extract_ipv4(const struct sockaddr_in * address)

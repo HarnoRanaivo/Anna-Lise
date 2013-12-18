@@ -44,6 +44,10 @@ int main(int argc, char ** argv)
             printf("\t%s: %s\n", name, address_to_string(address));
         }
 
+    struct sockaddr_in a;
+    get_interface_ipv4(&a);
+    printf("\tfirst valid interface: %s\n", address_to_string(extract_ipv4(&a)));
+
     MT_section("IPv6");
     printf("TODO\n");
 

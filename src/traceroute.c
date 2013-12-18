@@ -15,23 +15,6 @@
 
 #include "traceroute.h"
 
-int receive_icmp_v4(int sockfd, struct sockaddr_in * address, icmp4_packet * packet)
-{
-    int success = -1;
-    fd_set socket_set;
-    struct timeval wait_time = { 1, 0 };
-    socklen_t address_size = sizeof (struct sockaddr_in);
-
-    FD_ZERO(&socket_set);
-    FD_SET(sockfd, &socket_set);
-    if (select(sockfd + 1, &socket_set, NULL, NULL, &wait_time) != -1)
-        if (FD_ISSET(sockfd, &socket_set))
-            if (recvfrom(sockfd, packet, sizeof *packet, 0, (struct sockaddr *) address, &address_size) != -1)
-                success = 0;
-
-    return success;
-}
-
 int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct sockaddr_in * source, struct timeval * time)
 {
     int answer_type = -1;

@@ -22,6 +22,8 @@
 
 struct timeval diff_timeval(struct timeval start, struct timeval end);
 
+long double extract_time(struct timeval time);
+
 void print_timeval(struct timeval time);
 
 #endif /* __TIME_UTIL_H */

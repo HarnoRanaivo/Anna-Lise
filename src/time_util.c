@@ -39,8 +39,13 @@ struct timeval diff_timeval(struct timeval start, struct timeval end)
     return result;
 }
 
+long double extract_time(struct timeval time)
+{
+	return (time.tv_sec * 1000.0 + time.tv_usec / 1000.0);
+}
+
 void print_timeval(struct timeval time)
 {
-    long double ms = time.tv_sec * 1000.0 + time.tv_usec / 1000.0;
+    long double ms = extract_time(time);
     printf("%.3Lf ms", ms);
 }
