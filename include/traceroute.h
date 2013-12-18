@@ -23,13 +23,6 @@
 #include "packet.h"
 #include "time_util.h"
 
-/**
- * \brief Recevoir un paquet IPv4+ICMP.
- * \param sockfd Socket.
- * \param ttl TTL courant.
- */
-int receive_icmp_v4(int sockfd, struct sockaddr_in * address, icmp4_packet * packet);
-
 int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct sockaddr_in * source, struct timeval * time);
 
 int traceroute_icmp_v4(const char * hostname, int hops_max, int attempts_number);

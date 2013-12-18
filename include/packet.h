@@ -69,4 +69,11 @@ int icmp4_packet_set_echo_seq(icmp4_packet * packet, u_int16_t sequence);
 
 void icmp4_packet_print(const icmp4_packet * packet);
 
+/**
+ * \brief Recevoir un paquet IPv4+ICMP.
+ * \param sockfd Socket.
+ * \param ttl TTL courant.
+ */
+int receive_icmp_v4(int sockfd, struct sockaddr_in * address, icmp4_packet * packet);
+
 #endif /* __PACKET_H */

@@ -12,7 +12,16 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details.
  */
-#include "base.h"
+#include "ping_icmp.h"
+
+
+int fin_des_temps = 1;
+
+static void handler_int (int signum)
+{
+	if (signum == SIGINT)
+		fin_des_temps=0;
+}
 
 /**
  * \brief Nom du programme.
@@ -62,7 +71,33 @@ int main(int argc, char ** argv)
     if (argc != 1 && (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0))
         print_version();
     else
-        printf("This program doesn't do anything yet. (Sorry)\n");
+    {
+		icmp4_packet p;
+		connexion c;
+		info_addr ia;
+		compteur cpt;
+		struct sigaction sa;
+		
+		char * dest = argv[1];
+    
+		sa.sa_handler = handler_int;
+		sigfillset(&sa.sa_mask);
+		sa.sa_flags = 0;
+		sigaction(SIGINT,&sa,NULL);
+    
+		init(&p,&c,&ia,dest,&cpt);
+		create_raw_socket(AF_INET,SOCK_RAW,IPPROTO_ICMP,&c.sockfd);
+		
+		while(fin_des_temps)
+		{
+			send_paquet(&c,&p,&cpt);
+			answer_send(&c,&ia,&cpt);
+		}
 
-    return 0;
+		affichage_fin(dest,&cpt);
+	
+		freedom(&c);
+	
+		return 0;
+	}
 }
