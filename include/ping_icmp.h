@@ -17,11 +17,13 @@
 #include "ip_util.h"
 #include "address.h"
 #include "packet.h"
+#include "time_util.h"
 
 typedef struct compteur
 {
 	unsigned int paquets_transmis;
 	unsigned int paquets_recus;
+	long double min, max, sum;
 } compteur;
 
 typedef struct connexion
@@ -44,7 +46,7 @@ char * char_to_ip (char * dest);
 
 void send_paquet (connexion * c, icmp4_packet * p, compteur * cpt);
 
-void answer_send (connexion * c, info_addr * ia, compteur * cpt);
+void answer_send (connexion * c, compteur * cpt);
 
 void freedom (connexion * c);
 

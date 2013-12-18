@@ -25,7 +25,7 @@ void send_paquet (connexion * c, icmp4_packet * p, compteur * cpt)
 	cpt->paquets_transmis++;
 }
 
-void answer_send (connexion * c, info_addr * ia, compteur * cpt)
+void answer_send (connexion * c, compteur * cpt)
 {
 	int succes;
 	icmp4_packet paquet;
@@ -36,7 +36,9 @@ void answer_send (connexion * c, info_addr * ia, compteur * cpt)
     else
     {
 		cpt->paquets_recus++;
-		printf("%lu bytes from %s: icmp_seq=%d ttl=%d\n", sizeof(paquet), ia->addr_dest, paquet.icmp_header.un.echo.sequence, paquet.ip_header.ttl);
+		printf("%lu bytes from ",sizeof(paquet));
+		print_host_v4(c->addr.sin_addr);
+		printf(" : icmp_seq=%d ttl=%d ", paquet.icmp_header.un.echo.sequence, paquet.ip_header.ttl);
 		sleep(1);
     }
 }
@@ -49,6 +51,6 @@ void freedom (connexion * c)
 void affichage_fin (char* dest, compteur * cpt)
 {
 	printf("--- %s ping statistics ---\n",dest);
-	printf("%d packets transmitted, %d received, %d%% paquet loss\n",cpt->paquets_transmis, cpt->paquets_recus, (cpt->paquets_transmis - cpt->paquets_recus)/cpt->paquets_transmis*100);
-	printf("rtt min/avg/max = //\n");
+	printf("%d packets transmitted, %d received, %d%% paquet loss, time %.0Lf\n",cpt->paquets_transmis, cpt->paquets_recus, (cpt->paquets_transmis - cpt->paquets_recus)/cpt->paquets_transmis*100,cpt->sum);
+	printf("rtt min/avg/max = %.3Lf/%.3Lf/%.3Lf\n",cpt->min,cpt->sum/cpt->paquets_recus,cpt->max);
 }
