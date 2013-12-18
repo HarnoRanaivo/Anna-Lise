@@ -92,6 +92,7 @@ int main(int argc, char ** argv)
 		{
 			send_paquet(&c,&p,&cpt);
 			answer_send(&c,&ia,&cpt);
+			icmp4_packet_set_echo_seq(&p,p.icmp_header.un.echo.sequence+1);
 		}
 
 		affichage_fin(dest,&cpt);
