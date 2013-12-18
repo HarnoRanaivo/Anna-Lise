@@ -30,8 +30,8 @@ other_tests: test_address test_traceroute | bin
 test_address: test_address.o address.o | bin
 	$(CC) $(CFLAGS) -o $(BPATH)/test_address $(OPATH)/test_address.o $(OPATH)/address.o
 
-test_traceroute: test_traceroute.o traceroute.o address.o packet.o | bin
-	$(CC) $(CFLAGS) -o $(BPATH)/test_traceroute $(OPATH)/test_traceroute.o $(OPATH)/traceroute.o $(OPATH)/address.o $(OPATH)/packet.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/checksum.o
+test_traceroute: test_traceroute.o traceroute.o address.o packet.o time_util.o | bin
+	$(CC) $(CFLAGS) -o $(BPATH)/test_traceroute $(OPATH)/test_traceroute.o $(OPATH)/traceroute.o $(OPATH)/address.o $(OPATH)/packet.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/checksum.o $(OPATH)/time_util.o
 
 %.o: %.c | obj
 		$(CC) $(CFLAGS) -o $(OPATH)/$@ -c $< $(IFLAGS)
@@ -43,7 +43,8 @@ icmp_util.o: icmp_util.c icmp_util.h base.h checksum.h
 ip_util.o: ip_util.c ip_util.h base.h address.h checksum.h
 packet.o: packet.c packet.h base.h icmp_util.h ip_util.h address.h
 checksum.o: checksum.c checksum.h
-traceroute.o: traceroute.c traceroute.h base.h address.h packet.h
+traceroute.o: traceroute.c traceroute.h base.h address.h packet.h time_util.h
+time_util.o: time_util.c time_util.h base.h
 
 # Tests
 unit_tests.o: unit_tests.c CUnit_util.h

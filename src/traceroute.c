@@ -15,9 +15,15 @@
 
 #include "traceroute.h"
 
-int receive_icmp_v4(int sockfd, int ttl, struct sockaddr_in * address)
+int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address)
 {
-    int gotten = -1;
+    struct sockaddr_in source = { AF_INET, 0, address, { 0 } };
+    return getnameinfo((struct sockaddr *)&source, sizeof source, buffer, buffer_size, NULL, 0, 0);
+}
+
+int receive_icmp_v4(int sockfd, struct sockaddr_in * address, icmp4_packet * packet)
+{
+    int success = -1;
     fd_set socket_set;
     struct timeval wait_time = { 1, 0 };
     socklen_t address_size = sizeof (struct sockaddr_in);
@@ -25,23 +31,39 @@ int receive_icmp_v4(int sockfd, int ttl, struct sockaddr_in * address)
     FD_ZERO(&socket_set);
     FD_SET(sockfd, &socket_set);
     if (select(sockfd + 1, &socket_set, NULL, NULL, &wait_time) != -1)
-    {
         if (FD_ISSET(sockfd, &socket_set))
-        {
-            icmp4_packet received;
-            if (recvfrom(sockfd, &received, sizeof received, 0, (struct sockaddr *) address, &address_size) != -1)
-            {
-                gotten = received.icmp_header.type;
-                struct in_addr in = { received.ip_header.saddr };
-                struct sockaddr_in s = { AF_INET, 0, in, { 0 } };
-                char buf[256];
-                getnameinfo((struct sockaddr *)&s, sizeof s, buf, 256, NULL, 0, 0);
-                printf("%d: %s %s\n", ttl, buf, inet_ntoa(in));
-            }
-        }
-    }
+            if (recvfrom(sockfd, packet, sizeof *packet, 0, (struct sockaddr *) address, &address_size) != -1)
+                success = 0;
 
-    return gotten;
+    return success;
+}
+
+int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct sockaddr_in * source, struct timeval * time)
+{
+    int answer_type = -1;
+    icmp4_packet received;
+    struct timeval start;
+    struct timeval end;
+
+    gettimeofday(&start, NULL);
+    if (receive_icmp_v4(sockfd, address, &received) == 0)
+    {
+        answer_type = received.icmp_header.type;
+        *source = (struct sockaddr_in) { AF_INET, 0, { received.ip_header.saddr }, { 0 } };
+    }
+    else
+        printf(" *");
+
+    gettimeofday(&end, NULL);
+    *time = diff_timeval(start, end);
+
+    return answer_type;
+}
+
+static inline void print_times(struct timeval times[], size_t array_size)
+{
+    for (unsigned int i = 0; i < array_size; i++)
+        print_timeval(times[i]);
 }
 
 int traceroute_icmp_v4(const char * hostname)
@@ -59,13 +81,33 @@ int traceroute_icmp_v4(const char * hostname)
     if (success == 0)
         success = icmp4_packet_init(&packet, extract_ipv4(&address));
 
-    for (int i = 1; stop != 0 && i < 60; i++)
+    for (int ttl = 1; stop != 0 && ttl <= 60; ttl++)
     {
-        icmp4_packet_set_ttl(&packet, i);
-        sendto(sockfd, &packet, sizeof packet, 0, (struct sockaddr *) &address, address_size);
-        int current = receive_icmp_v4(sockfd, i, &address);
-        if (current == ICMP_ECHOREPLY)
-            stop = 0;
+        printf("%d", ttl);
+        icmp4_packet_set_ttl(&packet, ttl);
+        int printed = 1;
+
+        int attempt_number = 3;
+        struct timeval times[attempt_number];
+        for (int attempt = 0; attempt < attempt_number; attempt++)
+        {
+            sendto(sockfd, &packet, sizeof packet, 0, (struct sockaddr *) &address, address_size);
+            struct sockaddr_in source;
+            int current = traceroute_receive_icmp_v4(sockfd, &address, &source, &times[attempt]);
+            if (current != -1 && printed == 1)
+            {
+                size_t buffer_size = 256;
+                char buffer[buffer_size];
+                struct in_addr source_address = source.sin_addr;
+                reverse_dns_v4(buffer, buffer_size, source_address);
+                printf(" %s (%s)", buffer, inet_ntoa(source_address));
+                printed = 0;
+            }
+            if (current == ICMP_ECHOREPLY)
+                stop = 0;
+        }
+        print_times(times, attempt_number);
+        printf("\n");
     }
 
     return success;

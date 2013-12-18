@@ -125,6 +125,5 @@ int socket_host_v4(const char * hostname, int protocol, int socktype, int * sock
 
 void print_ipv4_address(u_int32_t address)
 {
-    struct in_addr in = { address };
-    printf("%s\n", inet_ntoa(in));
+    printf("%s\n", inet_ntoa((struct in_addr) { address }));
 }
