@@ -60,6 +60,16 @@ static inline void print_version()
     );
 }
 
+static void rtt(struct timeval time, compteur * c)
+{
+	long double temps_aller_retour = extract_time(time);
+	c->sum += temps_aller_retour;
+	if(temps_aller_retour<c->min)
+		c->min = temps_aller_retour;
+	if(temps_aller_retour>c->max)
+		c->max = temps_aller_retour;
+}
+
 /**
  * \brief Main.
  * \param argc Nombre d'arguments de la ligne de commande.
@@ -77,6 +87,7 @@ int main(int argc, char ** argv)
 		info_addr ia;
 		compteur cpt;
 		struct sigaction sa;
+		struct timeval debut, fin, diff;
 		
 		char * dest = argv[1];
     
@@ -90,8 +101,13 @@ int main(int argc, char ** argv)
 		
 		while(fin_des_temps)
 		{
+			gettimeofday(&debut,NULL);
 			send_paquet(&c,&p,&cpt);
-			answer_send(&c,&ia,&cpt);
+			answer_send(&c,&cpt);
+			gettimeofday(&fin,NULL);
+			diff = diff_timeval(debut,fin);
+			rtt(diff,&cpt);
+			printf("time=%.0Lf\n",extract_time(diff));
 			icmp4_packet_set_echo_seq(&p,p.icmp_header.un.echo.sequence+1);
 		}
 
