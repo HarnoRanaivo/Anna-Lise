@@ -43,6 +43,13 @@ typedef struct sockaddr_in6 sockaddr_in6;
 int get_ip(const char * hostname, int family, int socktype, int protocol, struct sockaddr * address);
 
 /**
+ * \brief Afficher une addresse IP.
+ * \param family Type d'adresse.
+ * \param address Adresse.
+ */
+void print_ip(int family, struct sockaddr * address);
+
+/**
  * \brief Obtenir une adresse IPv4.
  * \param hostname Nom d'hôte.
  * \param protocol Protocole.
@@ -51,11 +58,25 @@ int get_ip(const char * hostname, int family, int socktype, int protocol, struct
 int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address);
 
 /**
+ * \brief Obtenir une adresse IPv6.
+ * \param hostname Nom d'hôte.
+ * \param protocol Protocole.
+ * \return Adresse IPv6.
+ */
+int get_ipv6(const char * hostanme, int protocol, struct sockaddr_in6 * address);
+/**
  * \brief Obtenir l'adresse IPv4 de la machine.
  * \param protocol Protocole.
  * \return Adresse IPv4.
  */
 int get_source_ipv4(int protocol, struct sockaddr_in * address);
+
+/**
+ * \brief Obtenir l'adresse IPv6 de la machine.
+ * \param protocol Protocole.
+ * \return Adresse Ipv6.
+ */
+int get_source_ipv6(int protocol, struct sockaddr_in6 * address);
 
 /**
  * \brief Rechercher une adresse IPv4 parmi celles des interfaces de la machine.

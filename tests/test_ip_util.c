@@ -190,3 +190,150 @@ void test_iphdr_set_dest_address(void)
     CU_ASSERT_EQUAL(iphdr_set_dest_address(&header_1, 0), -2);
     CU_ASSERT_EQUAL(iphdr_set_dest_address(&header_2, 0), 0);
 }
+
+void test_ip6_hdr_set_version(void)
+{
+    ip6_hdr header;
+    header.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_version(NULL), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_version(&header), 0);
+}
+
+void test_ip6_hdr_set_traffic_class(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_traffic_class(NULL, 0), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_traffic_class(&header_1, 0), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_traffic_class(&header_2, 0), 0);
+}
+
+void test_ip6_hdr_set_flow_label(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_flow_label(NULL, 0), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_flow_label(&header_1, 0), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_flow_label(&header_2, 0), 0);
+}
+
+void test_ip6_hdr_set_payload_length(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_payload_length(NULL, 0), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_payload_length(&header_1, 0), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_payload_length(&header_2, 0), 0);
+}
+
+void test_ip6_hdr_set_next_header(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_next_header(NULL, 0), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_next_header(&header_1, 0), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_next_header(&header_2, 0), 0);
+}
+
+void test_ip6_hdr_set_hop_limit(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_hop_limit(NULL, 0), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_hop_limit(&header_1, 0), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_hop_limit(&header_2, 0), 0);
+}
+
+void test_ip6_hdr_set_source(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+    sockaddr_in6 address;
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_source(NULL, NULL), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_source(&header_1, NULL), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_source(&header_2, NULL), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_source(NULL, &address), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_source(&header_1, &address), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_source(&header_2, &address), 0);
+}
+
+void test_ip6_hdr_set_destination(void)
+{
+    ip6_hdr header_1;
+    ip6_hdr header_2;
+    header_1.ip6_ctlun.ip6_un1.ip6_un1_flow = 0;
+    ip6_hdr_set_version(&header_2);
+    sockaddr_in6 address;
+
+    CU_ASSERT_EQUAL(ip6_hdr_set_destination(NULL, NULL), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_destination(&header_1, NULL), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_destination(&header_2, NULL), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_destination(NULL, &address), -1);
+    CU_ASSERT_EQUAL(ip6_hdr_set_destination(&header_1, &address), -2);
+    CU_ASSERT_EQUAL(ip6_hdr_set_destination(&header_2, &address), 0);
+}
+
+void test_fake_ip6_hdr_set_source(void)
+{
+    fake_ip6_hdr header;
+    sockaddr_in6 address;
+
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_source(NULL, NULL), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_source(&header, NULL), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_source(NULL, &address), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_source(&header, &address), 0);
+}
+
+void test_fake_ip6_hdr_set_destination(void)
+{
+    fake_ip6_hdr header;
+    sockaddr_in6 address;
+
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_destination(NULL, NULL), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_destination(&header, NULL), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_destination(NULL, &address), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_destination(&header, &address), 0);
+}
+
+void test_fake_ip6_hdr_set_length(void)
+{
+    fake_ip6_hdr header;
+
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_length(NULL, 0), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_length(&header, 0), 0);
+}
+
+void test_fake_ip6_hdr_set_zeros(void)
+{
+    fake_ip6_hdr header;
+
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_zeros(NULL), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_zeros(&header), 0);
+}
+
+void test_fake_ip6_hdr_set_next_header(void)
+{
+    fake_ip6_hdr header;
+
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_next_header(NULL, 0), -1);
+    CU_ASSERT_EQUAL(fake_ip6_hdr_set_next_header(&header, 0), 0);
+}

@@ -46,6 +46,11 @@ int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address)
     return get_ip(hostname, AF_INET, SOCK_RAW, protocol, (struct sockaddr *) address);
 }
 
+int get_ipv6(const char * hostname, int protocol, struct sockaddr_in6 * address)
+{
+    return get_ip(hostname, AF_INET6, SOCK_RAW, protocol, (struct sockaddr *) address);
+}
+
 int get_source_ipv4(int protocol, struct sockaddr_in * address)
 {
     /* Voir la section NOTES du man(2) de gethostname pour la taille
@@ -73,6 +78,16 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address)
     const in_addr_t REFUSED_IPV4 = inet_addr("127.0.0.1");
     if (address->sin_addr.s_addr == REFUSED_IPV4)
         success = get_interface_ipv4(address);
+
+    return success;
+}
+
+int get_source_ipv6(int protocol, struct sockaddr_in6 * address)
+{
+    char buffer[HOST_NAME_MAX+1];
+    gethostname(buffer, HOST_NAME_MAX+1);
+
+    int success = get_ipv6(buffer, protocol, address);
 
     return success;
 }
@@ -109,6 +124,25 @@ u_int32_t extract_ipv4(const struct sockaddr_in * address)
         result = address->sin_addr.s_addr;
 
     return result;
+}
+
+void print_ip(int family, struct sockaddr * address)
+{
+    void * in;
+    char buffer[INET6_ADDRSTRLEN];
+    if (family == AF_INET)
+    {
+        struct sockaddr_in * a = (struct sockaddr_in *)address;
+        in = &a->sin_addr;
+    }
+    else
+    {
+        struct sockaddr_in6 * a = (struct sockaddr_in6 *)address;
+        in = &a->sin6_addr;
+    }
+
+    if (inet_ntop(family, in, buffer, INET6_ADDRSTRLEN) != NULL)
+        printf("%s\n", buffer);
 }
 
 void print_ipv4_address(u_int32_t address)
