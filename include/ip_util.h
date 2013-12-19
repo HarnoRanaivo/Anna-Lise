@@ -27,7 +27,7 @@
 #include "address.h"
 
 /**
- * \brief Header IP.
+ * \brief Header IPv4.
  */
 typedef struct iphdr iphdr;
 
@@ -197,5 +197,53 @@ int iphdr_set_dest_address(iphdr * header, u_int32_t address);
  * \param header Header à afficher.
  */
 void iphdr_print(const iphdr * header);
+
+
+/**
+ * \brief Header IPv6.
+ */
+typedef struct ip6_hdr ip6_hdr;
+
+typedef struct ip6_hdr_first_part
+{
+    unsigned int version:4;
+    unsigned int traffic_class:8;
+    unsigned int flow_label:20;
+} ip6_hdr_first_part;
+
+int ip6_hdr_set_version(ip6_hdr * header);
+
+int ip6_hdr_set_traffic_class(ip6_hdr * header, u_int8_t traffic_class);
+
+int ip6_hdr_set_flow_label(ip6_hdr * header, unsigned int label);
+
+int ip6_hdr_set_payload_length(ip6_hdr * header, uint16_t length);
+
+int ip6_hdr_set_next_header(ip6_hdr * header, uint8_t next_header);
+
+int ip6_hdr_set_hop_limit(ip6_hdr * header, uint8_t limit);
+
+int ip6_hdr_set_source(ip6_hdr * header, sockaddr_in6 * address);
+
+int ip6_hdr_set_destination(ip6_hdr * header, sockaddr_in6 * address);
+
+typedef struct fake_ip6_hdr
+{
+    struct in6_addr source;
+    struct in6_addr destination;
+    uint32_t length;
+    uint8_t zeros[3];
+    uint8_t next_header;
+} fake_ip6_hdr;
+
+int fake_ip6_hdr_set_source(fake_ip6_hdr * header, sockaddr_in6 * address);
+
+int fake_ip6_hdr_set_destination(fake_ip6_hdr * header, sockaddr_in6 * address);
+
+int fake_ip6_hdr_set_length(fake_ip6_hdr * header, uint32_t length);
+
+int fake_ip6_hdr_set_zeros(fake_ip6_hdr * header);
+
+int fake_ip6_hdr_set_next_header(fake_ip6_hdr * header, uint8_t next_header);
 
 #endif /* __IP_UTIL_H */

@@ -26,6 +26,10 @@
 
 #include "base.h"
 
+typedef struct sockaddr sockaddr;
+typedef struct sockaddr_in sockaddr_in;
+typedef struct sockaddr_in6 sockaddr_in6;
+
 /**
  * \brief Obtenir une adresse IP.
  * \param[in] hostname Nom d'hôte.
@@ -92,7 +96,6 @@ int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address);
  * Affichage sous la forme "nom d'hôte (addresse)".
  */
 void print_host_v4(struct in_addr host);
-
 
 /**
  * \brief Créer une socket.
