@@ -35,6 +35,12 @@ int get_ip(const char * hostname, int family, int socktype, int protocol, struct
     if (success == 0)
     {
         *address = *results->ai_addr;
+        if (results->ai_family == AF_INET6)
+        {
+            struct sockaddr_in6 * a = (struct sockaddr_in6 *) address;
+            struct sockaddr_in6 * r = (struct sockaddr_in6 *) results->ai_addr;
+            *a = *r;
+        }
         freeaddrinfo(results);
     }
 
