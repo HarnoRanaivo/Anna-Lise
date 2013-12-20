@@ -238,3 +238,15 @@ int create_raw_socket(int family, int socktype, int protocol, int * sockfd)
 
     return success;
 }
+
+int create_raw_socket_v6(int family, int socktype, int protocol, int * sockfd)
+{
+    int success = -1;
+    int optval;
+
+    *sockfd = socket(family, socktype, protocol);
+    if (*sockfd != -1)
+        success = setsockopt(*sockfd, IPPROTO_IPV6, IP_HDRINCL, &optval, sizeof optval);
+
+    return success;
+}

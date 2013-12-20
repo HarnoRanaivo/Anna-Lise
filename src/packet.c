@@ -127,24 +127,35 @@ int icmp6_packet_init(icmp6_packet * packet, struct sockaddr_in6 * address)
     icmp6_hdr * icmp_header = &packet->icmp_header;
 
     succeed_or_die(success, 0, ip6_hdr_set_version(ip_header));
+    /* printf("version\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_traffic_class(ip_header, 0));
+    /* printf("traffic class\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_flow_label(ip_header, 0));
+    /* printf("flow\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_payload_length(ip_header, sizeof *packet));
+    /* printf("length\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_next_header(ip_header, 58));
+    /* printf("next\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_hop_limit(ip_header, 64));
+    /* printf("hop\n"); */
     struct sockaddr_in6 source;
     succeed_or_die(success, 0, get_source_ipv6(IPPROTO_ICMP, &source));
+    /* printf("source get\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_source(ip_header, &source));
+    /* printf("source set\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_destination(ip_header, address));
+    /* printf("destination\n"); */
 
-    /* HACK ?! */
-    icmphdr * icmp4_header = (icmphdr *) icmp_header;
-    succeed_or_die(success, 0, icmp_set_type(icmp4_header, ICMP6_ECHO_REQUEST));
-    succeed_or_die(success, 0, icmp_set_code(icmp4_header, 0));
-    succeed_or_die(success, 0, icmp_set_echo(icmp4_header, getpid(), 0));
+    succeed_or_die(success, 0, icmp6_set_type(icmp_header, ICMP6_ECHO_REQUEST));
+    /* printf("type\n"); */
+    succeed_or_die(success, 0, icmp6_set_code(icmp_header, 0));
+    /* printf("code\n"); */
+    succeed_or_die(success, 0, icmp6_set_echo(icmp_header, getpid(), 0));
+    /* printf("echo\n"); */
 
     /* À faire en dernier. */
     succeed_or_die(success, 0, icmp6_packet_checksum(packet));
+    /* printf("check\n"); */
 
     return 0;
 }
@@ -219,8 +230,8 @@ int icmp6_packet_set_echo_seq(icmp6_packet * packet, u_int16_t sequence)
     if (success != 0)
         return success;
 
-    icmphdr * icmp4_header = (icmphdr *) &packet->icmp_header;
-    succeed_or_die(success, 0, icmp_set_echo(icmp4_header, icmp4_header->un.echo.id, sequence));
+    icmp6_hdr * icmp_header = &packet->icmp_header;
+    succeed_or_die(success, 0, icmp6_set_echo(icmp_header, icmp_header->icmp6_dataun.icmp6_un_data16[0], sequence));
     succeed_or_die(success, 0, icmp6_packet_checksum(packet));
     return success;
 }

@@ -98,4 +98,8 @@ int icmp_checksum(icmphdr * header);
  */
 void icmp_print(const icmphdr * header);
 
+int icmp6_set_type(icmp6_hdr * header, u_int8_t type);
+int icmp6_set_code(icmp6_hdr * header, u_int8_t code);
+int icmp6_set_echo(icmp6_hdr * header, u_int16_t identifier, u_int16_t sequence);
+
 #endif /* __ICMP_UTIL_H */

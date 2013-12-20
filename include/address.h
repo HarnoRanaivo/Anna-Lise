@@ -126,7 +126,9 @@ int reverse_dns_v4(char * buffer, size_t buffer_size, struct sockaddr_in * addre
 void print_host_v4(struct sockaddr_in * address);
 
 void print_host_v6(struct sockaddr_in6 * address);
+
 int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * address);
+
 /**
  * \brief Créer une socket.
  * \param[in] family Type d'adresse.
@@ -137,5 +139,7 @@ int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * addr
  * \retval -1 Erreur.
  */
 int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
+
+int create_raw_socket_v6(int family, int socktype, int protocol, int * sockfd);
 
 #endif /* __ADDRESS_H */
