@@ -26,7 +26,10 @@ static inline void print_ip4(const char * name)
     struct sockaddr_in address_buffer;
     printf("\t%s: ", name);
     if (get_ipv4(name, 0, &address_buffer) == 0)
+    {
         print_ip(AF_INET, (struct sockaddr *) &address_buffer);
+        printf("\n");
+    }
     else
         printf("None.\n");
 }
@@ -36,7 +39,10 @@ static inline void print_ip6(const char * name)
     struct sockaddr_in6 address_buffer;
     printf("\t%s: ", name);
     if (get_ipv6(name, 0, &address_buffer) == 0)
+    {
         print_ip(AF_INET6, (struct sockaddr *) &address_buffer);
+        printf("\n");
+    }
     else
         printf("None.\n");
 }
