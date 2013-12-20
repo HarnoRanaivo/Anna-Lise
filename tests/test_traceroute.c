@@ -21,7 +21,7 @@ int main(int argc, char ** argv)
     }
 
     int success = -1;
-    int enable_ipv6 = 0;
+    int enable_ipv6 = 1;
 
     struct sockaddr address;
     if (enable_ipv6 == 0 && get_ipv6(argv[1], IPPROTO_ICMPV6, (struct sockaddr_in6 *) &address) == 0)
