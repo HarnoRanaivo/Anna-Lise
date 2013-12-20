@@ -46,4 +46,6 @@ int traceroute_receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct
 
 int traceroute_icmp_v6(const char * hostname, int hops_max, int attempts_number);
 
+int traceroute_udp_v4(const char * hostname, int hops_max, int attempts_number);
+
 #endif /* __TRACEROUTE_H */

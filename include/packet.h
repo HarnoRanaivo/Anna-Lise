@@ -27,6 +27,7 @@
 #include "base.h"
 #include "icmp_util.h"
 #include "ip_util.h"
+#include "udp_util.h"
 #include "address.h"
 
 /**
