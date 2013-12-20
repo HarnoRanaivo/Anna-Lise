@@ -24,6 +24,8 @@
 #include <string.h>
 #include <limits.h>
 
+#include "log.h"
+
 /**
  * \brief Effectuer une opération, quitter la fonction courante en cas d'erreur.
  * \param var Variable où affecter le résultat.

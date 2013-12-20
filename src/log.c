@@ -34,3 +34,8 @@ int init_log_file(void)
 
     return success;
 }
+
+int close_log_file(void)
+{
+    return fclose(LOG_FILE);
+}

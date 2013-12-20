@@ -85,6 +85,7 @@ CU_SuiteInfo suites[] =
 
 int main(int argc, char ** argv)
 {
+    init_log_file();
     if (CU_initialize_registry() != CUE_SUCCESS)
         return CU_get_error();
 
@@ -104,6 +105,7 @@ int main(int argc, char ** argv)
     }
 
     CU_cleanup_registry();
+    close_log_file();
 
     return CU_get_error();
 }

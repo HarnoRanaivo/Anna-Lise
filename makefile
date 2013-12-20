@@ -8,7 +8,7 @@ DPATH = doc
 TPATH = tests
 LPATH = lib
 
-CFLAGS = -std=gnu99 -pedantic -Werror -W -Wall -Wextra -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wshadow -Wbad-function-cast -Wcast-qual -g
+CFLAGS = -std=gnu99 -pedantic -W -Wall -Wextra -Wmissing-declarations -Wmissing-prototypes -Wredundant-decls -Wshadow -Wbad-function-cast -Wcast-qual -g
 IFLAGS = -I$(HPATH) -I$(TPATH)
 LFLAGS = -L/usr/lib -L/usr/lib64 -L$(LPATH)
 
@@ -30,7 +30,7 @@ unit_tests: unit_tests.o libanna.a libunittests.a | bin
 other_tests: test_address test_traceroute | bin
 
 test_address: test_address.o address.o | bin
-	$(CC) $(CFLAGS) -o $(BPATH)/test_address $(OPATH)/test_address.o $(OPATH)/address.o
+	$(CC) $(CFLAGS) $(LFLAGS) -o $(BPATH)/test_address $(OPATH)/test_address.o $(OPATH)/address.o -lanna
 
 test_traceroute: test_traceroute.o libanna.a | bin
 	$(CC) $(CFLAGS) $(LFLAGS) -o $(BPATH)/test_traceroute $(OPATH)/test_traceroute.o -lanna

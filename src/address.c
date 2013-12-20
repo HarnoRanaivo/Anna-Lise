@@ -189,12 +189,16 @@ void print_ip(int family, struct sockaddr * address)
     }
 
     if (inet_ntop(family, in, buffer, INET6_ADDRSTRLEN) != NULL)
+    {
         printf("%s", buffer);
+        fprintf(LOG_FILE, "%s", buffer);
+    }
 }
 
 void print_ipv4_address(u_int32_t address)
 {
     printf("%s\n", inet_ntoa((struct in_addr) { address }));
+    fprintf(LOG_FILE, "%s\n", inet_ntoa((struct in_addr) { address }));
 }
 
 int reverse_dns_v4(char * buffer, size_t buffer_size, struct sockaddr_in * address)
@@ -208,8 +212,10 @@ void print_host_v4(struct sockaddr_in * address)
     char buffer[buffer_size];
     reverse_dns_v4(buffer, buffer_size, address);
     printf("%s (", buffer);
+    fprintf(LOG_FILE, "%s (", buffer);
     print_ip(AF_INET, (struct sockaddr *) address);
     printf(")");
+    fprintf(LOG_FILE, ")");
 }
 
 int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * address)
@@ -223,8 +229,10 @@ void print_host_v6(struct sockaddr_in6 * address)
     char buffer[buffer_size];
     reverse_dns_v6(buffer, buffer_size, address);
     printf("%s (", buffer);
+    fprintf(LOG_FILE, "%s (", buffer);
     print_ip(AF_INET6, (struct sockaddr *) address);
     printf(")");
+    fprintf(LOG_FILE, ")");
 }
 
 int create_raw_socket(int family, int socktype, int protocol, int * sockfd)

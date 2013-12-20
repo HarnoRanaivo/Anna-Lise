@@ -75,6 +75,7 @@ int main(int argc, char ** argv)
         print_version();
     else
     {
+        init_log_file();
 		icmp4_packet p;
 		connexion c;
 		info_addr ia;
@@ -105,6 +106,7 @@ int main(int argc, char ** argv)
 		affichage_fin(&ia,&cpt,diff_total);
 	
 		freedom(&c);
+		close_log_file();
 	
 		return 0;
 	}

@@ -24,18 +24,16 @@
 /**
  * \brief Fichier de log.
  */
-FILE * LOG_FILE;
-
-/**
- * \brief Logger l'output.
- */
-#define log_output(args) \
-    printf((args)); \
-    fprintf(LOG_FILE, (args))
+static FILE * LOG_FILE = NULL;
 
 /**
  * \brief Initialiser le fichier de log.
  */
 int init_log_file(void);
+
+/**
+ * \brief Fermer le fichier de log.
+ */
+int close_log_file(void);
 
 #endif /* __LOG_H */

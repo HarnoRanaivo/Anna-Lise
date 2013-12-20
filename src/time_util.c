@@ -49,4 +49,5 @@ void print_timeval(struct timeval time)
 {
     long double ms = extract_time(time);
     printf("%.3Lf ms", ms);
+    fprintf(LOG_FILE, "%.3Lf ms", ms);
 }

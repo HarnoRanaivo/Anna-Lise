@@ -118,15 +118,29 @@ void icmp_print(const icmphdr * header)
     int ok = check_pointer(header);
     if (ok == 0)
     {
-        printf("ICMP type: %d\n", header->type);
-        printf("ICMP code: %d\n", header->code);
-        printf("ICMP checksum: %d\n", header->checksum);
+        printf("ICMP type: %d\n"
+            "ICMP code: %d\n"
+            "ICMP checksum: %d\n",
+            header->type, header->code, header->checksum
+        );
+        fprintf(LOG_FILE,
+            "ICMP type: %d\n"
+            "ICMP code: %d\n"
+            "ICMP checksum: %d\n",
+            header->type, header->code, header->checksum
+        );
         if (header->type == ICMP_ECHO)
         {
-            printf("ICMP id: %d\n", header->un.echo.id);
-            printf("ICMP sequence: %d\n", header->un.echo.sequence);
+            printf("ICMP id: %d\n"
+                "ICMP sequence: %d\n",
+                header->un.echo.id, header->un.echo.sequence
+            );
+            fprintf(LOG_FILE,
+                "ICMP id: %d\n"
+                "ICMP sequence: %d\n",
+                header->un.echo.id, header->un.echo.sequence
+            );
         }
-
     }
 }
 

@@ -49,6 +49,7 @@ static inline void print_ip6(const char * name)
 
 int main(int argc, char ** argv)
 {
+    init_log_file();
     MT_title("Test address.[ch]");
 
     /* IPv4 */
@@ -94,6 +95,8 @@ int main(int argc, char ** argv)
         print_ip(AF_INET6, (struct sockaddr *) &if_address_buffer_6);
     else
         printf("None.\n");
+
+    close_log_file();
 
     return 0;
 }

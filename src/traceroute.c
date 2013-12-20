@@ -27,7 +27,10 @@ int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct 
         *source = (struct sockaddr_in) { AF_INET, 0, { received.ip_header.saddr }, { 0 } };
     }
     else
+    {
         printf(" *");
+        fprintf(LOG_FILE, " *");
+    }
 
     return answer_type;
 }
@@ -37,9 +40,11 @@ static inline void print_times(struct timeval times[], size_t array_size)
     for (unsigned int i = 0; i < array_size; i++)
     {
         printf(" ");
+        fprintf(LOG_FILE, " ");
         print_timeval(times[i]);
     }
     printf("\n");
+    fprintf(LOG_FILE, "\n");
 }
 
 static inline int traceroute_icmp_v4_init(const char* hostname, int * sockfd, struct sockaddr_in * address, icmp4_packet * packet, int packet_size)
@@ -56,6 +61,7 @@ static inline int traceroute_icmp_v4_init(const char* hostname, int * sockfd, st
 static inline void print_traceroute_greeting(int family, struct sockaddr * address, int hops_max, int packet_size)
 {
     printf("traceroute to ");
+    fprintf(LOG_FILE, "traceroute to ");
     if (family == AF_INET6)
     {
         struct sockaddr_in6 * in = (struct sockaddr_in6 *) address;
@@ -67,6 +73,7 @@ static inline void print_traceroute_greeting(int family, struct sockaddr * addre
         print_host_v4(in);
     }
     printf(", %d hops max, %d byte packets\n", hops_max, packet_size);
+    fprintf(LOG_FILE, ", %d hops max, %d byte packets\n", hops_max, packet_size);
 }
 
 static int icmp_v4_exchange(int sockfd, icmp4_packet * packet, int packet_size, struct sockaddr_in * address,
@@ -85,6 +92,7 @@ static int icmp_v4_exchange(int sockfd, icmp4_packet * packet, int packet_size, 
         if (current_type != -1 && *host_printed == 1)
         {
             printf(" ");
+            fprintf(LOG_FILE, " ");
             print_host_v4(&source);
             *host_printed = 0;
         }
@@ -118,11 +126,14 @@ int traceroute_icmp_v4(const char * hostname, int hops_max, int attempts_number,
         memset(times, 0, attempts_number * sizeof (struct timeval));
 
         printf("%d", ttl);
+        fprintf(LOG_FILE, "%d", ttl);
         icmp4_packet_set_ttl(packet, ttl);
         for (int attempt = 0; attempt < attempts_number; attempt++)
             current_type = icmp_v4_exchange(sockfd, packet, packet_size, &address, wait_time, &printed, &times[attempt]);
         print_times(times, attempts_number);
     }
+
+    close(sockfd);
 
     return success;
 }
@@ -143,7 +154,10 @@ int traceroute_receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct
             source->sin6_addr.__in6_u.__u6_addr32[0] = a[i];
     }
     else
+    {
         printf(" *");
+        fprintf(LOG_FILE, " *");
+    }
 
     return answer_type;
 }
@@ -164,6 +178,7 @@ static int icmp_v6_exchange(int sockfd, icmp6_packet * packet, int packet_size, 
         if (current_type != -1 && *host_printed == 1)
         {
             printf(" ");
+            fprintf(LOG_FILE, " ");
             print_host_v6(&source);
             *host_printed = 0;
         }
@@ -196,11 +211,14 @@ int traceroute_icmp_v6(const char * hostname, int hops_max, int attempts_number)
         memset(times, 0, attempts_number * sizeof (struct timeval));
 
         printf("%d", ttl);
+        fprintf(LOG_FILE, "%d", ttl);
         icmp6_packet_set_ttl(&packet, ttl);
         for (int attempt = 0; attempt < attempts_number; attempt++)
             current_type = icmp_v6_exchange(sockfd, &packet, packet_size, &address, &wait_time, &printed, &times[attempt]);
         print_times(times, attempts_number);
     }
+
+    close(sockfd);
 
     return success;
 }
@@ -235,6 +253,7 @@ static int udp_v4_exchange(int sendfd, int listenfd, udp4_packet * packet, int p
         if (current_type != -1 && *host_printed == 1)
         {
             printf(" ");
+            fprintf(LOG_FILE, " ");
             print_host_v4(&source);
             *host_printed = 0;
         }
@@ -265,11 +284,15 @@ int traceroute_udp_v4(const char * hostname, int hops_max, int attempts_number)
         memset(times, 0, attempts_number * sizeof (struct timeval));
 
         printf("%d", ttl);
+        fprintf(LOG_FILE, "%d", ttl);
         udp4_packet_set_ttl(&packet, ttl);
         for (int attempt = 0; attempt < attempts_number; attempt++)
             current_type = udp_v4_exchange(send_sockfd, listen_sockfd, &packet, sizeof packet, &address, &wait_time, &printed, &times[attempt]);
         print_times(times, attempts_number);
     }
+
+    close(send_sockfd);
+    close(listen_sockfd);
 
     return success;
 }

@@ -193,18 +193,40 @@ void iphdr_print(const iphdr * header)
 
     if (ok == 0)
     {
-        printf("IP ihl: %d\n", header->ihl);
-        printf("IP version: %d\n", header->version);
-        printf("IP tos: %d\n", header->tos);
-        printf("IP total length: %d\n", header->tot_len);
-        printf("IP id: %d\n", header->id);
-        printf("IP fragment_offset: %d\n", header->frag_off);
-        printf("IP ttl: %d\n", header->ttl);
-        printf("IP protocol: %d\n", header->protocol);
-        printf("IP checksum: %d\n", header->check);
-        printf("IP source: ");
+        printf("IP ihl: %d\n"
+            "IP version: %d\n"
+            "IP tos: %d\n"
+            "IP total length: %d\n"
+            "IP id: %d\n"
+            "IP fragment_offset: %d\n"
+            "IP ttl: %d\n"
+            "IP protocol: %d\n"
+            "IP checksum: %d\n"
+            "IP source: ",
+            header->ihl, header->version, header->tos, header->tot_len,
+            header->id, header->frag_off, header->ttl, header->protocol,
+            header->check
+        );
+        fprintf(LOG_FILE,
+            "IP ihl: %d\n"
+            "IP version: %d\n"
+            "IP tos: %d\n"
+            "IP total length: %d\n"
+            "IP id: %d\n"
+            "IP fragment_offset: %d\n"
+            "IP ttl: %d\n"
+            "IP protocol: %d\n"
+            "IP checksum: %d\n"
+            "IP source: ",
+            header->ihl, header->version, header->tos, header->tot_len,
+            header->id, header->frag_off, header->ttl, header->protocol,
+            header->check
+        );
+
         print_ipv4_address(header->saddr);
+
         printf("IP dest: ");
+        fprintf(LOG_FILE, "IP dest: ");
         print_ipv4_address(header->daddr);
     }
 }
@@ -458,18 +480,40 @@ void ip6_hdr_print(const ip6_hdr * header)
     if (ok == 0)
     {
         const ip6_hdr_first_part * beginning = (const ip6_hdr_first_part *) header;
-        printf("IP version: %d\n", beginning->version);
-        printf("IP traffic class: %d\n", beginning->traffic_class);
-        printf("IP flow label: %d\n", beginning->flow_label);
-        printf("IP payload length: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_plen);
-        printf("IP next header: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_nxt);
-        printf("IP hop limit: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_hlim);
+        printf("IP version: %d\n"
+            "IP traffic class: %d\n"
+            "IP flow label: %d\n"
+            "IP payload length: %d\n"
+            "IP next header: %d\n"
+            "IP hop limit: %d\n",
+            beginning->version, beginning->traffic_class, beginning->flow_label,
+            header->ip6_ctlun.ip6_un1.ip6_un1_plen, header->ip6_ctlun.ip6_un1.ip6_un1_nxt,
+            header->ip6_ctlun.ip6_un1.ip6_un1_hlim
+        );
+        fprintf(LOG_FILE,
+            "IP version: %d\n"
+            "IP traffic class: %d\n"
+            "IP flow label: %d\n"
+            "IP payload length: %d\n"
+            "IP next header: %d\n"
+            "IP hop limit: %d\n",
+            beginning->version, beginning->traffic_class, beginning->flow_label,
+            header->ip6_ctlun.ip6_un1.ip6_un1_plen, header->ip6_ctlun.ip6_un1.ip6_un1_nxt,
+            header->ip6_ctlun.ip6_un1.ip6_un1_hlim
+        );
+
 
         char buffer[INET6_ADDRSTRLEN];
         if (inet_ntop(AF_INET6, &header->ip6_src, buffer, INET6_ADDRSTRLEN) != NULL)
+        {
             printf("IP source: %s\n", buffer);
+            fprintf(LOG_FILE, "IP source: %s\n", buffer);
+        }
         if (inet_ntop(AF_INET6, &header->ip6_dst, buffer, INET6_ADDRSTRLEN) != NULL)
+        {
             printf("IP dest: %s\n", buffer);
+            fprintf(LOG_FILE, "IP dest: %s\n", buffer);
+        }
     }
 }
 
@@ -481,11 +525,24 @@ void fake_ip6_hdr_print(const fake_ip6_hdr * header)
     {
         char buffer[INET6_ADDRSTRLEN];
         if (inet_ntop(AF_INET6, &header->source, buffer, INET6_ADDRSTRLEN) != NULL)
+        {
             printf("IP source: %s\n", buffer);
+            fprintf(LOG_FILE, "IP source: %s\n", buffer);
+        }
         if (inet_ntop(AF_INET6, &header->destination, buffer, INET6_ADDRSTRLEN) != NULL)
+        {
             printf("IP destination: %s\n", buffer);
-        printf("IP length: %d\n", header->length);
-        printf("IP next header: %d\n", header->next_header);
+            fprintf(LOG_FILE, "IP destination: %s\n", buffer);
+        }
+        printf("IP length: %d\n"
+            "IP next header: %d\n",
+            header->length, header->next_header
+        );
+        fprintf(LOG_FILE,
+            "IP length: %d\n"
+            "IP next header: %d\n",
+            header->length, header->next_header
+        );
     }
 
 }

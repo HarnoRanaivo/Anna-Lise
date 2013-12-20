@@ -22,8 +22,9 @@ int main(int argc, char ** argv)
 
     int success = -1;
     int enable_ipv6 = 1;
-    int enable_udp = 0;
+    int enable_udp = 1;
 
+    init_log_file();
     struct sockaddr address;
     if (enable_udp == 0)
     {
@@ -41,6 +42,7 @@ int main(int argc, char ** argv)
         struct timeval wait_time = { 1, 0 };
         success = traceroute_icmp_v4(argv[1], 64, 3, 64, &wait_time);
     }
+    close_log_file();
 
     return success;
 }

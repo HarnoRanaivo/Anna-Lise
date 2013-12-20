@@ -20,6 +20,8 @@
 #include <stdio.h>
 #include <sys/time.h>
 
+#include "base.h"
+
 /**
  * \brief Faire la différence entre deux struct timeval.
  * \param start timeval de départ.
