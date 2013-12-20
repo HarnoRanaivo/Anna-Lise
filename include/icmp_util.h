@@ -26,9 +26,14 @@
 #include "address.h"
 
 /**
- * \brief ICMP Header.
+ * \brief ICMP4 Header.
  */
 typedef struct icmphdr icmphdr;
+
+/**
+ * \brief ICMP6 Header.
+ */
+typedef struct icmp6_hdr icmp6_hdr;
 
 /**
  * \brief Modifier le type.

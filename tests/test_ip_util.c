@@ -295,7 +295,7 @@ void test_ip6_hdr_set_destination(void)
 void test_fake_ip6_hdr_set_source(void)
 {
     fake_ip6_hdr header;
-    sockaddr_in6 address;
+    struct in6_addr address;
 
     CU_ASSERT_EQUAL(fake_ip6_hdr_set_source(NULL, NULL), -1);
     CU_ASSERT_EQUAL(fake_ip6_hdr_set_source(&header, NULL), -1);
@@ -306,7 +306,7 @@ void test_fake_ip6_hdr_set_source(void)
 void test_fake_ip6_hdr_set_destination(void)
 {
     fake_ip6_hdr header;
-    sockaddr_in6 address;
+    struct in6_addr address;
 
     CU_ASSERT_EQUAL(fake_ip6_hdr_set_destination(NULL, NULL), -1);
     CU_ASSERT_EQUAL(fake_ip6_hdr_set_destination(&header, NULL), -1);
