@@ -123,6 +123,47 @@ int get_interface_ipv4(struct sockaddr_in * address)
     return success;
 }
 
+static inline int compare_ipv6(struct in6_addr * address_1, struct in6_addr * address_2)
+{
+    int identical = 0;
+
+    for (int i = 0; identical == 0 && i < 4; i++)
+        if (address_1->__in6_u.__u6_addr32[i] != address_2->__in6_u.__u6_addr32[i])
+            identical = -1;
+
+    return identical;
+}
+
+int get_interface_ipv6(struct sockaddr_in6 * address)
+{
+    struct ifaddrs * results;
+    struct in6_addr REFUSED_IPV6;
+    inet_pton(AF_INET6, "::1", &REFUSED_IPV6);
+
+    int success = getifaddrs(&results);
+    if (success == 0)
+    {
+        success = -1;
+        for (const struct ifaddrs * r = results; success == -1 && r != NULL; r = r->ifa_next)
+            if (r->ifa_addr != NULL && r->ifa_addr->sa_family == AF_INET6)
+            {
+                struct sockaddr_in6 * s = (struct sockaddr_in6 *) r->ifa_addr;
+                if (compare_ipv6(&s->sin6_addr, &REFUSED_IPV6) == -1)
+                {
+                    char buffer[INET6_ADDRSTRLEN];
+                    if (inet_ntop(AF_INET6, &s->sin6_addr, buffer, INET6_ADDRSTRLEN) != NULL)
+                        if (strncmp(buffer, "fe80::", 6) != 0)
+                        {
+                            *address = *s;
+                            success = 0;
+                        }
+                }
+            }
+        freeifaddrs(results);
+    }
+
+    return success;
+}
 u_int32_t extract_ipv4(const struct sockaddr_in * address)
 {
     u_int32_t result = 0;

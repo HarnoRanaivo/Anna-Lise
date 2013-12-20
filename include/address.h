@@ -86,6 +86,13 @@ int get_source_ipv6(int protocol, struct sockaddr_in6 * address);
  */
 int get_interface_ipv4(struct sockaddr_in * address);
 
+/**
+ * \brief Rechercher une addresse IPv6 parmi celles des interfaces de la machine.
+ * \param[în,out] address Adresse.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
+int get_interface_ipv6(struct sockaddr_in6 * address);
 
 /**
  * \brief Extraire une IPv4.
