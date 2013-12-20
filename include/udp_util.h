@@ -31,4 +31,4 @@ typedef struct fake_udp_packet
     udphdr udp_header;
 } fake_udp_packet;
 
-int udp_checksum(iphdr * ip_header, udphdr * udp_header, int length);
+int udp_checksum(iphdr * ip_header, udphdr * udp_header);

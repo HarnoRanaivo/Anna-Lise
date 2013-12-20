@@ -96,6 +96,20 @@ void icmp4_packet_print(const icmp4_packet * packet);
  */
 int receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct timeval * wait_time, icmp4_packet * packet);
 
+typedef struct udp4_packet
+{
+    iphdr ip_header;
+    udphdr udp_header;
+} udp4_packet;
+
+int udp4_packet_init(udp4_packet * packet, struct sockaddr_in * address);
+
+int udp4_packet_set_ttl(udp4_packet * packet, u_int8_t ttl);
+
+int udp4_packet_set_length(udp4_packet * packet, u_int16_t total_length);
+
+int udp4_packet_checksum(udp4_packet * packet);
+
 /**
  * \brief Paquet IPv6+ICMP
  */
