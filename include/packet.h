@@ -49,6 +49,16 @@ typedef struct icmp4_packet
 int icmp4_packet_init(icmp4_packet * packet, u_int32_t dest_address);
 
 /**
+ * \brief Changer la taille d'un paquet.
+ * \param[in,out] packet Paquet.
+ * \param[in] length Taille.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ * \relatesalso icmp4_packet
+ */
+int icmp4_packet_set_length(icmp4_packet * packet, u_int16_t length);
+
+/**
  * \brief Changer le TTL d'un paquet IPv4 + ICMP.
  * \param[in,out] packet Paquet.
  * \param[in] ttl Nouveau TTL (1 <= TTL <= MAXTTL).
