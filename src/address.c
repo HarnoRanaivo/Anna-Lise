@@ -35,6 +35,12 @@ int get_ip(const char * hostname, int family, int socktype, int protocol, struct
     if (success == 0)
     {
         *address = *results->ai_addr;
+        if (results->ai_family == AF_INET6)
+        {
+            struct sockaddr_in6 * a = (struct sockaddr_in6 *) address;
+            struct sockaddr_in6 * r = (struct sockaddr_in6 *) results->ai_addr;
+            *a = *r;
+        }
         freeaddrinfo(results);
     }
 
@@ -44,6 +50,11 @@ int get_ip(const char * hostname, int family, int socktype, int protocol, struct
 int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address)
 {
     return get_ip(hostname, AF_INET, SOCK_RAW, protocol, (struct sockaddr *) address);
+}
+
+int get_ipv6(const char * hostname, int protocol, struct sockaddr_in6 * address)
+{
+    return get_ip(hostname, AF_INET6, SOCK_RAW, protocol, (struct sockaddr *) address);
 }
 
 int get_source_ipv4(int protocol, struct sockaddr_in * address)
@@ -77,6 +88,16 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address)
     return success;
 }
 
+int get_source_ipv6(int protocol, struct sockaddr_in6 * address)
+{
+    char buffer[HOST_NAME_MAX+1];
+    gethostname(buffer, HOST_NAME_MAX+1);
+
+    int success = get_ipv6(buffer, protocol, address);
+
+    return success;
+}
+
 int get_interface_ipv4(struct sockaddr_in * address)
 {
     struct ifaddrs * results;
@@ -102,6 +123,47 @@ int get_interface_ipv4(struct sockaddr_in * address)
     return success;
 }
 
+static inline int compare_ipv6(struct in6_addr * address_1, struct in6_addr * address_2)
+{
+    int identical = 0;
+
+    for (int i = 0; identical == 0 && i < 4; i++)
+        if (address_1->__in6_u.__u6_addr32[i] != address_2->__in6_u.__u6_addr32[i])
+            identical = -1;
+
+    return identical;
+}
+
+int get_interface_ipv6(struct sockaddr_in6 * address)
+{
+    struct ifaddrs * results;
+    struct in6_addr REFUSED_IPV6;
+    inet_pton(AF_INET6, "::1", &REFUSED_IPV6);
+
+    int success = getifaddrs(&results);
+    if (success == 0)
+    {
+        success = -1;
+        for (const struct ifaddrs * r = results; success == -1 && r != NULL; r = r->ifa_next)
+            if (r->ifa_addr != NULL && r->ifa_addr->sa_family == AF_INET6)
+            {
+                struct sockaddr_in6 * s = (struct sockaddr_in6 *) r->ifa_addr;
+                if (compare_ipv6(&s->sin6_addr, &REFUSED_IPV6) == -1)
+                {
+                    char buffer[INET6_ADDRSTRLEN];
+                    if (inet_ntop(AF_INET6, &s->sin6_addr, buffer, INET6_ADDRSTRLEN) != NULL)
+                        if (strncmp(buffer, "fe80::", 6) != 0)
+                        {
+                            *address = *s;
+                            success = 0;
+                        }
+                }
+            }
+        freeifaddrs(results);
+    }
+
+    return success;
+}
 u_int32_t extract_ipv4(const struct sockaddr_in * address)
 {
     u_int32_t result = 0;
@@ -111,23 +173,58 @@ u_int32_t extract_ipv4(const struct sockaddr_in * address)
     return result;
 }
 
+void print_ip(int family, struct sockaddr * address)
+{
+    void * in;
+    char buffer[INET6_ADDRSTRLEN];
+    if (family == AF_INET)
+    {
+        struct sockaddr_in * a = (struct sockaddr_in *)address;
+        in = &a->sin_addr;
+    }
+    else
+    {
+        struct sockaddr_in6 * a = (struct sockaddr_in6 *)address;
+        in = &a->sin6_addr;
+    }
+
+    if (inet_ntop(family, in, buffer, INET6_ADDRSTRLEN) != NULL)
+        printf("%s", buffer);
+}
+
 void print_ipv4_address(u_int32_t address)
 {
     printf("%s\n", inet_ntoa((struct in_addr) { address }));
 }
 
-int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address)
+int reverse_dns_v4(char * buffer, size_t buffer_size, struct sockaddr_in * address)
 {
-    struct sockaddr_in source = { AF_INET, 0, address, { 0 } };
-    return getnameinfo((struct sockaddr *)&source, sizeof source, buffer, buffer_size, NULL, 0, 0);
+    return getnameinfo((struct sockaddr *) address, sizeof *address, buffer, buffer_size, NULL, 0, 0);
 }
 
-void print_host_v4(struct in_addr host)
+void print_host_v4(struct sockaddr_in * address)
 {
     size_t buffer_size = 256;
     char buffer[buffer_size];
-    reverse_dns_v4(buffer, buffer_size, host);
-    printf("%s (%s)", buffer, inet_ntoa(host));
+    reverse_dns_v4(buffer, buffer_size, address);
+    printf("%s (", buffer);
+    print_ip(AF_INET, (struct sockaddr *) address);
+    printf(")");
+}
+
+int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * address)
+{
+    return getnameinfo((struct sockaddr *)address, sizeof *address, buffer, buffer_size, NULL, 0, 0);
+}
+
+void print_host_v6(struct sockaddr_in6 * address)
+{
+    size_t buffer_size = 256;
+    char buffer[buffer_size];
+    reverse_dns_v6(buffer, buffer_size, address);
+    printf("%s (", buffer);
+    print_ip(AF_INET6, (struct sockaddr *) address);
+    printf(")");
 }
 
 int create_raw_socket(int family, int socktype, int protocol, int * sockfd)
@@ -138,6 +235,18 @@ int create_raw_socket(int family, int socktype, int protocol, int * sockfd)
     *sockfd = socket(family, socktype, protocol);
     if (*sockfd != -1)
         success = setsockopt(*sockfd, IPPROTO_IP, IP_HDRINCL, &optval, sizeof optval);
+
+    return success;
+}
+
+int create_raw_socket_v6(int family, int socktype, int protocol, int * sockfd)
+{
+    int success = -1;
+    int optval;
+
+    *sockfd = socket(family, socktype, protocol);
+    if (*sockfd != -1)
+        success = setsockopt(*sockfd, IPPROTO_IPV6, IP_HDRINCL, &optval, sizeof optval);
 
     return success;
 }

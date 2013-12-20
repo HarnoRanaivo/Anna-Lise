@@ -27,7 +27,7 @@
 #include "address.h"
 
 /**
- * \brief Header IP.
+ * \brief Header IPv4.
  */
 typedef struct iphdr iphdr;
 
@@ -197,5 +197,181 @@ int iphdr_set_dest_address(iphdr * header, u_int32_t address);
  * \param header Header à afficher.
  */
 void iphdr_print(const iphdr * header);
+
+
+/**
+ * \brief Header IPv6.
+ */
+typedef struct ip6_hdr ip6_hdr;
+
+/**
+ * \brief Première partie d'un header IPv6.
+ */
+typedef struct ip6_hdr_first_part
+{
+    unsigned int version:4;         /**<- Version. */
+    unsigned int traffic_class:8;   /**<- Traffic class. */
+    unsigned int flow_label:20;     /**<- Flow label. */
+} ip6_hdr_first_part;
+
+/**
+ * \brief Changer la version.
+ * \param header Header.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ */
+int ip6_hdr_set_version(ip6_hdr * header);
+
+/**
+ * \brief Changer la traffic class.
+ * \param header Header.
+ * \param traffic_class Traffic class.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_traffic_class(ip6_hdr * header, u_int8_t traffic_class);
+
+/**
+ * \brief Changer le flow label.
+ * \param header Header.
+ * \param label Flow label.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_flow_label(ip6_hdr * header, unsigned int label);
+
+/**
+ * \brief Changer la taille.
+ * \param header Header.
+ * \param length Taille.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_payload_length(ip6_hdr * header, uint16_t length);
+
+/**
+ * \brief Changer le header suivant.
+ * \param header Header.
+ * \param next_header Header suivant.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_next_header(ip6_hdr * header, uint8_t next_header);
+
+/**
+ * \brief Changer le nombre de sauts maximal.
+ * \param header Header.
+ * \param limit Nombre de sauts maximal.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_hop_limit(ip6_hdr * header, uint8_t limit);
+
+/**
+ * \brief Changer l'adresse source.
+ * \param header Header.
+ * \param address Adresse source.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_source(ip6_hdr * header, sockaddr_in6 * address);
+
+/**
+ * \brief Changer l'adresse de destination.
+ * \param header Header.
+ * \param address Adresse de destination.
+ * \relatesalso ip6_hdr
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \retval -2 \p header n'est pas un header IPv6
+ */
+int ip6_hdr_set_destination(ip6_hdr * header, sockaddr_in6 * address);
+
+/**
+ * \brief Pseudo header IPv6.
+ */
+typedef struct fake_ip6_hdr
+{
+    struct in6_addr source;         /**<- Adresse source. */
+    struct in6_addr destination;    /**<- Adresse de destination. */
+    uint32_t length;                /**<- Taille. */
+    uint8_t zeros[3];               /**<- Zeros FTW. */
+    uint8_t next_header;            /**<- Header suivant. */
+} fake_ip6_hdr;
+
+/**
+ * \brief Changer l'adresse source.
+ * \param header Header.
+ * \param address Adresse source.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header ou \p address pointe vers \c NULL.
+ * \relatesalso fake_ip6_hdr
+ */
+int fake_ip6_hdr_set_source(fake_ip6_hdr * header, struct in6_addr * address);
+
+/**
+ * \brief Changer l'adresse de destination.
+ * \param header Header.
+ * \param address Adresse de destination.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header ou \p address pointe vers \c NULL.
+ * \relatesalso fake_ip6_hdr
+ */
+int fake_ip6_hdr_set_destination(fake_ip6_hdr * header, struct in6_addr * address);
+
+/**
+ * \brief Changer la taille.
+ * \param header Header.
+ * \param length Taille.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header ou \p address pointe vers \c NULL.
+ * \relatesalso fake_ip6_hdr
+ */
+int fake_ip6_hdr_set_length(fake_ip6_hdr * header, uint32_t length);
+
+/**
+ * \brief Zeros.
+ * \param header Header.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header pointe vers \c NULL.
+ * \relatesalso fake_ip6_hdr
+ */
+int fake_ip6_hdr_set_zeros(fake_ip6_hdr * header);
+
+/**
+ * \brief Changer le header suivant.
+ * \param header Header.
+ * \param address Adresse source.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 \p header ou \p address pointe vers \c NULL.
+ * \relatesalso fake_ip6_hdr
+ */
+int fake_ip6_hdr_set_next_header(fake_ip6_hdr * header, uint8_t next_header);
+
+/**
+ * \brief Initialiser un pseudo header IPv6.
+ * \param[in,out] fake Pseudo header.
+ * \param[in] header Header.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
+int fake_ip6_hdr_init(fake_ip6_hdr * fake, ip6_hdr * header);
+
+void ip6_hdr_print(const ip6_hdr * header);
+
+void fake_ip6_hdr_print(const fake_ip6_hdr * header);
 
 #endif /* __IP_UTIL_H */

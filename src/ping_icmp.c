@@ -27,17 +27,14 @@ void send_paquet (connexion * c, icmp4_packet * p, compteur * cpt)
 
 void answer_send (connexion * c, compteur * cpt)
 {
-	int succes;
 	icmp4_packet paquet;
 	
-    if (( succes = receive_icmp_v4(c->sockfd,&c->addr,&paquet)) == -1)
-    {
-    }
-    else
+	struct timeval wait_time = { 1, 0 };
+    if (receive_icmp_v4(c->sockfd,&c->addr,&wait_time,&paquet) != -1)
     {
 		cpt->paquets_recus++;
 		printf("%lu bytes from ",sizeof(paquet));
-		print_host_v4(c->addr.sin_addr);
+		print_host_v4(&c->addr);
 		printf(" : icmp_seq=%d ttl=%d ", paquet.icmp_header.un.echo.sequence, paquet.ip_header.ttl);
     }
 }
