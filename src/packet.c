@@ -186,35 +186,22 @@ int icmp6_packet_init(icmp6_packet * packet, struct sockaddr_in6 * address)
     icmp6_hdr * icmp_header = &packet->icmp_header;
 
     succeed_or_die(success, 0, ip6_hdr_set_version(ip_header));
-    /* printf("version\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_traffic_class(ip_header, 0));
-    /* printf("traffic class\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_flow_label(ip_header, 0));
-    /* printf("flow\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_payload_length(ip_header, sizeof *packet));
-    /* printf("length\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_next_header(ip_header, 58));
-    /* printf("next\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_hop_limit(ip_header, 64));
-    /* printf("hop\n"); */
     struct sockaddr_in6 source;
     succeed_or_die(success, 0, get_source_ipv6(IPPROTO_ICMPV6, &source));
-    /* printf("source get\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_source(ip_header, &source));
-    /* printf("source set\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_destination(ip_header, address));
-    /* printf("destination\n"); */
 
     succeed_or_die(success, 0, icmp6_set_type(icmp_header, ICMP6_ECHO_REQUEST));
-    /* printf("type\n"); */
     succeed_or_die(success, 0, icmp6_set_code(icmp_header, 0));
-    /* printf("code\n"); */
     succeed_or_die(success, 0, icmp6_set_echo(icmp_header, getpid(), 0));
-    /* printf("echo\n"); */
 
     /* À faire en dernier. */
     succeed_or_die(success, 0, icmp6_packet_checksum(packet));
-    /* printf("check\n"); */
 
     return 0;
 }
@@ -240,8 +227,6 @@ int icmp6_packet_checksum(icmp6_packet * packet)
 
         icmp6_hdr * icmp_header = &temporary_packet.icmp_header;
         icmp_header->icmp6_cksum = 0;
-        /* printf("\n"); */
-        /* icmp6_checksum_packet_print(&temporary_packet); */
         temporary_packet.icmp_header.icmp6_cksum = checksum(&temporary_packet, (sizeof temporary_packet) / 2);
         u_int16_t check = checksum(&temporary_packet, (sizeof temporary_packet) / 2);
         if (check != 0)
@@ -326,7 +311,6 @@ void icmp6_checksum_packet_print(icmp6_checksum_packet * packet)
     fake_ip6_hdr * ip_header = &packet->ip_header;
     icmp6_hdr * icmp_header = &packet->icmp_header;
 
-    printf("fake:\n");
     fake_ip6_hdr_print(ip_header);
     icmp_print((icmphdr *) icmp_header);
 }

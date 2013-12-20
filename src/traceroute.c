@@ -141,9 +141,6 @@ int traceroute_receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct
         u_int32_t * a = (u_int32_t *) &received.ip_header.ip6_src;
         for (int i = 0; i < 4; i++)
             source->sin6_addr.__in6_u.__u6_addr32[0] = a[i];
-        /* printf("\n"); */
-        /* icmp6_packet_print(&received); */
-        /* printf("\n"); */
     }
     else
         printf(" *");
@@ -187,15 +184,11 @@ int traceroute_icmp_v6(const char * hostname, int hops_max, int attempts_number)
     struct timeval wait_time = { 1, 0 };
 
     succeed_or_die(success, 0, get_ipv6(hostname, IPPROTO_ICMPV6, &address));
-    /* printf("ipv6\n"); */
     succeed_or_die(success, 0, create_raw_socket_v6(AF_INET6, SOCK_RAW, IPPROTO_ICMPV6, &sockfd));
-    /* printf("socket\n"); */
     succeed_or_die(success, 0, icmp6_packet_init(&packet, &address));
-    /* printf("packet\n"); */
 
     print_traceroute_greeting(AF_INET6, (struct sockaddr *) &address, hops_max, sizeof packet);
     int current_type = -1;
-    /* icmp6_packet_print(&packet); */
     for (int ttl = 1; current_type != ICMP6_ECHO_REPLY && ttl <= hops_max; ttl++)
     {
         int printed = 1;
