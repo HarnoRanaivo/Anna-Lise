@@ -34,7 +34,7 @@ void answer_send (connexion * c, compteur * cpt)
     {
 		cpt->paquets_recus++;
 		printf("%lu bytes from ",sizeof(paquet));
-		print_host_v4(c->addr.sin_addr);
+		print_host_v4(&c->addr);
 		printf(" : icmp_seq=%d ttl=%d ", paquet.icmp_header.un.echo.sequence, paquet.ip_header.ttl);
     }
 }
