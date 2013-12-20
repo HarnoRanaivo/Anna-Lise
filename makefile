@@ -48,9 +48,10 @@ packet.o: packet.c packet.h base.h icmp_util.h ip_util.h address.h
 checksum.o: checksum.c checksum.h
 traceroute.o: traceroute.c traceroute.h base.h address.h packet.h time_util.h
 time_util.o: time_util.c time_util.h base.h
+udp_util.o: udp_util.c udp_util.h base.h ip_util.h address.h
 
-libanna.a: address.o icmp_util.o ip_util.o packet.o checksum.o traceroute.o time_util.o | lib
-		ar -crv $(LPATH)/libanna.a $(OPATH)/address.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/packet.o $(OPATH)/checksum.o $(OPATH)/traceroute.o $(OPATH)/time_util.o
+libanna.a: address.o icmp_util.o ip_util.o packet.o checksum.o traceroute.o time_util.o udp_util.o | lib
+		ar -crv $(LPATH)/libanna.a $(OPATH)/address.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/packet.o $(OPATH)/checksum.o $(OPATH)/traceroute.o $(OPATH)/time_util.o $(OPATH)/udp_util.o
 		ranlib $(LPATH)/libanna.a
 
 # Tests

@@ -141,9 +141,6 @@ int traceroute_receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct
         u_int32_t * a = (u_int32_t *) &received.ip_header.ip6_src;
         for (int i = 0; i < 4; i++)
             source->sin6_addr.__in6_u.__u6_addr32[0] = a[i];
-        /* printf("\n"); */
-        /* icmp6_packet_print(&received); */
-        /* printf("\n"); */
     }
     else
         printf(" *");
@@ -187,15 +184,11 @@ int traceroute_icmp_v6(const char * hostname, int hops_max, int attempts_number)
     struct timeval wait_time = { 1, 0 };
 
     succeed_or_die(success, 0, get_ipv6(hostname, IPPROTO_ICMPV6, &address));
-    /* printf("ipv6\n"); */
     succeed_or_die(success, 0, create_raw_socket_v6(AF_INET6, SOCK_RAW, IPPROTO_ICMPV6, &sockfd));
-    /* printf("socket\n"); */
     succeed_or_die(success, 0, icmp6_packet_init(&packet, &address));
-    /* printf("packet\n"); */
 
     print_traceroute_greeting(AF_INET6, (struct sockaddr *) &address, hops_max, sizeof packet);
     int current_type = -1;
-    /* icmp6_packet_print(&packet); */
     for (int ttl = 1; current_type != ICMP6_ECHO_REPLY && ttl <= hops_max; ttl++)
     {
         int printed = 1;
@@ -205,12 +198,77 @@ int traceroute_icmp_v6(const char * hostname, int hops_max, int attempts_number)
         printf("%d", ttl);
         icmp6_packet_set_ttl(&packet, ttl);
         for (int attempt = 0; attempt < attempts_number; attempt++)
-        {
             current_type = icmp_v6_exchange(sockfd, &packet, packet_size, &address, &wait_time, &printed, &times[attempt]);
-        }
-
         print_times(times, attempts_number);
+    }
 
+    return success;
+}
+
+static inline int traceroute_udp_v4_init(const char * hostname, int * sendfd, int * listenfd, struct sockaddr_in * address, udp4_packet * packet)
+{
+    int success = get_ipv4(hostname, IPPROTO_UDP, address);
+
+    if (success != 0)
+        return success;
+
+    succeed_or_die(success, 0, create_raw_socket(AF_INET, SOCK_RAW, IPPROTO_ICMP, listenfd));
+    succeed_or_die(success, 0, create_raw_socket(AF_INET, SOCK_RAW, IPPROTO_UDP, sendfd));
+    succeed_or_die(success, 0, udp4_packet_init(packet, address));
+
+    return success;
+}
+
+static int udp_v4_exchange(int sendfd, int listenfd, udp4_packet * packet, int packet_size, struct sockaddr_in * address,
+        const struct timeval * wait_time, int * host_printed, struct timeval * diff)
+{
+    int current_type = -1;
+    struct timeval start;
+    struct timeval end;
+    gettimeofday(&start, NULL);
+    static const socklen_t address_size = sizeof (struct sockaddr_in);
+
+    if (sendto(sendfd, packet, packet_size, 0, (struct sockaddr *) address, address_size) == packet_size)
+    {
+        struct sockaddr_in source;
+        current_type = traceroute_receive_icmp_v4(listenfd, address, &source, wait_time);
+        if (current_type != -1 && *host_printed == 1)
+        {
+            printf(" ");
+            print_host_v4(&source);
+            *host_printed = 0;
+        }
+        gettimeofday(&end, NULL);
+        *diff = diff_timeval(start, end);
+    }
+
+    return current_type;
+}
+
+int traceroute_udp_v4(const char * hostname, int hops_max, int attempts_number)
+{
+    int success = -1;
+    int send_sockfd;
+    int listen_sockfd;
+    struct sockaddr_in address;
+    udp4_packet packet;
+    struct timeval wait_time = { 1, 0 };
+
+    succeed_or_die(success, 0 , traceroute_udp_v4_init(hostname, &send_sockfd, &listen_sockfd, &address, &packet));
+
+    print_traceroute_greeting(AF_INET, (struct sockaddr *) &address, hops_max, sizeof packet);
+    int current_type = -1;
+    for (int ttl = 1; current_type != ICMP6_ECHO_REPLY && ttl <= hops_max; ttl++)
+    {
+        int printed = 1;
+        struct timeval times[attempts_number];
+        memset(times, 0, attempts_number * sizeof (struct timeval));
+
+        printf("%d", ttl);
+        udp4_packet_set_ttl(&packet, ttl);
+        for (int attempt = 0; attempt < attempts_number; attempt++)
+            current_type = udp_v4_exchange(send_sockfd, listen_sockfd, &packet, sizeof packet, &address, &wait_time, &printed, &times[attempt]);
+        print_times(times, attempts_number);
     }
 
     return success;
