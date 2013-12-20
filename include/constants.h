@@ -29,7 +29,7 @@ static const char * DATE = "2013";
 /**
  * \brief Numéro de version.
  */
-static const char * VERSION_NUMBER = "0.01";
+static const char * VERSION_NUMBER = "1.0";
 
 /**
  * \brief Auteurs.
