@@ -24,7 +24,7 @@ int main(int argc, char ** argv)
     int enable_ipv6 = 1;
 
     struct sockaddr address;
-    if (enable_ipv6 == 0 && get_ipv6(argv[1], IPPROTO_ICMP, (struct sockaddr_in6 *) &address) == 0)
+    if (enable_ipv6 == 0 && get_ipv6(argv[1], IPPROTO_ICMPV6, (struct sockaddr_in6 *) &address) == 0)
     {
         success = traceroute_icmp_v6(argv[1], 64, 3);
     }
