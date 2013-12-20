@@ -82,7 +82,10 @@ int main(int argc, char ** argv)
 
     printf("\tsource: ");
     if (get_source_ipv6(0, &src_address_buffer_6) == 0)
+    {
         print_ip(AF_INET6, (struct sockaddr *) &src_address_buffer_6);
+        printf("\n");
+    }
     else
         printf("None.\n");
 
