@@ -25,6 +25,17 @@
 #include <limits.h>
 
 /**
+ * \brief Effectuer une opération, quitter la fonction courante en cas d'erreur.
+ * \param var Variable où affecter le résultat.
+ * \param instr Operation ou fonction à effectuer.
+ * \pre \p var doit être du même type que le type de retour de \p instr.
+ */
+#define succeed_or_die(var, expect, instr) \
+    (var) = (instr); \
+    if ((var) != (expect)) \
+        return (var)
+
+/**
  * \brief Afficher un message d'erreur, puis quitter.
  * \param message Message d'erreur.
  * \param exit_code Code d'erreur.

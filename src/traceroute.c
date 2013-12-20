@@ -15,25 +15,19 @@
 
 #include "traceroute.h"
 
-int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct sockaddr_in * source, struct timeval * time)
+int traceroute_receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct sockaddr_in * source, const struct timeval * wait_time)
 {
     int answer_type = -1;
     icmp4_packet received;
-    struct timeval start;
-    struct timeval end;
 
-    struct timeval wait_time = { 1, 0 };
-    gettimeofday(&start, NULL);
-    if (receive_icmp_v4(sockfd, address, &wait_time, &received) == 0)
+    struct timeval wait = *wait_time;
+    if (receive_icmp_v4(sockfd, address, &wait, &received) == 0)
     {
         answer_type = received.icmp_header.type;
         *source = (struct sockaddr_in) { AF_INET, 0, { received.ip_header.saddr }, { 0 } };
     }
     else
         printf(" *");
-
-    gettimeofday(&end, NULL);
-    *time = diff_timeval(start, end);
 
     return answer_type;
 }
@@ -48,47 +42,78 @@ static inline void print_times(struct timeval times[], size_t array_size)
     printf("\n");
 }
 
-int traceroute_icmp_v4(const char * hostname, int hops_max, int attempts_number)
+static inline int traceroute_icmp_v4_init(const char* hostname, int * sockfd, struct sockaddr_in * address, icmp4_packet * packet, int packet_size)
+{
+    int success = get_ipv4(hostname, IPPROTO_ICMP, address);
+
+    succeed_or_die(success, 0, create_raw_socket(AF_INET, SOCK_RAW, IPPROTO_ICMP, sockfd));
+    succeed_or_die(success, 0, icmp4_packet_init(packet, extract_ipv4(address)));
+    succeed_or_die(success, 0, icmp4_packet_set_length(packet, packet_size));
+
+    return success;
+}
+
+static inline void print_traceroute_greeting(struct sockaddr_in * address, int hops_max, int packet_size)
+{
+    printf("traceroute to ");
+    print_host_v4(address->sin_addr);
+    printf(", %d hops max, %d byte packets\n", hops_max, packet_size);
+}
+
+static int icmp_v4_exchange(int sockfd, icmp4_packet * packet, int packet_size, struct sockaddr_in * address,
+        const struct timeval * wait_time, int * host_printed, struct timeval * diff)
+{
+    int current_type = -1;
+    struct timeval start;
+    struct timeval end;
+    gettimeofday(&start, NULL);
+    static const socklen_t address_size = sizeof (struct sockaddr_in);
+
+    if (sendto(sockfd, packet, packet_size, 0, (struct sockaddr *) address, address_size) == packet_size)
+    {
+        struct sockaddr_in source;
+        current_type = traceroute_receive_icmp_v4(sockfd, address, &source, wait_time);
+        if (current_type != -1 && *host_printed == 1)
+        {
+            printf(" ");
+            print_host_v4(source.sin_addr);
+            *host_printed = 0;
+        }
+        gettimeofday(&end, NULL);
+        *diff = diff_timeval(start, end);
+    }
+
+    return current_type;
+}
+
+int traceroute_icmp_v4(const char * hostname, int hops_max, int attempts_number, int packet_size, const struct timeval * wait_time)
 {
     int sockfd;
-    int success;
-    int current_type = -1;
-    icmp4_packet packet;
     struct sockaddr_in address;
-    socklen_t address_size = sizeof (struct sockaddr_in);
+    char buffer[packet_size];
+    for (int i = 0; i < packet_size; i++)
+        buffer[i] = 0;
+    icmp4_packet * packet = (icmp4_packet *) buffer;
+    int success = traceroute_icmp_v4_init(hostname, &sockfd, &address, packet, packet_size);
 
-    success = create_raw_socket(AF_INET, SOCK_RAW, IPPROTO_ICMP, &sockfd);
-    if (success == 0)
-        success = get_ipv4(hostname, IPPROTO_ICMP, &address);
-    if (success == 0)
-        success = icmp4_packet_init(&packet, extract_ipv4(&address));
-    printf("traceroute to ");
-    print_host_v4(address.sin_addr);
-    printf(", %d hops max\n", hops_max);
+    if (success != 0)
+        return success;
 
-    if (success == 0)
-        for (int ttl = 1; current_type != ICMP_ECHOREPLY && ttl <= hops_max; ttl++)
-        {
-            int printed = 1;
-            struct timeval times[attempts_number];
-            memset(times, 0, attempts_number * sizeof (struct timeval));
+    print_traceroute_greeting(&address, hops_max, packet_size);
 
-            printf("%d", ttl);
-            icmp4_packet_set_ttl(&packet, ttl);
-            for (int attempt = 0; attempt < attempts_number; attempt++)
-                if (sendto(sockfd, &packet, sizeof packet, 0, (struct sockaddr *) &address, address_size) == sizeof packet)
-                {
-                    struct sockaddr_in source;
-                    current_type = traceroute_receive_icmp_v4(sockfd, &address, &source, &times[attempt]);
-                    if (current_type != -1 && printed == 1)
-                    {
-                        printf(" ");
-                        print_host_v4(source.sin_addr);
-                        printed = 0;
-                    }
-                }
-            print_times(times, attempts_number);
-        }
+    int current_type = -1;
+    for (int ttl = 1; current_type != ICMP_ECHOREPLY && ttl <= hops_max; ttl++)
+    {
+        int printed = 1;
+        struct timeval times[attempts_number];
+        memset(times, 0, attempts_number * sizeof (struct timeval));
+
+        printf("%d", ttl);
+        icmp4_packet_set_ttl(packet, ttl);
+        for (int attempt = 0; attempt < attempts_number; attempt++)
+            current_type = icmp_v4_exchange(sockfd, packet, packet_size, &address, wait_time, &printed, &times[attempt]);
+        print_times(times, attempts_number);
+    }
 
     return success;
 }

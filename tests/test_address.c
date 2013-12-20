@@ -50,10 +50,7 @@ int main(int argc, char ** argv)
         print_ip4(HOSTNAMES[i]);
     if (argc != 1)
         for (int i = 1; i < argc; i++)
-        {
-            const char * name = argv[i];
-            print_ip4(name);
-        }
+            print_ip4(argv[i]);
 
     struct sockaddr_in if_address_buffer;
     get_interface_ipv4(&if_address_buffer);
@@ -62,18 +59,17 @@ int main(int argc, char ** argv)
     get_source_ipv4(0, &src_address_buffer);
     printf("\tsource: ");
     print_ip(AF_INET, (struct sockaddr *) &src_address_buffer);
-    printf("\tsource bis: %s\n", address_to_string(extract_ipv4(&src_address_buffer)));
 
     MT_section("IPv6");
     for (int i = 0; HOSTNAMES[i] != NULL; i++)
-    {
-        const char * name = HOSTNAMES[i];
-        print_ip6(name);
-    }
+        print_ip6(HOSTNAMES[i]);
     printf("\tsource: ");
     struct sockaddr_in6 src_address_buffer_6;
     get_source_ipv6(0, &src_address_buffer_6);
     print_ip(AF_INET6, (struct sockaddr *) &src_address_buffer_6);
+    if (argc != 1)
+        for (int i = 1; i < argc; i++)
+            print_ip6(argv[i]);
 
     return 0;
 }
