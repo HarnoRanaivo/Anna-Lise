@@ -186,7 +186,7 @@ int traceroute_icmp_v6(const char * hostname, int hops_max, int attempts_number)
     int packet_size = sizeof packet;
     struct timeval wait_time = { 1, 0 };
 
-    succeed_or_die(success, 0, get_ipv6(hostname, IPPROTO_ICMP, &address));
+    succeed_or_die(success, 0, get_ipv6(hostname, IPPROTO_ICMPV6, &address));
     /* printf("ipv6\n"); */
     succeed_or_die(success, 0, create_raw_socket_v6(AF_INET6, SOCK_RAW, IPPROTO_ICMPV6, &sockfd));
     /* printf("socket\n"); */

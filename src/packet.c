@@ -139,7 +139,7 @@ int icmp6_packet_init(icmp6_packet * packet, struct sockaddr_in6 * address)
     succeed_or_die(success, 0, ip6_hdr_set_hop_limit(ip_header, 64));
     /* printf("hop\n"); */
     struct sockaddr_in6 source;
-    succeed_or_die(success, 0, get_source_ipv6(IPPROTO_ICMP, &source));
+    succeed_or_die(success, 0, get_source_ipv6(IPPROTO_ICMPV6, &source));
     /* printf("source get\n"); */
     succeed_or_die(success, 0, ip6_hdr_set_source(ip_header, &source));
     /* printf("source set\n"); */
