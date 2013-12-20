@@ -1,6 +1,6 @@
 /**
  * \file anna.h
- * \brief Main. (implémentation)
+ * \brief Anna. (implémentation)
  * \author MEYER Jérémy
  * \author RAZANAJATO Harenome
  * \date 2013

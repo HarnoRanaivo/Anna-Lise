@@ -1,6 +1,6 @@
 /**
- * \file time_util.c
- * \brief Utilitaires temps (implémentation)
+ * \file time_util.h
+ * \brief Utilitaires temps (header)
  * \author MEYER Jérémy
  * \author RAZANAJATO Harenome
  * \date 2013

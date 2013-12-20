@@ -1,5 +1,5 @@
 /**
- * \file icmp_util.h
+ * \file icmp_util.c
  * \brief Utilitaires ICMP (implémentation)
  * \author MEYER Jérémy
  * \author RAZANAJATO Harenome
