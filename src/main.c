@@ -20,7 +20,10 @@ int fin_des_temps = 1;
 static void handler_int (int signum)
 {
 	if (signum == SIGINT)
+	{
 		fin_des_temps=0;
+		printf("\n");
+	}
 }
 
 /**
@@ -60,16 +63,6 @@ static inline void print_version()
     );
 }
 
-static void rtt(struct timeval time, compteur * c)
-{
-	long double temps_aller_retour = extract_time(time);
-	c->sum += temps_aller_retour;
-	if(temps_aller_retour<c->min)
-		c->min = temps_aller_retour;
-	if(temps_aller_retour>c->max)
-		c->max = temps_aller_retour;
-}
-
 /**
  * \brief Main.
  * \param argc Nombre d'arguments de la ligne de commande.
@@ -88,7 +81,6 @@ int main(int argc, char ** argv)
 		compteur cpt;
 		struct sigaction sa;
 		struct timeval debut_total, fin_total, diff_total;
-		struct timeval debut, fin, diff;
 		
 		gettimeofday(&debut_total,NULL);
 		
@@ -99,34 +91,18 @@ int main(int argc, char ** argv)
 		sa.sa_flags = 0;
 		sigaction(SIGINT,&sa,NULL);
     
-		init(&p,&c,&ia,dest,&cpt);
-		create_raw_socket(AF_INET,SOCK_RAW,IPPROTO_ICMP,&c.sockfd);
+		init_domaine_IPv4(&p,&c,&ia,dest,&cpt);
 		
 		while(fin_des_temps)
 		{
-			int avant = cpt.paquets_recus;
-			gettimeofday(&debut,NULL);
-			send_paquet(&c,&p,&cpt);
-			answer_send(&c,&cpt);
-			gettimeofday(&fin,NULL);
-			diff = diff_timeval(debut,fin);
-			if((avant == 0) &&(cpt.paquets_recus == 1))
-			{
-			    cpt.sum = .0;
-				cpt.min = extract_time(diff);
-				cpt.max = extract_time(diff);
-			}
-			rtt(diff,&cpt);
-			printf("time=%.2Lf\n",extract_time(diff));
-			icmp4_packet_set_echo_seq(&p,p.icmp_header.un.echo.sequence+1);
-            sleep(1);
+			pi_ng_choix_sleep_et_attente_reception(&p,&c,&cpt,1,0,1,0);
 		}
 
 		gettimeofday(&fin_total,NULL);
 		
 		diff_total = diff_timeval(debut_total,fin_total);
 		
-		affichage_fin(dest,&cpt,diff_total);
+		affichage_fin(&ia,&cpt,diff_total);
 	
 		freedom(&c);
 	
