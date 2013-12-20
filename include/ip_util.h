@@ -198,6 +198,20 @@ int iphdr_set_dest_address(iphdr * header, u_int32_t address);
  */
 void iphdr_print(const iphdr * header);
 
+typedef struct fake_iphdr
+{
+    u_int32_t source;
+    u_int32_t destination;
+    u_int8_t zeros;
+    u_int8_t protocol;
+    u_int16_t length;
+} fake_iphdr;
+
+int fake_iphdr_set_source(fake_iphdr * header, u_int32_t address);
+int fake_iphdr_set_destination(fake_iphdr * header, u_int32_t address);
+int fake_iphdr_set_zeros(fake_iphdr * header);
+int fake_iphdr_set_protocol(fake_iphdr * header, u_int8_t protocol);
+int fake_iphdr_set_length(fake_iphdr * header, u_int16_t length);
 
 /**
  * \brief Header IPv6.
