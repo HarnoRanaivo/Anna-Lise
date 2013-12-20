@@ -129,3 +129,35 @@ void icmp_print(const icmphdr * header)
 
     }
 }
+
+int icmp6_set_type(icmp6_hdr * header, u_int8_t type)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->icmp6_type = type;
+
+    return success;
+}
+
+int icmp6_set_code(icmp6_hdr * header, u_int8_t code)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->icmp6_code = code;
+
+    return success;
+}
+int icmp6_set_echo(icmp6_hdr * header, u_int16_t identifier, u_int16_t sequence)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+    {
+        header->icmp6_dataun.icmp6_un_data16[0] = identifier;
+        header->icmp6_dataun.icmp6_un_data16[1] = sequence;
+    }
+
+    return success;
+}

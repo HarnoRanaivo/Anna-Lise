@@ -26,6 +26,10 @@
 
 #include "base.h"
 
+typedef struct sockaddr sockaddr;
+typedef struct sockaddr_in sockaddr_in;
+typedef struct sockaddr_in6 sockaddr_in6;
+
 /**
  * \brief Obtenir une adresse IP.
  * \param[in] hostname Nom d'hôte.
@@ -39,6 +43,13 @@
 int get_ip(const char * hostname, int family, int socktype, int protocol, struct sockaddr * address);
 
 /**
+ * \brief Afficher une addresse IP.
+ * \param family Type d'adresse.
+ * \param address Adresse.
+ */
+void print_ip(int family, struct sockaddr * address);
+
+/**
  * \brief Obtenir une adresse IPv4.
  * \param hostname Nom d'hôte.
  * \param protocol Protocole.
@@ -47,11 +58,25 @@ int get_ip(const char * hostname, int family, int socktype, int protocol, struct
 int get_ipv4(const char * hostname, int protocol, struct sockaddr_in * address);
 
 /**
+ * \brief Obtenir une adresse IPv6.
+ * \param hostname Nom d'hôte.
+ * \param protocol Protocole.
+ * \return Adresse IPv6.
+ */
+int get_ipv6(const char * hostname, int protocol, struct sockaddr_in6 * address);
+/**
  * \brief Obtenir l'adresse IPv4 de la machine.
  * \param protocol Protocole.
  * \return Adresse IPv4.
  */
 int get_source_ipv4(int protocol, struct sockaddr_in * address);
+
+/**
+ * \brief Obtenir l'adresse IPv6 de la machine.
+ * \param protocol Protocole.
+ * \return Adresse Ipv6.
+ */
+int get_source_ipv6(int protocol, struct sockaddr_in6 * address);
 
 /**
  * \brief Rechercher une adresse IPv4 parmi celles des interfaces de la machine.
@@ -61,6 +86,13 @@ int get_source_ipv4(int protocol, struct sockaddr_in * address);
  */
 int get_interface_ipv4(struct sockaddr_in * address);
 
+/**
+ * \brief Rechercher une addresse IPv6 parmi celles des interfaces de la machine.
+ * \param[în,out] address Adresse.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
+int get_interface_ipv6(struct sockaddr_in6 * address);
 
 /**
  * \brief Extraire une IPv4.
@@ -83,7 +115,7 @@ void print_ipv4_address(u_int32_t address);
  * \retval 0 Pas d'erreur.
  * \retval n < 0 Erreur.
  */
-int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address);
+int reverse_dns_v4(char * buffer, size_t buffer_size, struct sockaddr_in * address);
 
 /**
  * \brief Afficher un hôte.
@@ -91,8 +123,11 @@ int reverse_dns_v4(char * buffer, size_t buffer_size, struct in_addr address);
  *
  * Affichage sous la forme "nom d'hôte (addresse)".
  */
-void print_host_v4(struct in_addr host);
+void print_host_v4(struct sockaddr_in * address);
 
+void print_host_v6(struct sockaddr_in6 * address);
+
+int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * address);
 
 /**
  * \brief Créer une socket.
@@ -104,5 +139,7 @@ void print_host_v4(struct in_addr host);
  * \retval -1 Erreur.
  */
 int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
+
+int create_raw_socket_v6(int family, int socktype, int protocol, int * sockfd);
 
 #endif /* __ADDRESS_H */

@@ -18,7 +18,7 @@
 void init_domaine_IPv4 (icmp4_packet * p, connexion * c, info_addr * ia, char * dest, compteur * cpt)
 {	
     get_ipv4(dest,IPPROTO_ICMP,&c->addr);
-    reverse_dns_v4(ia->dom_dest,HOST_NAME_MAX+1,c->addr.sin_addr);
+    reverse_dns_v4(ia->dom_dest,HOST_NAME_MAX+1,&c->addr);
     ia->addr_dest = char_to_ip(ia->dom_dest);
     ia->dest = extract_ipv4(&c->addr);
     ia->dest_de_base = dest;
@@ -46,11 +46,12 @@ void send_paquet (connexion * c, icmp4_packet * p, compteur * cpt)
 void answer_send (connexion * c, compteur * cpt, struct timeval * tv)
 {
 	icmp4_packet paquet;
-    if (receive_icmp_v4(c->sockfd,&c->addr, tv, &paquet) != -1)
+	struct timeval * wait_time = tv;
+    if (receive_icmp_v4(c->sockfd,&c->addr, wait_time, &paquet) != -1)
     {
 		cpt->paquets_recus++;
 		printf("%lu bytes from ",sizeof(paquet));
-		print_host_v4(c->addr.sin_addr);
+		print_host_v4(&c->addr);
 		printf(": icmp_req=%d ttl=%d ", paquet.icmp_header.un.echo.sequence+1, paquet.ip_header.ttl);
     }
 }

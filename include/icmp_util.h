@@ -26,9 +26,14 @@
 #include "address.h"
 
 /**
- * \brief ICMP Header.
+ * \brief ICMP4 Header.
  */
 typedef struct icmphdr icmphdr;
+
+/**
+ * \brief ICMP6 Header.
+ */
+typedef struct icmp6_hdr icmp6_hdr;
 
 /**
  * \brief Modifier le type.
@@ -92,5 +97,9 @@ int icmp_checksum(icmphdr * header);
  * \param header Header.
  */
 void icmp_print(const icmphdr * header);
+
+int icmp6_set_type(icmp6_hdr * header, u_int8_t type);
+int icmp6_set_code(icmp6_hdr * header, u_int8_t code);
+int icmp6_set_echo(icmp6_hdr * header, u_int16_t identifier, u_int16_t sequence);
 
 #endif /* __ICMP_UTIL_H */
