@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.3.1"/>
+<title>Anna-Lise:  Fichier source de tests/test_packet.c</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Anna-Lise
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.3.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="../../pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="../../annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="../../files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="../../search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="../../globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Structures de données</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Définitions de type</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">test_packet.c</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#include &quot;test_packet.h&quot;</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;</div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="keywordtype">void</span> test_icmp4_packet_init(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;{</div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a> packet;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;    <span class="keyword">struct </span><a class="code" href="../../d9/d9b/address_8h_a448f4d0be082ffd426565074f78b6e32.html#a448f4d0be082ffd426565074f78b6e32" title="Adresses IPv4 et autres réjouissances.">sockaddr_in</a> address;</div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;    <a class="code" href="../../d9/d9b/address_8h_a79cf7a5008448aa62a64f8f1fe64fb4a.html#a79cf7a5008448aa62a64f8f1fe64fb4a" title="Obtenir l&#39;adresse IPv4 de la machine.">get_source_ipv4</a>(IPPROTO_ICMP, &amp;address);</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;    CU_ASSERT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(&amp;packet, 0), 0);</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(NULL, 0), 0);</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.version, IPVERSION);</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.ihl, 5);</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.tos, 0);</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.tot_len, sizeof (<a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a>));</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.id, 0);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.frag_off, 0);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.ttl, IPDEFTTL);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.protocol, 1);</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.saddr, <a class="code" href="../../d9/d9b/address_8h_a049129a0c931708a99bfbc0856b7a12f.html#a049129a0c931708a99bfbc0856b7a12f" title="Extraire une IPv4.">extract_ipv4</a>(&amp;address));</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.daddr, 0);</div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_ab170b0ebe7c4fe6efad7a78a4d5d2a85.html#ab170b0ebe7c4fe6efad7a78a4d5d2a85">icmp_header</a>.type, ICMP_ECHO);</div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_ab170b0ebe7c4fe6efad7a78a4d5d2a85.html#ab170b0ebe7c4fe6efad7a78a4d5d2a85">icmp_header</a>.code, 0);</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_ab170b0ebe7c4fe6efad7a78a4d5d2a85.html#ab170b0ebe7c4fe6efad7a78a4d5d2a85">icmp_header</a>.un.echo.id, getpid());</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_ab170b0ebe7c4fe6efad7a78a4d5d2a85.html#ab170b0ebe7c4fe6efad7a78a4d5d2a85">icmp_header</a>.un.echo.sequence, 0);</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;}</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="keywordtype">void</span> test_icmp4_packet_set_ttl(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;{</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a> packet_1;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a> packet_2;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a> packet_3;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a> packet_4;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(&amp;packet_1, 0);</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(&amp;packet_2, 0);</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(&amp;packet_3, 0);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(&amp;packet_4, 0);</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(NULL, 0), 0);</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(NULL, 1), 0);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(NULL, IPDEFTTL), 0);</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(NULL, MAXTTL), 0);</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(&amp;packet_1, 0), 0);</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    CU_ASSERT_EQUAL(packet_1.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.ttl, IPDEFTTL);</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(&amp;packet_2, 0), 0);</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    CU_ASSERT_EQUAL(packet_2.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.ttl, IPDEFTTL);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    CU_ASSERT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(&amp;packet_3, 1), 0);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    CU_ASSERT_EQUAL(packet_3.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.ttl, 1);</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    CU_ASSERT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_a240696fd8d3a5fec165bafed14adf2d2.html#a240696fd8d3a5fec165bafed14adf2d2" title="Changer le TTL d&#39;un paquet IPv4 + ICMP.">icmp4_packet_set_ttl</a>(&amp;packet_4, MAXTTL), 0);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;    CU_ASSERT_EQUAL(packet_4.<a class="code" href="../../d0/dd6/structicmp4__packet_a19fe7489bf447373fd034f0991d2367d.html#a19fe7489bf447373fd034f0991d2367d">ip_header</a>.ttl, MAXTTL);</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;}</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keywordtype">void</span> test_icmp4_packet_set_echo_seq(<span class="keywordtype">void</span>)</div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;{</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet.html" title="Paquet Ipv4 ICMP.">icmp4_packet</a> packet;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <a class="code" href="../../d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP.">icmp4_packet_init</a>(&amp;packet, 0);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    CU_ASSERT_NOT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_af095ed91818f00ec8eb99f95ad89f6f9.html#af095ed91818f00ec8eb99f95ad89f6f9" title="Changer la sequence d&#39;un paquet IPv4+ICMP ECHO_REQUEST.">icmp4_packet_set_echo_seq</a>(NULL, 0), 0);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    CU_ASSERT_EQUAL(<a class="code" href="../../d0/dd6/structicmp4__packet_af095ed91818f00ec8eb99f95ad89f6f9.html#af095ed91818f00ec8eb99f95ad89f6f9" title="Changer la sequence d&#39;un paquet IPv4+ICMP ECHO_REQUEST.">icmp4_packet_set_echo_seq</a>(&amp;packet, 2), 0);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    CU_ASSERT_EQUAL(packet.<a class="code" href="../../d0/dd6/structicmp4__packet_ab170b0ebe7c4fe6efad7a78a4d5d2a85.html#ab170b0ebe7c4fe6efad7a78a4d5d2a85">icmp_header</a>.un.echo.sequence, 2);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;}</div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.3.1
+</small></address>
+</body>
+</html>

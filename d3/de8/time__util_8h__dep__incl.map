@@ -1,0 +1,12 @@
+<map id="include/time_util.h" name="include/time_util.h">
+<area shape="rect" id="node2" href="$de/d71/traceroute_8h.html" title="Traceroute (header)" alt="" coords="244,80,380,107"/>
+<area shape="rect" id="node8" href="$d6/dc8/ping__icmp_8h.html" title="Implémentation de la fonction Ping. (header)" alt="" coords="482,80,619,107"/>
+<area shape="rect" id="node11" href="$d0/ddf/time__util_8c.html" title="Utilitaires temps (implémentation)" alt="" coords="644,80,748,107"/>
+<area shape="rect" id="node3" href="$d9/d8d/anna_8h.html" title="Anna. (implémentation)" alt="" coords="47,155,153,181"/>
+<area shape="rect" id="node6" href="$d1/d4c/traceroute_8c.html" title="Traceroute (implémentation)" alt="" coords="178,155,291,181"/>
+<area shape="rect" id="node7" href="$de/d12/test__traceroute_8c_source.html" title="tests/test_traceroute.c" alt="" coords="315,155,468,181"/>
+<area shape="rect" id="node4" href="$d2/da0/anna_8c.html" title="Anna. (implémentation)" alt="" coords="5,229,88,256"/>
+<area shape="rect" id="node5" href="$d0/d29/main_8c.html" title="Main. (implémentation)" alt="" coords="112,229,195,256"/>
+<area shape="rect" id="node9" href="$d5/d74/ping__icmp_8c.html" title="Implémentation de la fonction Ping. (implémentation)" alt="" coords="493,155,608,181"/>
+<area shape="rect" id="node10" href="$d5/da8/test__ping_8c_source.html" title="tests/test_ping.c" alt="" coords="633,155,751,181"/>
+</map>

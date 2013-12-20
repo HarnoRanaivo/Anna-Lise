@@ -1,0 +1,5 @@
+<map id="get_ipv4" name="get_ipv4">
+<area shape="rect" id="node2" href="$d1/d3e/address_8c_a79cf7a5008448aa62a64f8f1fe64fb4a.html#a79cf7a5008448aa62a64f8f1fe64fb4a" title="Obtenir l&#39;adresse IPv4 de la machine." alt="" coords="132,5,249,32"/>
+<area shape="rect" id="node4" href="$d5/d74/ping__icmp_8c_a8840388a584c45eb700d7451452e2b72.html#a8840388a584c45eb700d7451452e2b72" title="Initialisation des différentes structures et création d&#39;un paquet icmp4_packet." alt="" coords="126,56,255,83"/>
+<area shape="rect" id="node3" href="$de/df3/packet_8c_a4b88c80657bb9a94505d743b92db9652.html#a4b88c80657bb9a94505d743b92db9652" title="Paquet UDP." alt="" coords="304,5,424,32"/>
+</map>

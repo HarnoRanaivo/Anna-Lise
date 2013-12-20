@@ -1,0 +1,10 @@
+<map id="init_domaine_IPv4" name="init_domaine_IPv4">
+<area shape="rect" id="node2" href="$d6/dc8/ping__icmp_8h_a14a6ab2d3de563a4a3092278a645ee10.html#a14a6ab2d3de563a4a3092278a645ee10" title="Renvoie l&#39;adresse IP d&#39;un domaine." alt="" coords="216,5,299,32"/>
+<area shape="rect" id="node3" href="$d9/d9b/address_8h_a3e33868e46fd64d2522d50763b7b7df0.html#a3e33868e46fd64d2522d50763b7b7df0" title="Créer une socket." alt="" coords="191,56,323,83"/>
+<area shape="rect" id="node4" href="$d9/d9b/address_8h_a049129a0c931708a99bfbc0856b7a12f.html#a049129a0c931708a99bfbc0856b7a12f" title="Extraire une IPv4." alt="" coords="211,107,304,133"/>
+<area shape="rect" id="node6" href="$d9/d9b/address_8h_af637c541dd7ff290a03bef9fcc4d9a8f.html#af637c541dd7ff290a03bef9fcc4d9a8f" title="Obtenir une adresse IPv4." alt="" coords="222,157,293,184"/>
+<area shape="rect" id="node8" href="$d0/dd6/structicmp4__packet_a974a33d2edadacf13bcb4e2b4d9ec144.html#a974a33d2edadacf13bcb4e2b4d9ec144" title="Construire un paquet IPv4 + ICMP." alt="" coords="184,209,331,250"/>
+<area shape="rect" id="node9" href="$d9/d9b/address_8h_ac3cf1976c272170c2ab9be2418cd5a0f.html#ac3cf1976c272170c2ab9be2418cd5a0f" title="Obtenir le nom d&#39;un hôte à partir de son adresse IPv4." alt="" coords="200,275,315,301"/>
+<area shape="rect" id="node5" href="$d3/d5a/base_8h_a58ba35289e8c456e6beb956ae2057469.html#a58ba35289e8c456e6beb956ae2057469" title="Vérifier qu&#39;un pointeur ne pointe pas vers NULL." alt="" coords="379,107,482,133"/>
+<area shape="rect" id="node7" href="$d9/d9b/address_8h_ac2527f2c331db757a25840db6b1068b9.html#ac2527f2c331db757a25840db6b1068b9" title="Obtenir une adresse IP." alt="" coords="402,157,459,184"/>
+</map>

@@ -1,0 +1,7 @@
+<map id="extract_time" name="extract_time">
+<area shape="rect" id="node2" href="$d5/d74/ping__icmp_8c_a6a3154a1a62bd6a94210cd147bfaee80.html#a6a3154a1a62bd6a94210cd147bfaee80" title="Affichage des statistiques de la commande Ping traditionelle." alt="" coords="149,5,245,32"/>
+<area shape="rect" id="node3" href="$d5/d74/ping__icmp_8c_a291ab2abf1ed6e77d7a8f41281d88a17.html#a291ab2abf1ed6e77d7a8f41281d88a17" title="Fonction réalisant l&#39;affichage et l&#39;application de Ping." alt="" coords="293,107,347,133"/>
+<area shape="rect" id="node5" href="$d0/ddf/time__util_8c_a624184776617f30aeee74cbe3c9a3667.html#a624184776617f30aeee74cbe3c9a3667" title="Afficher une struct timeval." alt="" coords="149,107,245,133"/>
+<area shape="rect" id="node6" href="$d5/d74/ping__icmp_8c_a89e67a82ab92067d3bf8d721b6a03a81.html#a89e67a82ab92067d3bf8d721b6a03a81" title="Mise à jour des RTT de la structure compteur." alt="" coords="178,157,217,184"/>
+<area shape="rect" id="node4" href="$d5/d74/ping__icmp_8c_a21469bf5e3430dbf282e52280882d1af.html#a21469bf5e3430dbf282e52280882d1af" title="Fonction réalisant l&#39;affichage et l&#39;application de Ping avec le choix précis des attentes." alt="" coords="395,99,541,141"/>
+</map>

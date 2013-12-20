@@ -1,0 +1,8 @@
+<map id="icmp4_packet_init" name="icmp4_packet_init">
+<area shape="rect" id="node2" href="$d3/d5a/base_8h_a58ba35289e8c456e6beb956ae2057469.html#a58ba35289e8c456e6beb956ae2057469" title="Vérifier qu&#39;un pointeur ne pointe pas vers NULL." alt="" coords="347,81,450,108"/>
+<area shape="rect" id="node3" href="$d7/d13/icmp__util_8h_afe296c49e028d34dfdc018351fe39a2e.html#afe296c49e028d34dfdc018351fe39a2e" title="Checksum." alt="" coords="181,208,299,235"/>
+<area shape="rect" id="node5" href="$d7/d13/icmp__util_8h_a7d45a65add662fd815d8ff7f68cc19a2.html#a7d45a65add662fd815d8ff7f68cc19a2" title="Modifier le code." alt="" coords="185,5,295,32"/>
+<area shape="rect" id="node6" href="$d7/d13/icmp__util_8h_a65554e8d1aed22d72e2554d184fe72d8.html#a65554e8d1aed22d72e2554d184fe72d8" title="Modifier les infos pour un ICMP_ECHO." alt="" coords="185,157,295,184"/>
+<area shape="rect" id="node7" href="$d7/d13/icmp__util_8h_a3ad2a591351ec64d4e4ffe7e0c4972e7.html#a3ad2a591351ec64d4e4ffe7e0c4972e7" title="Modifier le type." alt="" coords="187,56,293,83"/>
+<area shape="rect" id="node4" href="$dc/d31/checksum_8h_a7828c8e3be5232a22a919d3686d98b80.html#a7828c8e3be5232a22a919d3686d98b80" title="Calculer l&#39;Internet Checksum (RFC 1071)." alt="" coords="357,208,440,235"/>
+</map>

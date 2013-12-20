@@ -1,0 +1,5 @@
+<map id="get_ipv6" name="get_ipv6">
+<area shape="rect" id="node2" href="$d1/d3e/address_8c_a4cd830d7caea78032021132d23d75bb9.html#a4cd830d7caea78032021132d23d75bb9" title="Obtenir l&#39;adresse IPv6 de la machine." alt="" coords="135,5,252,32"/>
+<area shape="rect" id="node4" href="$d1/d4c/traceroute_8c_a6466354b99f01aad9924d61294ed38cd.html#a6466354b99f01aad9924d61294ed38cd" title="Traceroute IPv6+ICMP." alt="" coords="125,56,261,83"/>
+<area shape="rect" id="node3" href="$de/df3/packet_8c_a65b5fff2654c7ea3bb5da793d18043ed.html#a65b5fff2654c7ea3bb5da793d18043ed" title="Construire un paquet IPv6 + ICMP." alt="" coords="310,5,437,32"/>
+</map>

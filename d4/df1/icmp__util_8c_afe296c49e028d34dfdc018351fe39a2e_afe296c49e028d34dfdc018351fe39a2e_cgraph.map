@@ -1,0 +1,4 @@
+<map id="icmp_checksum" name="icmp_checksum">
+<area shape="rect" id="node2" href="$d3/d5a/base_8h_a58ba35289e8c456e6beb956ae2057469.html#a58ba35289e8c456e6beb956ae2057469" title="Vérifier qu&#39;un pointeur ne pointe pas vers NULL." alt="" coords="171,5,274,32"/>
+<area shape="rect" id="node3" href="$dc/d31/checksum_8h_a7828c8e3be5232a22a919d3686d98b80.html#a7828c8e3be5232a22a919d3686d98b80" title="Calculer l&#39;Internet Checksum (RFC 1071)." alt="" coords="181,56,264,83"/>
+</map>

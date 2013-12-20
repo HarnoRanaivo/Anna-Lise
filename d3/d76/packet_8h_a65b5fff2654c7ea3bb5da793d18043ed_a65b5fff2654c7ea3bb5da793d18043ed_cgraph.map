@@ -1,0 +1,18 @@
+<map id="icmp6_packet_init" name="icmp6_packet_init">
+<area shape="rect" id="node2" href="$d3/d5a/base_8h_a58ba35289e8c456e6beb956ae2057469.html#a58ba35289e8c456e6beb956ae2057469" title="Vérifier qu&#39;un pointeur ne pointe pas vers NULL." alt="" coords="398,275,501,301"/>
+<area shape="rect" id="node3" href="$d9/d9b/address_8h_a4cd830d7caea78032021132d23d75bb9.html#a4cd830d7caea78032021132d23d75bb9" title="Obtenir l&#39;adresse IPv6 de la machine." alt="" coords="207,5,324,32"/>
+<area shape="rect" id="node6" href="$df/d91/structicmp6__packet_a56693b0f5270e1406a1da4f5a9907e14.html#a56693b0f5270e1406a1da4f5a9907e14" title="Checksum d&#39;un paquet IPv6+ICMP." alt="" coords="192,107,339,149"/>
+<area shape="rect" id="node7" href="$d7/d13/icmp__util_8h_a220ba97e672eedfb660f9c3b0cccf87f.html#a220ba97e672eedfb660f9c3b0cccf87f" title="Changer le code d&#39;un header ICMPv6." alt="" coords="207,173,324,200"/>
+<area shape="rect" id="node8" href="$d7/d13/icmp__util_8h_adf88119191ec068dc904d94c0c13c800.html#adf88119191ec068dc904d94c0c13c800" title="Changer l&#39;identifiant et la séquence d&#39;un header ICMPv6." alt="" coords="207,224,324,251"/>
+<area shape="rect" id="node9" href="$d7/d13/icmp__util_8h_a9f6d1d5377699ef543df48b357452f35.html#a9f6d1d5377699ef543df48b357452f35" title="Changer le type d&#39;un header ICMPv6." alt="" coords="208,275,323,301"/>
+<area shape="rect" id="node10" href="$d4/dbd/ip__util_8h_a5a79f6fb2f62db4db66cdf11e9ad102c.html#a5a79f6fb2f62db4db66cdf11e9ad102c" title="Changer l&#39;adresse de destination." alt="" coords="186,325,345,352"/>
+<area shape="rect" id="node11" href="$d4/dbd/ip__util_8h_a00918ad86fe73d8de709214231187c18.html#a00918ad86fe73d8de709214231187c18" title="Changer le flow label." alt="" coords="188,376,343,403"/>
+<area shape="rect" id="node12" href="$d4/dbd/ip__util_8h_a2c916dee701ab564850d740f1ef69444.html#a2c916dee701ab564850d740f1ef69444" title="Changer le nombre de sauts maximal." alt="" coords="191,427,339,453"/>
+<area shape="rect" id="node13" href="$d4/dbd/ip__util_8h_aae14de17e88b8d5147962c587fe40924.html#aae14de17e88b8d5147962c587fe40924" title="Changer le header suivant." alt="" coords="182,477,349,504"/>
+<area shape="rect" id="node14" href="$d4/dbd/ip__util_8h_aef9a371aacfba7647436f472bbdd5e8c.html#aef9a371aacfba7647436f472bbdd5e8c" title="Changer la taille." alt="" coords="195,529,336,570"/>
+<area shape="rect" id="node15" href="$d4/dbd/ip__util_8h_a1b672fc13cf82b1131ad3a85384d8c8b.html#a1b672fc13cf82b1131ad3a85384d8c8b" title="Changer l&#39;adresse source." alt="" coords="198,595,333,621"/>
+<area shape="rect" id="node16" href="$d4/dbd/ip__util_8h_a7619709c7054a35f7f3a086ffbdc0a0a.html#a7619709c7054a35f7f3a086ffbdc0a0a" title="Changer la traffic class." alt="" coords="201,646,330,687"/>
+<area shape="rect" id="node17" href="$d4/dbd/ip__util_8h_ad468ea1d71af7785f34b7e1fe5f50fea.html#ad468ea1d71af7785f34b7e1fe5f50fea" title="Changer la version." alt="" coords="196,712,335,739"/>
+<area shape="rect" id="node4" href="$d9/d9b/address_8h_a58de0fb218e18cdb0185b96c6171ed9d.html#a58de0fb218e18cdb0185b96c6171ed9d" title="Obtenir une adresse IPv6." alt="" coords="414,5,485,32"/>
+<area shape="rect" id="node5" href="$d9/d9b/address_8h_ac2527f2c331db757a25840db6b1068b9.html#ac2527f2c331db757a25840db6b1068b9" title="Obtenir une adresse IP." alt="" coords="550,5,607,32"/>
+</map>

@@ -1,0 +1,174 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.3.1"/>
+<title>Anna-Lise: Référence du fichier include/icmp_util.h</title>
+<link href="../../tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../jquery.js"></script>
+<script type="text/javascript" src="../../dynsections.js"></script>
+<link href="../../search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="../../search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="../../doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">Anna-Lise
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.8.3.1 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "../../search",false,'Recherche');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="../../index.html"><span>Page&#160;principale</span></a></li>
+      <li><a href="../../pages.html"><span>Pages&#160;associées</span></a></li>
+      <li><a href="../../annotated.html"><span>Structures&#160;de&#160;données</span></a></li>
+      <li class="current"><a href="../../files.html"><span>Fichiers</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="../../search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Recherche" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="../../search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="../../files.html"><span>Liste&#160;des&#160;fichiers</span></a></li>
+      <li><a href="../../globals.html"><span>Variables&#160;globale</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Tout</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Structures de données</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Fichiers</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Fonctions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Définitions de type</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Macros</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="../../dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#typedef-members">Définitions de type</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle">
+<div class="title">Référence du fichier icmp_util.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+
+<p>Utilitaires ICMP (header)  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;netinet/ip_icmp.h&gt;</code><br/>
+<code>#include &lt;netinet/icmp6.h&gt;</code><br/>
+<code>#include &lt;sys/types.h&gt;</code><br/>
+<code>#include &lt;errno.h&gt;</code><br/>
+<code>#include &quot;<a class="el" href="../../d3/d5a/base_8h_source.html">base.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="../../dc/d31/checksum_8h_source.html">checksum.h</a>&quot;</code><br/>
+<code>#include &quot;<a class="el" href="../../d9/d9b/address_8h_source.html">address.h</a>&quot;</code><br/>
+</div><div class="textblock"><div class="dynheader">
+Graphe des dépendances par inclusion de icmp_util.h:</div>
+<div class="dyncontent">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d8/d8c/icmp__util_8h__incl.svg" width="100%" height="496"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+</div><div class="textblock"><div class="dynheader">
+Ce graphe montre quels fichiers incluent directement ou indirectement ce fichier :</div>
+<div class="dyncontent">
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d3/dbd/icmp__util_8h__dep__incl.svg" width="100%" height="552"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+</div>
+<p><a href="../../d7/d13/icmp__util_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
+Définitions de type</h2></td></tr>
+<tr class="memitem:aedbae89ac9a11880f7ab449dc06d6b2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aedbae89ac9a11880f7ab449dc06d6b2f"></a>
+typedef struct <a class="el" href="../../d7/d13/icmp__util_8h_aedbae89ac9a11880f7ab449dc06d6b2f.html#aedbae89ac9a11880f7ab449dc06d6b2f">icmp6_hdr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_aedbae89ac9a11880f7ab449dc06d6b2f.html#aedbae89ac9a11880f7ab449dc06d6b2f">icmp6_hdr</a></td></tr>
+<tr class="memdesc:aedbae89ac9a11880f7ab449dc06d6b2f"><td class="mdescLeft">&#160;</td><td class="mdescRight">ICMP6 Header. <br/></td></tr>
+<tr class="separator:aedbae89ac9a11880f7ab449dc06d6b2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af66a6f5400bcbdb8c393a52ba17b4ab4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af66a6f5400bcbdb8c393a52ba17b4ab4"></a>
+typedef struct <a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a></td></tr>
+<tr class="memdesc:af66a6f5400bcbdb8c393a52ba17b4ab4"><td class="mdescLeft">&#160;</td><td class="mdescRight">ICMP4 Header. <br/></td></tr>
+<tr class="separator:af66a6f5400bcbdb8c393a52ba17b4ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:a220ba97e672eedfb660f9c3b0cccf87f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_a220ba97e672eedfb660f9c3b0cccf87f.html#a220ba97e672eedfb660f9c3b0cccf87f">icmp6_set_code</a> (<a class="el" href="../../d7/d13/icmp__util_8h_aedbae89ac9a11880f7ab449dc06d6b2f.html#aedbae89ac9a11880f7ab449dc06d6b2f">icmp6_hdr</a> *header, u_int8_t code)</td></tr>
+<tr class="memdesc:a220ba97e672eedfb660f9c3b0cccf87f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changer le code d'un header ICMPv6.  <a href="#a220ba97e672eedfb660f9c3b0cccf87f">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a220ba97e672eedfb660f9c3b0cccf87f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf88119191ec068dc904d94c0c13c800"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_adf88119191ec068dc904d94c0c13c800.html#adf88119191ec068dc904d94c0c13c800">icmp6_set_echo</a> (<a class="el" href="../../d7/d13/icmp__util_8h_aedbae89ac9a11880f7ab449dc06d6b2f.html#aedbae89ac9a11880f7ab449dc06d6b2f">icmp6_hdr</a> *header, u_int16_t identifier, u_int16_t sequence)</td></tr>
+<tr class="memdesc:adf88119191ec068dc904d94c0c13c800"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changer l'identifiant et la séquence d'un header ICMPv6.  <a href="#adf88119191ec068dc904d94c0c13c800">Plus de détails...</a><br/></td></tr>
+<tr class="separator:adf88119191ec068dc904d94c0c13c800"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f6d1d5377699ef543df48b357452f35"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_a9f6d1d5377699ef543df48b357452f35.html#a9f6d1d5377699ef543df48b357452f35">icmp6_set_type</a> (<a class="el" href="../../d7/d13/icmp__util_8h_aedbae89ac9a11880f7ab449dc06d6b2f.html#aedbae89ac9a11880f7ab449dc06d6b2f">icmp6_hdr</a> *header, u_int8_t type)</td></tr>
+<tr class="memdesc:a9f6d1d5377699ef543df48b357452f35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changer le type d'un header ICMPv6.  <a href="#a9f6d1d5377699ef543df48b357452f35">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a9f6d1d5377699ef543df48b357452f35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe296c49e028d34dfdc018351fe39a2e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_afe296c49e028d34dfdc018351fe39a2e.html#afe296c49e028d34dfdc018351fe39a2e">icmp_checksum</a> (<a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a> *header)</td></tr>
+<tr class="memdesc:afe296c49e028d34dfdc018351fe39a2e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checksum.  <a href="#afe296c49e028d34dfdc018351fe39a2e">Plus de détails...</a><br/></td></tr>
+<tr class="separator:afe296c49e028d34dfdc018351fe39a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe4ce415809b1afda860324e7a8edaaa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_afe4ce415809b1afda860324e7a8edaaa.html#afe4ce415809b1afda860324e7a8edaaa">icmp_print</a> (const <a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a> *header)</td></tr>
+<tr class="memdesc:afe4ce415809b1afda860324e7a8edaaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Afficher un header.  <a href="#afe4ce415809b1afda860324e7a8edaaa">Plus de détails...</a><br/></td></tr>
+<tr class="separator:afe4ce415809b1afda860324e7a8edaaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d45a65add662fd815d8ff7f68cc19a2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_a7d45a65add662fd815d8ff7f68cc19a2.html#a7d45a65add662fd815d8ff7f68cc19a2">icmp_set_code</a> (<a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a> *header, u_int8_t code)</td></tr>
+<tr class="memdesc:a7d45a65add662fd815d8ff7f68cc19a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifier le code.  <a href="#a7d45a65add662fd815d8ff7f68cc19a2">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a7d45a65add662fd815d8ff7f68cc19a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65554e8d1aed22d72e2554d184fe72d8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_a65554e8d1aed22d72e2554d184fe72d8.html#a65554e8d1aed22d72e2554d184fe72d8">icmp_set_echo</a> (<a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a> *header, u_int16_t identifier, u_int16_t sequence)</td></tr>
+<tr class="memdesc:a65554e8d1aed22d72e2554d184fe72d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifier les infos pour un ICMP_ECHO.  <a href="#a65554e8d1aed22d72e2554d184fe72d8">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a65554e8d1aed22d72e2554d184fe72d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ad2a591351ec64d4e4ffe7e0c4972e7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d7/d13/icmp__util_8h_a3ad2a591351ec64d4e4ffe7e0c4972e7.html#a3ad2a591351ec64d4e4ffe7e0c4972e7">icmp_set_type</a> (<a class="el" href="../../d7/d13/icmp__util_8h_af66a6f5400bcbdb8c393a52ba17b4ab4.html#af66a6f5400bcbdb8c393a52ba17b4ab4">icmphdr</a> *header, u_int8_t type)</td></tr>
+<tr class="memdesc:a3ad2a591351ec64d4e4ffe7e0c4972e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifier le type.  <a href="#a3ad2a591351ec64d4e4ffe7e0c4972e7">Plus de détails...</a><br/></td></tr>
+<tr class="separator:a3ad2a591351ec64d4e4ffe7e0c4972e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p>Utilitaires ICMP (header) </p>
+<dl class="section author"><dt>Auteur</dt><dd>MEYER Jérémy </dd>
+<dd>
+RAZANAJATO Harenome </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>2013 </dd></dl>
+<dl class="section copyright"><dt>Copyright</dt><dd>WTFPL version 2 </dd></dl>
+
+<p>Définition dans le fichier <a class="el" href="../../d7/d13/icmp__util_8h_source.html">icmp_util.h</a>.</p>
+</div></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="../../doxygen.png" alt="doxygen"/>
+</a> 1.8.3.1
+</small></address>
+</body>
+</html>

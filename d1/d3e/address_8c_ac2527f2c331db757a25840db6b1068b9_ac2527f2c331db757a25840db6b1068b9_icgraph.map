@@ -1,0 +1,10 @@
+<map id="get_ip" name="get_ip">
+<area shape="rect" id="node2" href="$d1/d3e/address_8c_af637c541dd7ff290a03bef9fcc4d9a8f.html#af637c541dd7ff290a03bef9fcc4d9a8f" title="Obtenir une adresse IPv4." alt="" coords="113,56,183,83"/>
+<area shape="rect" id="node6" href="$d1/d3e/address_8c_a58de0fb218e18cdb0185b96c6171ed9d.html#a58de0fb218e18cdb0185b96c6171ed9d" title="Obtenir une adresse IPv6." alt="" coords="113,107,183,133"/>
+<area shape="rect" id="node3" href="$d1/d3e/address_8c_a79cf7a5008448aa62a64f8f1fe64fb4a.html#a79cf7a5008448aa62a64f8f1fe64fb4a" title="Obtenir l&#39;adresse IPv4 de la machine." alt="" coords="241,5,359,32"/>
+<area shape="rect" id="node5" href="$d5/d74/ping__icmp_8c_a8840388a584c45eb700d7451452e2b72.html#a8840388a584c45eb700d7451452e2b72" title="Initialisation des différentes structures et création d&#39;un paquet icmp4_packet." alt="" coords="235,56,365,83"/>
+<area shape="rect" id="node4" href="$de/df3/packet_8c_a4b88c80657bb9a94505d743b92db9652.html#a4b88c80657bb9a94505d743b92db9652" title="Paquet UDP." alt="" coords="420,5,540,32"/>
+<area shape="rect" id="node7" href="$d1/d3e/address_8c_a4cd830d7caea78032021132d23d75bb9.html#a4cd830d7caea78032021132d23d75bb9" title="Obtenir l&#39;adresse IPv6 de la machine." alt="" coords="241,107,359,133"/>
+<area shape="rect" id="node9" href="$d1/d4c/traceroute_8c_a6466354b99f01aad9924d61294ed38cd.html#a6466354b99f01aad9924d61294ed38cd" title="Traceroute IPv6+ICMP." alt="" coords="232,157,368,184"/>
+<area shape="rect" id="node8" href="$de/df3/packet_8c_a65b5fff2654c7ea3bb5da793d18043ed.html#a65b5fff2654c7ea3bb5da793d18043ed" title="Construire un paquet IPv6 + ICMP." alt="" coords="417,107,543,133"/>
+</map>

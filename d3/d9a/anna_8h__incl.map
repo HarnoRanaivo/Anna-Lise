@@ -1,0 +1,11 @@
+<map id="include/anna.h" name="include/anna.h">
+<area shape="rect" id="node4" href="$d3/d5a/base_8h.html" title="Fonctions et inclusions de base. (header)" alt="" coords="1203,453,1264,480"/>
+<area shape="rect" id="node12" href="$d9/d9b/address_8h.html" title="Utilitaires pour obtenir des addresses. (header)" alt="" coords="733,379,811,405"/>
+<area shape="rect" id="node20" href="$de/d71/traceroute_8h.html" title="Traceroute (header)" alt="" coords="1235,80,1325,107"/>
+<area shape="rect" id="node22" href="$d3/d76/packet_8h.html" title="Utilitaires pour créer des paquets (header)" alt="" coords="737,155,809,181"/>
+<area shape="rect" id="node32" href="$d0/d91/time__util_8h.html" title="Utilitaires temps (header)" alt="" coords="1459,155,1541,181"/>
+<area shape="rect" id="node27" href="$d7/d13/icmp__util_8h.html" title="Utilitaires ICMP (header)" alt="" coords="988,304,1073,331"/>
+<area shape="rect" id="node29" href="$d4/dbd/ip__util_8h.html" title="Utilitaires IP (header)" alt="" coords="521,304,588,331"/>
+<area shape="rect" id="node30" href="$da/d14/udp__util_8h.html" title="Utilitaires IP (header)" alt="" coords="691,229,769,256"/>
+<area shape="rect" id="node28" href="$dc/d31/checksum_8h.html" title="Internet Checksum. (header)" alt="" coords="1039,379,1132,405"/>
+</map>

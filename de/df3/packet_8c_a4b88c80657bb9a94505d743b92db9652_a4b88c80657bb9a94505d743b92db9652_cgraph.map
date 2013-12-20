@@ -1,0 +1,20 @@
+<map id="udp4_packet_init" name="udp4_packet_init">
+<area shape="rect" id="node2" href="$d3/d5a/base_8h_a58ba35289e8c456e6beb956ae2057469.html#a58ba35289e8c456e6beb956ae2057469" title="Vérifier qu&#39;un pointeur ne pointe pas vers NULL." alt="" coords="410,56,513,83"/>
+<area shape="rect" id="node3" href="$d9/d9b/address_8h_a049129a0c931708a99bfbc0856b7a12f.html#a049129a0c931708a99bfbc0856b7a12f" title="Extraire une IPv4." alt="" coords="215,5,308,32"/>
+<area shape="rect" id="node4" href="$d9/d9b/address_8h_a79cf7a5008448aa62a64f8f1fe64fb4a.html#a79cf7a5008448aa62a64f8f1fe64fb4a" title="Obtenir l&#39;adresse IPv4 de la machine." alt="" coords="203,157,320,184"/>
+<area shape="rect" id="node8" href="$d4/dbd/ip__util_8h_a72e243e899f4cc01d7316c041fc00c56.html#a72e243e899f4cc01d7316c041fc00c56" title="Checksum." alt="" coords="203,680,320,707"/>
+<area shape="rect" id="node10" href="$d4/dbd/ip__util_8h_a60160003f8340f58c821590762148eb6.html#a60160003f8340f58c821590762148eb6" title="Modifier l&#39;addresse de destination." alt="" coords="181,208,341,235"/>
+<area shape="rect" id="node11" href="$d4/dbd/ip__util_8h_a392f3326ffc0fc540dfee514dbe7403f.html#a392f3326ffc0fc540dfee514dbe7403f" title="Modifier le fragment offset." alt="" coords="195,259,328,301"/>
+<area shape="rect" id="node12" href="$d4/dbd/ip__util_8h_a788c655e86ff6747198ca3b0064ceea3.html#a788c655e86ff6747198ca3b0064ceea3" title="Modifier la longueur du header." alt="" coords="180,325,343,352"/>
+<area shape="rect" id="node13" href="$d4/dbd/ip__util_8h_abf62e1b5dd4dde6340ef82902945fcdf.html#abf62e1b5dd4dde6340ef82902945fcdf" title="Modifier l&#39;ID." alt="" coords="215,376,307,403"/>
+<area shape="rect" id="node14" href="$d4/dbd/ip__util_8h_ab1cd53e095e2fc2166cfcfecc893d096.html#ab1cd53e095e2fc2166cfcfecc893d096" title="Modifier le protocole." alt="" coords="197,427,325,453"/>
+<area shape="rect" id="node15" href="$d4/dbd/ip__util_8h_a0ef833453c44003006f9449414ec5d6e.html#a0ef833453c44003006f9449414ec5d6e" title="Modifier l&#39;addresse source." alt="" coords="174,477,349,504"/>
+<area shape="rect" id="node16" href="$d4/dbd/ip__util_8h_a9ee1bba27e0446b484c74ffeccc20e1d.html#a9ee1bba27e0446b484c74ffeccc20e1d" title="Modifier la longueur totale." alt="" coords="187,528,336,555"/>
+<area shape="rect" id="node17" href="$d4/dbd/ip__util_8h_adc54766945281f7d5a95a1b26f0da373.html#adc54766945281f7d5a95a1b26f0da373" title="Modifier le TTL." alt="" coords="215,579,308,605"/>
+<area shape="rect" id="node18" href="$d4/dbd/ip__util_8h_aa29972f8352daa4f412ba86bdba72a48.html#aa29972f8352daa4f412ba86bdba72a48" title="Modifier le type de service." alt="" coords="174,629,349,656"/>
+<area shape="rect" id="node19" href="$d4/dbd/ip__util_8h_a2d6369cd5ac368993d95f6dca338c514.html#a2d6369cd5ac368993d95f6dca338c514" title="Modifier la version du header." alt="" coords="199,56,323,83"/>
+<area shape="rect" id="node5" href="$d9/d9b/address_8h_a1f7b5c9308c7885935d49fd0816e1e2d.html#a1f7b5c9308c7885935d49fd0816e1e2d" title="Rechercher une adresse IPv4 parmi celles des interfaces de la machine." alt="" coords="397,132,525,159"/>
+<area shape="rect" id="node6" href="$d9/d9b/address_8h_af637c541dd7ff290a03bef9fcc4d9a8f.html#af637c541dd7ff290a03bef9fcc4d9a8f" title="Obtenir une adresse IPv4." alt="" coords="426,183,497,209"/>
+<area shape="rect" id="node7" href="$d9/d9b/address_8h_ac2527f2c331db757a25840db6b1068b9.html#ac2527f2c331db757a25840db6b1068b9" title="Obtenir une adresse IP." alt="" coords="574,183,631,209"/>
+<area shape="rect" id="node9" href="$dc/d31/checksum_8h_a7828c8e3be5232a22a919d3686d98b80.html#a7828c8e3be5232a22a919d3686d98b80" title="Calculer l&#39;Internet Checksum (RFC 1071)." alt="" coords="420,680,503,707"/>
+</map>
