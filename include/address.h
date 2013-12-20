@@ -26,8 +26,19 @@
 
 #include "base.h"
 
+/**
+ * \brief Adresses et autres réjouissances.
+ */
 typedef struct sockaddr sockaddr;
+
+/**
+ * \brief Adresses IPv4 et autres réjouissances.
+ */
 typedef struct sockaddr_in sockaddr_in;
+
+/**
+ * \brief Adresses IPv6 et autres réjouissances.
+ */
 typedef struct sockaddr_in6 sockaddr_in6;
 
 /**
@@ -125,8 +136,22 @@ int reverse_dns_v4(char * buffer, size_t buffer_size, struct sockaddr_in * addre
  */
 void print_host_v4(struct sockaddr_in * address);
 
+/**
+ * \brief Afficher un hôte.
+ * \param host Addresse.
+ *
+ * Affichage sous la forme "nom d'hôte (addresse)".
+ */
 void print_host_v6(struct sockaddr_in6 * address);
 
+/**
+ * \brief Obtenir le nom d'un hôte à partir de son adresse IPv6.
+ * \param[in,out] buffer Tampon pour le nom de l'hôte.
+ * \param[in] buffer_size Taille du tampon.
+ * \param[in] address Adresse de l'hôte.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * address);
 
 /**
@@ -140,6 +165,15 @@ int reverse_dns_v6(char * buffer, size_t buffer_size, struct sockaddr_in6 * addr
  */
 int create_raw_socket(int family, int socktype, int protocol, int * sockfd);
 
+/**
+ * \brief Créer une socket.
+ * \param[in] family Type d'adresse.
+ * \param[in] socktype Type de socket.
+ * \param[in] protocol Protocole.
+ * \param[in,out] sockfd Descripteur de socket.
+ * \retval 0 Pas d'erreur.
+ * \retval -1 Erreur.
+ */
 int create_raw_socket_v6(int family, int socktype, int protocol, int * sockfd);
 
 #endif /* __ADDRESS_H */

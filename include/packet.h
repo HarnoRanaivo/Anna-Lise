@@ -97,18 +97,48 @@ void icmp4_packet_print(const icmp4_packet * packet);
  */
 int receive_icmp_v4(int sockfd, struct sockaddr_in * address, struct timeval * wait_time, icmp4_packet * packet);
 
+/**
+ * \brief Paquet IPv4 + UDP.
+ */
 typedef struct udp4_packet
 {
-    iphdr ip_header;
-    udphdr udp_header;
+    iphdr ip_header;    /**<- Header IP. */
+    udphdr udp_header;  /**<- Header UDP. */
 } udp4_packet;
 
+/**
+ * \brief Paquet UDP.
+ * \param packet Paquet.
+ * \param address Adresse.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int udp4_packet_init(udp4_packet * packet, struct sockaddr_in * address);
 
+/**
+ * \brief Paquet UDP.
+ * \param packet Paquet.
+ * \param ttl TTL.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int udp4_packet_set_ttl(udp4_packet * packet, u_int8_t ttl);
 
+/**
+ * \brief Paquet UDP.
+ * \param packet Paquet.
+ * \param total_length Taille.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int udp4_packet_set_length(udp4_packet * packet, u_int16_t total_length);
 
+/**
+ * \brief Checksum.
+ * \param packet Paquet.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int udp4_packet_checksum(udp4_packet * packet);
 
 /**
@@ -120,10 +150,13 @@ typedef struct icmp6_packet
     icmp6_hdr icmp_header;  /**<- Header ICMP. */
 } icmp6_packet;
 
+/**
+ * \brief Paquet pour la checksum.
+ */
 typedef struct icmp6_checksum_packet
 {
-    fake_ip6_hdr ip_header;
-    icmp6_hdr icmp_header;
+    fake_ip6_hdr ip_header; /**<- Pseudo header IPv6. */
+    icmp6_hdr icmp_header;  /**<- Header ICMPv6 */
 } icmp6_checksum_packet;
 
 /**
@@ -194,6 +227,10 @@ void icmp6_packet_print(const icmp6_packet * packet);
  */
 int receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct timeval * wait_time, icmp6_packet * packet);
 
+/**
+ * \brief Afficher un pseudo paquet IPv6+ICMPv6
+ * \param packet Paquet.
+ */
 void icmp6_checksum_packet_print(icmp6_checksum_packet * packet);
 
 #endif /* __PACKET_H */

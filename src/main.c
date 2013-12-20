@@ -12,44 +12,15 @@
  * To Public License, Version 2, as published by Sam Hocevar. See
  * http://www.wtfpl.net/ for more details.
  */
-#include "ping_icmp.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <sysexits.h>
+#include <string.h>
 
-int fin_des_temps = 1;
-
-static void handler_int (int signum)
-{
-	if (signum == SIGINT)
-	{
-		fin_des_temps=0;
-		printf("\n");
-	}
-}
-
-/**
- * \brief Nom du programme.
- */
-static const char * PROGRAM_NAME = "Anna-Lise";
-
-/**
- * \brief Date.
- */
-static const char * DATE = "2013";
-
-/**
- * \brief Numéro de version.
- */
-static const char * VERSION_NUMBER = "0.01";
-
-/**
- * \brief Auteurs.
- */
-static const char * AUTHORS = "MEYER Jérémy, RAZANAJATO Harenome";
-
-/**
- * \brief URL.
- */
-static const char * URL = "https://github.com/remove/Anna-Lise";
+#include "constants.h"
+#include "base.h"
+#include "anna.h"
 
 /**
  * \brief Afficher la version.
@@ -63,49 +34,43 @@ static inline void print_version()
     );
 }
 
+static inline int find_word(const char * word, int argc, char ** argv)
+{
+    int success = -1;
+
+    for (int i = 0; success == -1 && i < argc; i++)
+        if (strcmp(word, argv[i]) == 0)
+            success = 0;
+
+    return success;
+}
+
 /**
  * \brief Main.
  * \param argc Nombre d'arguments de la ligne de commande.
  * \param argv Arguments de la ligne de commande.
- * \retval 0
  */
 int main(int argc, char ** argv)
 {
-    if (argc != 1 && (strcmp(argv[1], "--version") == 0 || strcmp(argv[1], "-v") == 0))
-        print_version();
-    else
+    if (argc != 2)
     {
-		icmp4_packet p;
-		connexion c;
-		info_addr ia;
-		compteur cpt;
-		struct sigaction sa;
-		struct timeval debut_total, fin_total, diff_total;
-		
-		gettimeofday(&debut_total,NULL);
-		
-		char * dest = argv[1];
-    
-		sa.sa_handler = handler_int;
-		sigfillset(&sa.sa_mask);
-		sa.sa_flags = 0;
-		sigaction(SIGINT,&sa,NULL);
-    
-		init_domaine_IPv4(&p,&c,&ia,dest,&cpt);
-		
-		while(fin_des_temps)
-		{
-			pi_ng_choix_sleep_et_attente_reception(&p,&c,&cpt,1,0,1,0);
-		}
+        fprintf(stderr, "Usage: %s <hostname | ip address>\n", argv[0]);
+        exit(EX_USAGE);
+    }
 
-		gettimeofday(&fin_total,NULL);
-		
-		diff_total = diff_timeval(debut_total,fin_total);
-		
-		affichage_fin(&ia,&cpt,diff_total);
-	
-		freedom(&c);
-	
-		return 0;
-	}
+    if (find_word("-v", argc, argv) == 0 || find_word("--version", argc, argv) == 0)
+    {
+        print_version();
+        return 0;
+    }
+
+    if (getuid() != 0)
+    {
+        fprintf(stderr, "You need to be root.\n");
+        exit(EX_NOPERM);
+    }
+
+    anna(argv[1]);
+
+    return 0;
 }

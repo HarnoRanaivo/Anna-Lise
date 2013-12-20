@@ -207,10 +207,48 @@ typedef struct fake_iphdr
     u_int16_t length;
 } fake_iphdr;
 
+/**
+ * \brief Changer l'adresse source d'un pseudo header IPv4.
+ * \param[in,out] header Header.
+ * \param[in] address Adresse.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int fake_iphdr_set_source(fake_iphdr * header, u_int32_t address);
+
+/**
+ * \brief Changer l'adresse destination d'un pseudo header IPv4.
+ * \param[in,out] header Header.
+ * \param[in] address Adresse.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int fake_iphdr_set_destination(fake_iphdr * header, u_int32_t address);
+
+/**
+ * \brief ZEROS !
+ * \param[in,out] header Header.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur (Avec des zéros ?!).
+ */
 int fake_iphdr_set_zeros(fake_iphdr * header);
+
+/**
+ * \brief Changer le protocole d'un pseudo header IPv4.
+ * \param[in,out] header Header.
+ * \param[in] protocol Protocol.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int fake_iphdr_set_protocol(fake_iphdr * header, u_int8_t protocol);
+
+/**
+ * \brief Changer l'adresse source d'un pseudo header IPv4.
+ * \param[in,out] header Header.
+ * \param[in] length Taille.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int fake_iphdr_set_length(fake_iphdr * header, u_int16_t length);
 
 /**
@@ -384,8 +422,16 @@ int fake_ip6_hdr_set_next_header(fake_ip6_hdr * header, uint8_t next_header);
  */
 int fake_ip6_hdr_init(fake_ip6_hdr * fake, ip6_hdr * header);
 
+/**
+ * \brief Afficher un header IPv6.
+ * \param header Header.
+ */
 void ip6_hdr_print(const ip6_hdr * header);
 
+/**
+ * \brief Afficher un pseudo header IPv6.
+ * \param header Header.
+ */
 void fake_ip6_hdr_print(const fake_ip6_hdr * header);
 
 #endif /* __IP_UTIL_H */

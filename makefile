@@ -19,8 +19,8 @@ vpath %.a $(LPATH)/
 
 all: anna-lise
 
-anna-lise: main.o libanna.a ping_icmp.o | bin
-		$(CC) $(CFLAGS) $(LFLAGS) -o $(BPATH)/$@ $(OPATH)/main.o $(OPATH)/ping_icmp.o -lanna
+anna-lise: main.o libanna.a | bin
+		$(CC) $(CFLAGS) $(LFLAGS) -o $(BPATH)/$@ $(OPATH)/main.o -lanna
 
 tests: unit_tests other_tests
 
@@ -34,6 +34,9 @@ test_address: test_address.o address.o | bin
 
 test_traceroute: test_traceroute.o libanna.a | bin
 	$(CC) $(CFLAGS) $(LFLAGS) -o $(BPATH)/test_traceroute $(OPATH)/test_traceroute.o -lanna
+
+test_ping: test_ping.o libanna.a | bin
+	$(CC) $(CFLAGS) $(LFLAGS) -o $(BPATH)/test_ping $(OPATH)/test_ping.o -lanna
 
 %.o: %.c | obj
 		$(CC) $(CFLAGS) -o $(OPATH)/$@ -c $< $(IFLAGS)
@@ -49,9 +52,10 @@ checksum.o: checksum.c checksum.h
 traceroute.o: traceroute.c traceroute.h base.h address.h packet.h time_util.h
 time_util.o: time_util.c time_util.h base.h
 udp_util.o: udp_util.c udp_util.h base.h ip_util.h address.h
+anna.o: anna.c anna.h
 
-libanna.a: address.o icmp_util.o ip_util.o packet.o checksum.o traceroute.o time_util.o udp_util.o | lib
-		ar -crv $(LPATH)/libanna.a $(OPATH)/address.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/packet.o $(OPATH)/checksum.o $(OPATH)/traceroute.o $(OPATH)/time_util.o $(OPATH)/udp_util.o
+libanna.a: address.o icmp_util.o ip_util.o packet.o checksum.o traceroute.o time_util.o ping_icmp.o udp_util.o anna.o | lib
+		ar -crv $(LPATH)/libanna.a $(OPATH)/address.o $(OPATH)/icmp_util.o $(OPATH)/ip_util.o $(OPATH)/packet.o $(OPATH)/checksum.o $(OPATH)/traceroute.o $(OPATH)/time_util.o $(OPATH)/ping_icmp.o $(OPATH)/udp_util.o $(OPATH)/anna.o
 		ranlib $(LPATH)/libanna.a
 
 # Tests
@@ -63,6 +67,7 @@ test_address.o: test_address.c address.h manual_tests.h
 test_checksum.o: test_checksum.c test_checksum.h checksum.h
 test_packet.o: test_packet.c test_packet.h packet.h
 test_traceroute.o: test_traceroute.c traceroute.h address.h packet.h
+test_ping.o: test_ping.c ping_icmp.h
 
 libunittests.a: test_base.o test_icmp_util.o test_ip_util.o test_address.o test_checksum.o test_packet.o | lib
 		ar -crv $(LPATH)/libunittests.a $(OPATH)/test_base.o $(OPATH)/test_icmp_util.o $(OPATH)/test_ip_util.o $(OPATH)/test_address.o $(OPATH)/test_checksum.o $(OPATH)/test_packet.o
