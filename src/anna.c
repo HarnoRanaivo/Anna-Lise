@@ -6,9 +6,51 @@ static void handler_int (int signum)
 {
     if (signum == SIGINT)
     {
-        fin_des_temps=0;
+        fin_des_temps = 0;
         printf("\n");
     }
+}
+
+static inline void set_handler(void)
+{
+    struct sigaction sa;
+    sa.sa_handler = handler_int;
+    sigfillset(&sa.sa_mask);
+    sa.sa_flags = 0;
+    sigaction(SIGINT,&sa,NULL);
+}
+
+static inline void print_ping_statistics(int sent, int gotten, long double min, long double max, long double sum, struct timeval total, struct sockaddr_in * address)
+{
+    printf("--- ");
+    print_host_v4(address);
+    printf(" ping statistics ---\n");
+    printf("%d packets transmitted, %d received, %.0f%% paquet loss, time %.0Lfms\n", sent, gotten, ((float) (sent - gotten) / sent) * 100, extract_time(total));
+    printf("rtt min/avg/max = %.3Lf/%.3Lf/%.3Lf\n", min, sum / gotten, max);
+
+
+}
+
+static inline void update_statistics(long double * min, long double * max, long double * sum, long double rtt, int gotten, int before)
+{
+    if (gotten == 1 && before != gotten)
+    {
+        *min = rtt;
+        *max = rtt;
+    }
+    if (rtt < *min)
+        *min = rtt;
+    if (rtt > *max)
+        *max = rtt;
+    *sum += rtt;
+}
+
+static inline void print_received(icmp4_packet * received, struct sockaddr_in * address, long double rtt)
+{
+    printf("%lu bytes from ", sizeof *received);
+    print_host_v4(address);
+    printf(": icmp_seq=%d ttl=%d time=%.2Lf ms\n",
+        received->icmp_header.un.echo.sequence, received->ip_header.ttl, rtt);
 }
 
 static inline int ping_v4(const char * hostname)
@@ -18,7 +60,6 @@ static inline int ping_v4(const char * hostname)
     icmp4_packet packet;
 
     int success = get_ipv4(hostname, IPPROTO_ICMP, &address);
-
     printf("ping ");
     print_host_v4(&address);
     printf("\n");
@@ -60,21 +101,8 @@ static inline int ping_v4(const char * hostname)
                     gettimeofday(&end, NULL);
                     struct timeval diff = diff_timeval(start, end);
                     long double rtt = extract_time(diff);
-
-                    if (gotten == 1 && before != gotten)
-                    {
-                        min = rtt;
-                        max = rtt;
-                    }
-                    if (rtt < min)
-                        min = rtt;
-                    if (rtt > max)
-                        max = rtt;
-                    sum += rtt;
-                    printf("%lu bytes from ", sizeof received);
-                    print_host_v4(&address);
-                    printf(": icmp_seq=%d ttl=%d time=%.2Lf ms\n",
-                        received.icmp_header.un.echo.sequence, received.ip_header.ttl, rtt);
+                    update_statistics(&min, &max, &sum, rtt, gotten, before);
+                    print_received(&received, &address, rtt);
 
                     if (rtt > sum / gotten * 2 || rtt < sum / gotten / 2)
                         success = -1;
@@ -88,12 +116,7 @@ static inline int ping_v4(const char * hostname)
     }
     gettimeofday(&ping_end, NULL);
     struct timeval total = diff_timeval(ping_start, ping_end);
-
-    printf("--- ");
-    print_host_v4(&address);
-    printf(" ping statistics ---\n");
-    printf("%d packets transmitted, %d received, %.0f%% paquet loss, time %.0Lfms\n", sent, gotten, ((float) (sent - gotten) / sent) * 100, extract_time(total));
-    printf("rtt min/avg/max = %.3Lf/%.3Lf/%.3Lf\n", min, sum / gotten, max);
+    print_ping_statistics(sent, gotten, min, max, sum, total, &address);
 
     return success;
 
@@ -110,11 +133,7 @@ int anna(const char * hostname)
     int sockfd;
     succeed_or_die(success, 0, create_raw_socket(AF_INET, SOCK_RAW, IPPROTO_ICMP, &sockfd));
 
-    struct sigaction sa;
-    sa.sa_handler = handler_int;
-    sigfillset(&sa.sa_mask);
-    sa.sa_flags = 0;
-    sigaction(SIGINT,&sa,NULL);
+    set_handler();
 
     int i;
     for (i = 0; fin_des_temps == 1; i++)
@@ -126,6 +145,7 @@ int anna(const char * hostname)
         printf("Pinging:\n");
         printf("--------\n");
         ping_v4(hostname);
+        printf("\n");
     }
     printf("traceroute and pinging done %d time(s).\n", i);
 

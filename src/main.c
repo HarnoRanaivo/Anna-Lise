@@ -64,6 +64,12 @@ int main(int argc, char ** argv)
         return 0;
     }
 
+    if (getuid() != 0)
+    {
+        fprintf(stderr, "You need to be root.\n");
+        exit(EX_NOPERM);
+    }
+
     anna(argv[1]);
 
     return 0;
