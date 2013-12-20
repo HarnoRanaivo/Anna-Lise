@@ -372,4 +372,6 @@ int fake_ip6_hdr_init(fake_ip6_hdr * fake, ip6_hdr * header);
 
 void ip6_hdr_print(const ip6_hdr * header);
 
+void fake_ip6_hdr_print(const fake_ip6_hdr * header);
+
 #endif /* __IP_UTIL_H */

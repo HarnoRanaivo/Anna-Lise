@@ -181,6 +181,8 @@ int icmp6_packet_checksum(icmp6_packet * packet)
 
         icmp6_hdr * icmp_header = &temporary_packet.icmp_header;
         icmp_header->icmp6_cksum = 0;
+        /* printf("\n"); */
+        /* icmp6_checksum_packet_print(&temporary_packet); */
         temporary_packet.icmp_header.icmp6_cksum = checksum(&temporary_packet, (sizeof temporary_packet) / 2);
         u_int16_t check = checksum(&temporary_packet, (sizeof temporary_packet) / 2);
         if (check != 0)
@@ -254,9 +256,18 @@ int receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct timeval * 
     FD_SET(sockfd, &socket_set);
     if (select(sockfd + 1, &socket_set, NULL, NULL, wait_time) != -1)
         if (FD_ISSET(sockfd, &socket_set))
-            if (recvfrom(sockfd, packet, sizeof *packet, 0, (struct sockaddr *) address, &address_size) != -1)
+            if (recvfrom(sockfd, packet, sizeof *packet, 0, (struct sockaddr *) address, &address_size) == sizeof *packet)
                 success = 0;
 
     return success;
 }
 
+void icmp6_checksum_packet_print(icmp6_checksum_packet * packet)
+{
+    fake_ip6_hdr * ip_header = &packet->ip_header;
+    icmp6_hdr * icmp_header = &packet->icmp_header;
+
+    printf("fake:\n");
+    fake_ip6_hdr_print(ip_header);
+    icmp_print((icmphdr *) icmp_header);
+}

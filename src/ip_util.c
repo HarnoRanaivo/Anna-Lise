@@ -412,8 +412,8 @@ void ip6_hdr_print(const ip6_hdr * header)
         printf("IP traffic class: %d\n", beginning->traffic_class);
         printf("IP flow label: %d\n", beginning->flow_label);
         printf("IP payload length: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_plen);
-        printf("IP next header: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_plen);
-        printf("IP hop limit: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_plen);
+        printf("IP next header: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_nxt);
+        printf("IP hop limit: %d\n", header->ip6_ctlun.ip6_un1.ip6_un1_hlim);
 
         char buffer[INET6_ADDRSTRLEN];
         if (inet_ntop(AF_INET6, &header->ip6_src, buffer, INET6_ADDRSTRLEN) != NULL)
@@ -421,4 +421,21 @@ void ip6_hdr_print(const ip6_hdr * header)
         if (inet_ntop(AF_INET6, &header->ip6_dst, buffer, INET6_ADDRSTRLEN) != NULL)
             printf("IP dest: %s\n", buffer);
     }
+}
+
+void fake_ip6_hdr_print(const fake_ip6_hdr * header)
+{
+    int ok = check_pointer(header);
+
+    if (ok == 0)
+    {
+        char buffer[INET6_ADDRSTRLEN];
+        if (inet_ntop(AF_INET6, &header->source, buffer, INET6_ADDRSTRLEN) != NULL)
+            printf("IP source: %s\n", buffer);
+        if (inet_ntop(AF_INET6, &header->destination, buffer, INET6_ADDRSTRLEN) != NULL)
+            printf("IP destination: %s\n", buffer);
+        printf("IP length: %d\n", header->length);
+        printf("IP next header: %d\n", header->next_header);
+    }
+
 }

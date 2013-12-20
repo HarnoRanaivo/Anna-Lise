@@ -179,5 +179,6 @@ void icmp6_packet_print(const icmp6_packet * packet);
  */
 int receive_icmp_v6(int sockfd, struct sockaddr_in6 * address, struct timeval * wait_time, icmp6_packet * packet);
 
+void icmp6_checksum_packet_print(icmp6_checksum_packet * packet);
 
 #endif /* __PACKET_H */
