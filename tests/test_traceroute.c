@@ -1,3 +1,7 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <sysexits.h>
+
 #include "address.h"
 #include "packet.h"
 #include "traceroute.h"
@@ -5,7 +9,16 @@
 int main(int argc, char ** argv)
 {
     if (argc !=2)
-        return 64;
+    {
+        fprintf(stderr, "Usage: %s <hostname | address>\n", argv[0]);
+        exit(EX_USAGE);
+    }
+
+    if (getuid() != 0)
+    {
+        fprintf(stderr, "You need root rights.\n");
+        exit(EX_NOPERM);
+    }
 
     int success = -1;
     int enable_ipv6 = 1;
