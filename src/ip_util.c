@@ -209,6 +209,56 @@ void iphdr_print(const iphdr * header)
     }
 }
 
+int fake_iphdr_set_source(fake_iphdr * header, u_int32_t address)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->source = address;
+
+    return success;
+}
+
+int fake_iphdr_set_destination(fake_iphdr * header, u_int32_t address)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->destination = address;
+
+    return success;
+}
+
+int fake_iphdr_set_zeros(fake_iphdr * header)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->zeros = 0;
+
+    return success;
+}
+
+int fake_iphdr_set_protocol(fake_iphdr * header, u_int8_t protocol)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->protocol = protocol;
+
+    return success;
+}
+
+int fake_iphdr_set_length(fake_iphdr * header, u_int16_t length)
+{
+    int success = check_pointer(header);
+
+    if (success == 0)
+        header->length = length;
+
+    return success;
+}
+
 /* IPv6 */
 static inline int check_ipv6_version(unsigned int version)
 {
