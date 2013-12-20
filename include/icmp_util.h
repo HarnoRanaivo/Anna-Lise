@@ -98,8 +98,32 @@ int icmp_checksum(icmphdr * header);
  */
 void icmp_print(const icmphdr * header);
 
+/**
+ * \brief Changer le type d'un header ICMPv6.
+ * \param[in,out] header Header.
+ * \param[in] type Type.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int icmp6_set_type(icmp6_hdr * header, u_int8_t type);
+
+/**
+ * \brief Changer le code d'un header ICMPv6.
+ * \param[in,out] header Header.
+ * \param[in] code Code.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int icmp6_set_code(icmp6_hdr * header, u_int8_t code);
+
+/**
+ * \brief Changer l'identifiant et la séquence d'un header ICMPv6.
+ * \param[in,out] header Header.
+ * \param[in] identifier Identifiant.
+ * \param[in] sequence Sequence.
+ * \retval 0 Pas d'erreur.
+ * \retval n < 0 Erreur.
+ */
 int icmp6_set_echo(icmp6_hdr * header, u_int16_t identifier, u_int16_t sequence);
 
 #endif /* __ICMP_UTIL_H */
