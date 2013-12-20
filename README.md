@@ -52,10 +52,11 @@ Récuperer Anna-Lise
 $ git clone https://github.com/remove/Anna-Lise.git
 ```
 
-Compiler
---------
+Compiler et lancer Anna-Lise
+----------------------------
 ```bash
 $ make
+$ [sudo] bin/anna-lise <hostname>
 ```
 
 Documentation
