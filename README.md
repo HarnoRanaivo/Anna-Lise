@@ -65,7 +65,7 @@ Un fichier ```Doxyfile``` est déjà fourni. Pour générer la documentation :
 ```bash
 $ doxygen
 ```
-La documentation sera générée dans un dossier ```documentation```.
+La documentation sera générée dans un dossier ```documentation```. Celle-ci est également disponible à cette [adresse](http://remove.github.io/Anna-Lise/ "Documentation").
 
 Branches et tags
 ----------------
